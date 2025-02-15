@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "rems-additions",
-  "version": "1.0.6",
+  "version": "1.0.7",
 
   "name": "RMES-Carpet-additions",
   "description": "Additional, less vanilla additions to the carpet mod",

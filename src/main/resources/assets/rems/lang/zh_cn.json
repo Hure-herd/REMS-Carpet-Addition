@@ -6,48 +6,30 @@
   "carpet.rule.pistonBlockChunkLoader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
   "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载3x3的区块",
   "carpet.rule.pistonBlockChunkLoader.extra.2": "当活塞/黏性活塞上方有金原矿时，强加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "[True] - 打开该规则",
-  "carpet.rule.pistonBlockChunkLoader.extra.4": "[False] - 禁用该规则",
 
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
-  "carpet.rule.endGatewayChunkLoader.extra.0": "[True] - 打开该规则",
-  "carpet.rule.endGatewayChunkLoader.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.scheduledRandomTickCactus.name": "计划刻催熟仙人掌",
   "carpet.rule.scheduledRandomTickCactus.desc": "当仙人掌方块收到计划刻时仍会给予生长随机刻",
-  "carpet.rule.scheduledRandomTickCactus.extra.0": "[True] - 打开该规则",
-  "carpet.rule.scheduledRandomTickCactus.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.scheduledRandomTickBamboo.name": "计划刻催熟竹子",
   "carpet.rule.scheduledRandomTickBamboo.desc": "当竹子方块收到计划刻时仍会给予生长随机刻",
-  "carpet.rule.scheduledRandomTickBamboo.extra.0": "[True] - 打开该规则",
-  "carpet.rule.scheduledRandomTickBamboo.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.scheduledRandomTickChorusFlower.name": "计划刻催熟紫颂花",
   "carpet.rule.scheduledRandomTickChorusFlower.desc": "当紫颂花方块收到计划刻时仍会给予生长随机刻",
-  "carpet.rule.scheduledRandomTickChorusFlower.extra.0": "[True] - 打开该规则",
-  "carpet.rule.scheduledRandomTickChorusFlower.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.scheduledRandomTickSugarCane.name": "计划刻催熟甘蔗",
   "carpet.rule.scheduledRandomTickSugarCane.desc": "当甘蔗方块收到计划刻时仍会给予生长随机刻",
-  "carpet.rule.scheduledRandomTickSugarCane.extra.0": "[True] - 打开该规则",
-  "carpet.rule.scheduledRandomTickSugarCane.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.scheduledRandomTickAllPlants.name": "计划刻催熟所有作物",
   "carpet.rule.scheduledRandomTickAllPlants.desc": "当所有作物方块收到计划刻时仍会给予生长随机刻",
-  "carpet.rule.scheduledRandomTickAllPlants.extra.0": "[True] - 打开该规则",
-  "carpet.rule.scheduledRandomTickAllPlants.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.mergeTNTPro.name": "更好的合并TNT",
   "carpet.rule.mergeTNTPro.desc": "合并大量TNT以减小实体及爆炸带来的卡顿",
-  "carpet.rule.mergeTNTPro.extra.0": "[True] - 打开该规则",
-  "carpet.rule.mergeTNTPro.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.pearlTickets.name": "末影珍珠加载区块",
   "carpet.rule.pearlTickets.desc": "允许末影珍珠实体选择性地加载即将通过的区块。",
-  "carpet.rule.pearlTickets.extra.0": "[True] - 打开该规则",
-  "carpet.rule.pearlTickets.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.projectileRaycastLength.name": "投掷物Raycast长度",
   "carpet.rule.projectileRaycastLength.desc": "更改Raycast的距离。如果设置为0，将检查所有到达目的地的块，Vanilla!",
@@ -55,50 +37,34 @@
 
   "carpet.rule.pearlPosVelocity.name": "末影珍珠真实位置与速度",
   "carpet.rule.pearlPosVelocity.desc": "可以查看开启末影珍珠加载区块的末影珍珠真实位置与速度",
-  "carpet.rule.pearlPosVelocity.extra.0": "[True] - 打开该规则",
-  "carpet.rule.pearlPosVelocity.extra.1": "[False] - 禁用该规则",
+
+  "carpet.rule.chestMinecartChunkLoader.name": "箱子矿车加载区块",
+  "carpet.rule.chestMinecartChunkLoader.desc" : "箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效",
 
   "carpet.rule.teleportToPoiWithoutPortals.name": "POI传送门",
   "carpet.rule.teleportToPoiWithoutPortals.desc": "重新添加传送至没有传送门方块的传送门POI的规则",
-  "carpet.rule.teleportToPoiWithoutPortals.extra.0": "[True] - 打开该规则",
-  "carpet.rule.teleportToPoiWithoutPortals.extra.1": "[False] - 禁用该规则",
-
 
   "carpet.rule.keepWorldTickUpdate.name": "保持实体更新",
   "carpet.rule.keepWorldTickUpdate.desc": "在服务器当前维度没有玩家的300tick后，Minecraft会停止实体相关的更新，这条规则会绕过这个限制。",
 
   "carpet.rule.disableBatCanSpawn.name": "禁止蝙蝠生成",
   "carpet.rule.disableBatCanSpawn.desc" : "阻止蝙蝠自然生成",
-  "carpet.rule.disableBatCanSpawn.extra.0": "[True] - 打开该规则",
-  "carpet.rule.disableBatCanSpawn.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.cactusWrenchSound.name": "仙人掌扳手音效",
   "carpet.rule.cactusWrenchSound.desc" : "使用仙人掌扳手时播放 'BLOCK_DISPENSER_LAUNCH' 音效",
-  "carpet.rule.cactusWrenchSound.extra.0": "[True] - 打开该规则",
-  "carpet.rule.cactusWrenchSound.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.disablePortalUpdate.name": "禁止传送门更新",
   "carpet.rule.disablePortalUpdate.desc" : "下界传送门区块收到区块更新后不会做出反应",
-  "carpet.rule.disablePortalUpdate.extra.0": "[True] - 打开该规则",
-  "carpet.rule.disablePortalUpdate.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.stringDupeReintroduced.name": "重新引入拌线骗特性",
   "carpet.rule.stringDupeReintroduced.desc" : "重新引入拌线骗特性，可以通过此规则来继续使用刷线机",
-  "carpet.rule.stringDupeReintroduced.extra.0": "[True] - 打开该规则",
-  "carpet.rule.stringDupeReintroduced.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.sharedVillagerDiscounts.name": "共享打折",
   "carpet.rule.sharedVillagerDiscounts.desc" : "玩家将僵尸村民治疗为村民后的获得的折扣将共享给所有玩家",
-  "carpet.rule.sharedVillagerDiscounts.extra.0": "[True] - 打开该规则",
-  "carpet.rule.sharedVillagerDiscounts.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.itemShadowing.name": "物品分身",
   "carpet.rule.itemShadowing.desc" : "重新引入1.16.5物品栏之间交换的逻辑",
-  "carpet.rule.itemShadowing.extra.0": "[True] - 打开该规则",
-  "carpet.rule.itemShadowing.extra.1": "[False] - 禁用该规则",
 
   "carpet.rule.magicBox.name": "CCE抑制器",
-  "carpet.rule.magicBox.desc" : "控制基于类型转换的更新抑制是否可用",
-  "carpet.rule.magicBox.extra.0": "[True] - 打开该规则",
-  "carpet.rule.magicBox.extra.1": "[False] - 禁用该规则"
+  "carpet.rule.magicBox.desc" : "控制基于类型转换的更新抑制是否可用"
 }

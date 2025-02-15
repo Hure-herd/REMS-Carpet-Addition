@@ -17,6 +17,7 @@
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
     "EnderPearlChunkLoader.EnderPearlEntityMixins",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
+    "ChestMinecartEntityChunkLoader.ChestMinecartEntityMixin",
     "keepWorldTickUpdate",
     "BatEntityMixin",
     "TntEntityMixin",

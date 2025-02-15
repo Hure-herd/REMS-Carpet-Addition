@@ -52,6 +52,13 @@ TNT当量为1753+184的情况下，开启TIS-Carpet的optimizedFastEntityMovemen
 **移植自：**
 SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
+## 箱子矿车加载区块(ChestMinecartChunkLoader)
+箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效。
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet chestMinecartChunkLoader true`
+* 分类: `REMS` , `Feature`
+
 ## 末影真实位置(PearlPosVelocity)
 在开启末影珍珠加载(PearlTickets)的时候，珍珠只会显示第一gt的位置，查看不到珍珠的真实位置和速度，开启这个后，会在公屏显示出来。
 * 默认值: `false`

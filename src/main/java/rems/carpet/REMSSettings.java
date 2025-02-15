@@ -36,6 +36,11 @@ public class REMSSettings
     public static int projectileRaycastLength = 0;
 
     @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean chestMinecartChunkLoader = false;
+
+    @Rule(
             categories = {REMS, SURVIVAL}
     )
     public static boolean pistonBlockChunkLoader =  false;

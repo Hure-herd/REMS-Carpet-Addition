@@ -6,49 +6,33 @@
   "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
   "carpet.rule.pistonBlockChunkLoader.extra.1": "When Emerald_ore is on the piston,Load 3x3 chunk",
   "carpet.rule.pistonBlockChunkLoader.extra.2": "When Gold_ore is on the piston,Load 1x1 chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "[True] - Able the rule",
-  "carpet.rule.pistonBlockChunkLoader.extra.4": "[False] - Disable the rule",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
-  "carpet.rule.endGatewayChunkLoader.extra.0": "[True] - Open this rule",
-  "carpet.rule.endGatewayChunkLoader.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.scheduledRandomTickCactus.name": "scheduledRandomTickCactus",
   "carpet.rule.scheduledRandomTickCactus.desc": "Make cactus accepts scheduled tick as random tick",
-  "carpet.rule.scheduledRandomTickCactus.extra.0": "[True] - Open this rule",
-  "carpet.rule.scheduledRandomTickCactus.extra.1": "[False] - Disable the rule",
-
 
   "carpet.rule.scheduledRandomTickBamboo.name": "scheduledRandomTickBamboo",
   "carpet.rule.scheduledRandomTickBamboo.desc": "Make bamboo accepts scheduled tick as random tick",
-  "carpet.rule.scheduledRandomTickBamboo.extra.0": "[True] - Open this rule",
-  "carpet.rule.scheduledRandomTickBamboo.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.scheduledRandomTickChorusFlower.name": "scheduledRandomTickChorusFlower",
   "carpet.rule.scheduledRandomTickChorusFlower.desc": "Make chorus flower accepts scheduled tick as random tick",
-  "carpet.rule.scheduledRandomTickChorusFlower.extra.0": "[True] - Open this rule",
-  "carpet.rule.scheduledRandomTickChorusFlower.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.scheduledRandomTickSugarCane.name": "scheduledRandomTickSugarCane",
   "carpet.rule.scheduledRandomTickSugarCane.desc": "Make sugar cane accepts scheduled tick as random tick",
-  "carpet.rule.scheduledRandomTickSugarCane.extra.0": "[True] - Open this rule",
-  "carpet.rule.scheduledRandomTickSugarCane.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.scheduledRandomTickAllPlants.name": "scheduledRandomTickAllPlants",
   "carpet.rule.scheduledRandomTickAllPlants.desc": "Make all plants accepts scheduled tick as random tick",
-  "carpet.rule.scheduledRandomTickAllPlants.extra.0": "[True] - Open this rule",
-  "carpet.rule.scheduledRandomTickAllPlants.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.mergeTNTPro.name": "MergeTNTPro",
   "carpet.rule.mergeTNTPro.desc": "Combined with large amounts of TNT to reduce lag caused by entities and explosions",
-  "carpet.rule.mergeTNTPro.extra.0": "[True] - Open this rule",
-  "carpet.rule.mergeTNTPro.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.pearlTickets.name": "PearlTickets",
   "carpet.rule.pearlTickets.desc": "Allows Ender Pearl entity to selectively load chunks",
-  "carpet.rule.pearlTickets.extra.0": "[True] - Open this rule",
-  "carpet.rule.pearlTickets.extra.1": "[False] - Disable the rule",
+
+  "carpet.rule.chestMinecartChunkLoader.name": "ChestMinecartChunkLoader",
+  "carpet.rule.chestMinecartChunkLoader.desc" : "ChestMinecart can load nearby chunks for 2 seconds,when ChestMinecart customName is Load",
 
   "carpet.rule.projectileRaycastLength.name": "projectileRaycastLengthValidato",
   "carpet.rule.projectileRaycastLength.desc": "Changes the distance projectiles check for collisions. If set to 0 all Blocks to the destination will be checked which is the Vanilla behaviour.",
@@ -56,49 +40,31 @@
 
   "carpet.rule.pearlPosVelocity.name": "pearlPosVelocity",
   "carpet.rule.pearlPosVelocity.desc": "Can check the real position and speed of the ender pearl when the ender PearlTickets is enabled.",
-  "carpet.rule.pearlPosVelocity.extra.0": "[True] - Open this rule",
-  "carpet.rule.pearlPosVelocity.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.teleportToPoiWithoutPortals.name": "teleportToPoiWithoutPortals",
   "carpet.rule.teleportToPoiWithoutPortals.desc": "Re-adds teleporting to portal POIs without portal blocks 's rule",
-  "carpet.rule.teleportToPoiWithoutPortals.extra.0": "[True] - Open this rule",
-  "carpet.rule.teleportToPoiWithoutPortals.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.keepWorldTickUpdate.name": "KeepWorldTickUpdate",
   "carpet.rule.keepWorldTickUpdate.desc": "After 300 ticks without any players in the current dimension on the server, Minecraft will stop entities updates, This rule will bypass this restriction",
 
   "carpet.rule.disableBatCanSpawn.name": "DisableBatCanSpawn",
   "carpet.rule.disableBatCanSpawn.desc" : "Prevent bats from spawning naturally",
-  "carpet.rule.disableBatCanSpawn.extra.0": "[True] - Open this rule",
-  "carpet.rule.disableBatCanSpawn.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.cactusWrenchSound.name": "CactusWrenchSound",
   "carpet.rule.cactusWrenchSound.desc" : "Play 'BLOCK_DISPENSER_LAUNCH' sound when using cactus to flip block",
-  "carpet.rule.cactusWrenchSound.extra.0": "[True] - Open this rule",
-  "carpet.rule.cactusWrenchSound.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.disablePortalUpdate.name": "DisablePortalUpdate",
   "carpet.rule.disablePortalUpdate.desc" : "Nether portal blocks will not react after receiving block updates",
-  "carpet.rule.disablePortalUpdate.extra.0": "[True] - Open this rule",
-  "carpet.rule.disablePortalUpdate.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.stringDupeReintroduced.name": "StringDupeReintroduced",
   "carpet.rule.stringDupeReintroduced.desc" : "Reintroduced the string dupe feature, you can use this rule to continue using the string farm",
-  "carpet.rule.stringDupeReintroduced.extra.0": "[True] - Open this rule",
-  "carpet.rule.stringDupeReintroduced.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.sharedVillagerDiscounts.name": "SharedVillagerDiscounts",
   "carpet.rule.sharedVillagerDiscounts.desc" : "Share villagers discount to all players",
-  "carpet.rule.sharedVillagerDiscounts.extra.0": "[True] - Open this rule",
-  "carpet.rule.sharedVillagerDiscounts.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.itemShadowing.name": "ItemShadowing",
   "carpet.rule.itemShadowing.desc" : "Reintroducing the logic of swapping between inventory in 1.16.5",
-  "carpet.rule.itemShadowing.extra.0": "[True] - Open this rule",
-  "carpet.rule.itemShadowing.extra.1": "[False] - Disable the rule",
 
   "carpet.rule.magicBox.name": "MagicBox",
-  "carpet.rule.magicBox.desc" : "Control whether CastSuppressor(CCESuppressor) is available",
-  "carpet.rule.magicBox.extra.0": "[True] - Open this rule",
-  "carpet.rule.magicBox.extra.1": "[False] - Disable the rule"
+  "carpet.rule.magicBox.desc" : "Control whether CastSuppressor(CCESuppressor) is available"
 }
