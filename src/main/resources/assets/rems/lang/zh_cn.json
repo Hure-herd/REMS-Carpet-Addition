@@ -6,9 +6,16 @@
   "carpet.rule.pistonBlockChunkLoader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
   "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载3x3的区块",
   "carpet.rule.pistonBlockChunkLoader.extra.2": "当活塞/黏性活塞上方有金原矿时，强加载1x1的区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.3": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
 
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
+
+  "carpet.rule.eggtochicken.name": "鸡蛋小鸡",
+  "carpet.rule.eggtochicken.desc": "每次扔鸡蛋一定出四只小鸡",
+
+  "carpet.rule.PortalPearlWarp.name": "珍珠超传",
+  "carpet.rule.PortalPearlWarp.desc": "它可以移植回来1.13的超传，在某些特定的地方",
 
   "carpet.rule.scheduledRandomTickCactus.name": "计划刻催熟仙人掌",
   "carpet.rule.scheduledRandomTickCactus.desc": "当仙人掌方块收到计划刻时仍会给予生长随机刻",

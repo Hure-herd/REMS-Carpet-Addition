@@ -137,6 +137,7 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                 PlayerEntity owner = (PlayerEntity) this.getOwner();
                 if(this.tick == 1){
                     serverChunkManager.addTicket(ENDER_PEARL_TICKETS, nextChunkPos, 2, currChunkPos);
+                    serverChunkManager.addTicket(ENDER_PEARL_TICKETS, currChunkPos, 2, currChunkPos);
                     this.tick =2;
                 }
 

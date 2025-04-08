@@ -53,6 +53,10 @@ public abstract class PistonBlockMixin
 
     private static final int RedStoneOreHash = new Identifier("minecraft", "redstone_ore").hashCode();
 
+    private static final int BedrockHash = new Identifier("minecraft", "bedrock").hashCode();
+
+    private static final int RedStoneTorchHash = new Identifier("minecraft", "redstone_torch").hashCode();
+
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
     {
@@ -62,6 +66,12 @@ public abstract class PistonBlockMixin
 
             BlockPos nbp = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
             Block block = world.getBlockState(nbp).getBlock();
+
+            BlockPos nbp1 = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
+            Block block1 = world.getBlockState(nbp1).getBlock();
+
+            BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
+            Block block2 = world.getBlockState(nbp2).getBlock();
 
             if (Registries.BLOCK.getId(block).hashCode() == DiamondOreHash)
             {
@@ -86,6 +96,15 @@ public abstract class PistonBlockMixin
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
                 ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 2, cp);
+            }
+            if (Registries.BLOCK.getId(block1).hashCode() == BedrockHash && Registries.BLOCK.getId(block2).hashCode() == RedStoneTorchHash &&
+                    world.getRegistryKey() == World.NETHER)
+            {
+                int x = pos.getX() + direction.getOffsetX();
+                int z = pos.getZ() + direction.getOffsetZ();
+
+                ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
             }
         }
     }

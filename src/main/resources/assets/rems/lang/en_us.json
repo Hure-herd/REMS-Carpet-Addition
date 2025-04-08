@@ -6,9 +6,16 @@
   "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
   "carpet.rule.pistonBlockChunkLoader.extra.1": "When Emerald_ore is on the piston,Load 3x3 chunk",
   "carpet.rule.pistonBlockChunkLoader.extra.2": "When Gold_ore is on the piston,Load 1x1 chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.3": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
+
+  "carpet.rule.eggtochicken.name": "Eggtochicken",
+  "carpet.rule.eggtochicken.desc": "everytime throw egg can create chicken",
+
+  "carpet.rule.PortalPearlWarp.name": "PortalPearlWarp",
+  "carpet.rule.PortalPearlWarp.desc": "It allows the player to be teleported 8x the distance of their current coords",
 
   "carpet.rule.scheduledRandomTickCactus.name": "scheduledRandomTickCactus",
   "carpet.rule.scheduledRandomTickCactus.desc": "Make cactus accepts scheduled tick as random tick",

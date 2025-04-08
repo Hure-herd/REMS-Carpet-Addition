@@ -13,8 +13,7 @@
 |  1.20  |  ✔   |
 | 1.19.4 |  ✔   |
 
-
-# 新增功能
+# 功能列表
 
 ## 活塞头加载(PistonBlockChunkLoader)
 开启后，当该活塞/黏性活塞头产生活塞头的推出/拉回事件时，在创建推出/拉回事件的那一游戏刻为**活塞头方块所在区块**添加类型为"piston_block"的加载票，持续时间为60gt（3s）。
@@ -23,7 +22,8 @@
 |:----:|:--------:|
 | 钻石矿  | 弱加载1x1区块 |
 | 红石矿  | 强加载3X3区块 |
-|  金矿  | 强加载1X1区块 |
+|  金矿  | 强加载1X1区块 |**
+### 在地狱下方有基岩，后一格上方是红石火把时可以弱加载1x1的区块
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet pistonBlockChunkLoader ture`
@@ -48,16 +48,8 @@ TNT当量为1753+184的情况下，开启TIS-Carpet的optimizedFastEntityMovemen
 * 开启方法: `/carpet pearlTickets true`
 * 分类: `REMS` , `Survival`
 
- 
 **移植自：**
 SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
-
-## 箱子矿车加载区块(ChestMinecartChunkLoader)
-箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效。
-* 默认值: `false`
-* 可选参数: `true`, `false`
-* 开启方法: `/carpet chestMinecartChunkLoader true`
-* 分类: `REMS` , `Feature`
 
 ## 末影真实位置(PearlPosVelocity)
 在开启末影珍珠加载(PearlTickets)的时候，珍珠只会显示第一gt的位置，查看不到珍珠的真实位置和速度，开启这个后，会在公屏显示出来。
@@ -76,6 +68,28 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 **移植自：**[EpsilonSMP](https://github.com/EpsilonSMP/Epsilon-Carpet)
 
+## 珍珠超传(PortalPearlWarp)
+可以在某些特定的位置触发超传。  
+下面是地狱门的位置，都是正正或者负负
+
+| 地狱传送门位置（正中央)  |   主世界传送门位置（正中央)    |
+|:-------------:|:------------------:|
+|    915,915    | 29999600,29999600  |
+|   7324,7324   |  3749942,3749942   |
+|  58592,58592  |   468735,468735    |
+| 468743,468743 |   58585,58585      |
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet PortalPearlWarp true`
+* 分类: `REMS` , `Feature`
+
+## 箱子矿车加载区块(ChestMinecartChunkLoader)
+箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效。
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet chestMinecartChunkLoader true`
+* 分类: `REMS` , `Feature`
+
 ## 末地折跃门加载(EndGatewayChunkLoader)
 当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载。  
 (Minecraft<1.21时允许开启)
@@ -84,24 +98,26 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 开启方法: `/carpet endGatewayChunkLoader true`
 * 分类: `REMS` , `Survival`
 
-
-## 计划刻催熟植物
-| 植物类型 | 是否支持 |    命令     |
-|:----:|:---------:|:---------:|
-| 仙人掌  |    ✔    |    /carpet scheduledRandomTickCactus true    |
-|  竹子   |    ✔    |    /carpet scheduledRandomTickBamboo true    |
-| 紫颂花  |    ✔    |    /carpet scheduledRandomTickChorusFlower true    |
-|  甘蔗   |    ✔    |    /carpet scheduledRandomTickSugarCane true    |
-当表上的植物收到计划刻时仍会给予生长随机刻
-
-**移植自：**[OhMyVanillaMinecraft](https://github.com/hit-mc/OhMyVanillaMinecraft)
-
-## 计划刻催熟所有作物(ScheduledRandomTickAllPlants)
-当所有作物方块收到计划刻时仍会给予生长随机刻
+## 鸡蛋小鸡(Eggtochicken)
+每次扔鸡蛋，一定出四只小鸡
 * 默认值: `false`
 * 可选参数: `true`, `false`
-* 开启方法: `/carpet scheduledRandomTickAllPlants true`
-* 分类: `REMS`, `Feature`, `Survival`
+* 开启方法: `/carpet eggtochicken true`
+* 分类: `REMS` ,`Feature`
+
+## 计划刻催熟植物
+| 植物类型 |                     命令                      |
+|:----:|:-------------------------------------------:|
+| 仙人掌  |     /carpet scheduledRandomTickCactus true  |
+|  竹子  |/carpet scheduledRandomTickBamboo true    |
+| 紫颂花  |/carpet scheduledRandomTickChorusFlower true    |
+|  甘蔗  |/carpet scheduledRandomTickSugarCane true    |
+|  全选  |/carpet scheduledRandomTickAllPlants true    |
+当表上的植物收到计划刻时仍会给予生长随机刻
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 分类: `REMS` , `Feature`,`Survival`
+* 开启方法: `/carpet XXX true`
 
 **移植自：**[OhMyVanillaMinecraft](https://github.com/hit-mc/OhMyVanillaMinecraft)
 

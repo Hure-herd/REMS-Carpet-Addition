@@ -29,6 +29,11 @@ public class REMSSettings
 {
 
     @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean eggtochicken = false;
+
+    @Rule(
             categories = {REMS,EXPERIMENTAL,OPTIMIZATION},
             options = {"0","200"},
             strict = false
@@ -39,6 +44,13 @@ public class REMSSettings
             categories = {REMS, FEATURE}
     )
     public static boolean chestMinecartChunkLoader = false;
+
+    //#if MC<12102
+    @Rule(
+           categories = {REMS, FEATURE}
+    )
+    public static boolean PortalPearlWarp = false;
+    //#endif
 
     @Rule(
             categories = {REMS, SURVIVAL}
