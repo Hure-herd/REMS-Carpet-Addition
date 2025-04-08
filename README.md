@@ -105,7 +105,7 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 |  竹子  |/carpet scheduledRandomTickBamboo true    |
 | 紫颂花  |/carpet scheduledRandomTickChorusFlower true    |
 |  甘蔗  |/carpet scheduledRandomTickSugarCane true    |
-|  全选  |/carpet scheduledRandomTickAllPlants true    |
+|  全选  |/carpet scheduledRandomTickAllPlants true    |**
 当表上的植物收到计划刻时仍会给予生长随机刻
 * 默认值: `false`
 * 可选参数: `true`, `false`
