@@ -1,30 +1,27 @@
 /*
- * This file is part of the Carpet REMS Addition project, licensed under the
+ * This file is part of the Carpet AMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
  * Copyright (C) 2025 A Minecraft Server and contributors
  *
- * Carpet REMS Addition is free software: you can redistribute it and/or modify
+ * Carpet AMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Carpet REMS Addition is distributed in the hope that it will be useful,
+ * Carpet AMS Addition is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
+ * along with Carpet AMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins;
+package rems.carpet.mixins.MergeTNTPro;
 
-import rems.carpet.REMSSettings;
-import carpet.CarpetSettings;
 import carpet.fakes.TntEntityInterface;
-import carpet.logging.LoggerRegistry;
-import carpet.logging.logHelpers.TNTLogHelper;
+import carpet.CarpetSettings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -36,6 +33,9 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import carpet.logging.LoggerRegistry;
+import carpet.logging.logHelpers.TNTLogHelper;
+import rems.carpet.REMSSettings;
 
 
 @Mixin(TntEntity.class)
@@ -97,13 +97,17 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
         if (mergedTNT > 1)
             for (int i = mergedTNT; i < mergedTNT - 1; i++){
                 this.getWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
-                    this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
+                        this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
             }
     }
 
     @Inject(method = "tick", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/entity/TntEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V",
-            ordinal = 1))
+            //#if MC<1206
+            ordinal = 2))
+            //#else
+            //$$ ordinal = 1))
+            //#endif
     private void tryMergeTnT(CallbackInfo ci)
     {
         if(REMSSettings.mergeTNTPro){
@@ -118,7 +122,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
                                 && this.getX() == entityTNTPrimed.getX() && this.getZ() == entityTNTPrimed.getZ() && this.getY() == entityTNTPrimed.getY()
                                 && getFuse() == entityTNTPrimed.getFuse() +1){
                             mergedTNT += ((TntEntityInterface) entityTNTPrimed).getMergedTNT();
-                            entityTNTPrimed.remove(RemovalReason.DISCARDED);
+                            entityTNTPrimed.remove(Entity.RemovalReason.DISCARDED);
                         }
                     }
                 }

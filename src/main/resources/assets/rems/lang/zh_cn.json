@@ -11,9 +11,6 @@
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
 
-  "carpet.rule.eggtochicken.name": "鸡蛋小鸡",
-  "carpet.rule.eggtochicken.desc": "每次扔鸡蛋一定出四只小鸡",
-
   "carpet.rule.PortalPearlWarp.name": "珍珠超传",
   "carpet.rule.PortalPearlWarp.desc": "它可以移植回来1.13的超传，在某些特定的地方",
 

@@ -98,13 +98,6 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 开启方法: `/carpet endGatewayChunkLoader true`
 * 分类: `REMS` , `Survival`
 
-## 鸡蛋小鸡(Eggtochicken)
-每次扔鸡蛋，一定出四只小鸡
-* 默认值: `false`
-* 可选参数: `true`, `false`
-* 开启方法: `/carpet eggtochicken true`
-* 分类: `REMS` ,`Feature`
-
 ## 计划刻催熟植物
 | 植物类型 |                     命令                      |
 |:----:|:-------------------------------------------:|

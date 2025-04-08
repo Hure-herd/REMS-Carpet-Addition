@@ -18,7 +18,7 @@
  * along with Carpet AMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins;
+package rems.carpet.mixins.DisablePortalUpdate;
 
 import net.minecraft.block.Block;
 import rems.carpet.REMSSettings;

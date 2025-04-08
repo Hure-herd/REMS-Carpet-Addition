@@ -29,11 +29,6 @@ public class REMSSettings
 {
 
     @Rule(
-            categories = {REMS, FEATURE}
-    )
-    public static boolean eggtochicken = false;
-
-    @Rule(
             categories = {REMS,EXPERIMENTAL,OPTIMIZATION},
             options = {"0","200"},
             strict = false

@@ -11,9 +11,6 @@
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
 
-  "carpet.rule.eggtochicken.name": "Eggtochicken",
-  "carpet.rule.eggtochicken.desc": "everytime throw egg can create chicken",
-
   "carpet.rule.PortalPearlWarp.name": "PortalPearlWarp",
   "carpet.rule.PortalPearlWarp.desc": "It allows the player to be teleported 8x the distance of their current coords",
 

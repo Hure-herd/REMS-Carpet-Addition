@@ -21,10 +21,8 @@
 package rems.carpet.mixins.PistonBlockChunkLoader;
 
 
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FacingBlock;
-import net.minecraft.block.PistonBlock;
+import net.minecraft.block.*;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -54,6 +52,11 @@ public abstract class PistonBlockMixin
 
             BlockState pistonBlock = world.getBlockState(pos.up(1));
 
+            BlockState pistonBlock1 = world.getBlockState(pos.down(1));
+
+            BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
+            BlockState pistonBlock2 = world.getBlockState(nbp2);
+
             if (pistonBlock.isOf(Blocks.DIAMOND_ORE))
             {
                 int x = pos.getX() + direction.getOffsetX();
@@ -77,6 +80,15 @@ public abstract class PistonBlockMixin
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
                 ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 2, cp);
+            }
+            if (pistonBlock1.isOf(Blocks.BEDROCK) && pistonBlock2.isOf(Blocks.REDSTONE_TORCH) &&
+                    world.getRegistryKey() == World.NETHER)
+            {
+                int x = pos.getX() + direction.getOffsetX();
+                int z = pos.getZ() + direction.getOffsetZ();
+
+                ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
             }
         }
     }
