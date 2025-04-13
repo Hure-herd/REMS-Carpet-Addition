@@ -7,7 +7,7 @@
 
 # 文档
 
-- [支持版本](docs/support.md)
+- [支持](docs/support.md)
 - [规则](docs/rules.md)
 
 # Works Cited
