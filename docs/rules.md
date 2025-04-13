@@ -24,6 +24,14 @@ TNT当量为1753+184的情况下，开启TIS-Carpet的optimizedFastEntityMovemen
 * 开启方法: `/carpet mergeTNTPro true`
 * 分类: `REMS`, `Feature`, `Survival`,`TNT`
 
+## 重新引入POI传送(TeleportToPoiWithoutPortals)
+重新添加传送至没有传送门方块的传送门POI的规则
+
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet teleportToPoiWithoutPortals true`
+* 分类: `REMS`, `Experimental`
+
 ## 末影珍珠加载(PearlTickets)
 这个mod允许末影珍珠实体选择性地加载即将通过的区块，这样珍珠炮打出的珍珠就不会因为进入未加载区块而丢失。在1.14+中可以替代地狱门加载链使用。   
 该mod相比于@gnembon/carpet-extra mod的enderPearlChunkLoading功能有显著的性能提升。  

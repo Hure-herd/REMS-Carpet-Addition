@@ -45,7 +45,7 @@
   "carpet.rule.chestMinecartChunkLoader.name": "箱子矿车加载区块",
   "carpet.rule.chestMinecartChunkLoader.desc" : "箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效",
 
-  "carpet.rule.teleportToPoiWithoutPortals.name": "POI传送门",
+  "carpet.rule.teleportToPoiWithoutPortals.name": "重新引入POI传送",
   "carpet.rule.teleportToPoiWithoutPortals.desc": "重新添加传送至没有传送门方块的传送门POI的规则",
 
   "carpet.rule.keepWorldTickUpdate.name": "保持实体更新",

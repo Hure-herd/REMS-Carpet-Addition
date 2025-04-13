@@ -20,9 +20,9 @@
 
 package rems.carpet;
 
+
 import static rems.carpet.utils.REMSRuleCategory.*;
 import carpet.api.settings.Rule;
-import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 
 
 public class REMSSettings
@@ -128,10 +128,10 @@ public class REMSSettings
     )
     public static boolean sharedVillagerDiscounts = false;
 
-    //@Rule(
-    //        categories = {REMS, EXPERIMENTAL}
-    //)
-    //public static boolean teleportToPoiWithoutPortals = false;
+    @Rule(
+            categories = {REMS, EXPERIMENTAL}
+    )
+    public static boolean teleportToPoiWithoutPortals = false;
 
     //#if MC>=12102
     //$$ @Rule(
