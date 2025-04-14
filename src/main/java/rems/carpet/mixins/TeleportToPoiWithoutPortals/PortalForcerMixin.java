@@ -18,7 +18,7 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.TeleportToPoiWithoutPortals1;
+package rems.carpet.mixins.TeleportToPoiWithoutPortals;
 
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.util.math.ChunkPos;
@@ -30,7 +30,6 @@ import rems.carpet.REMSSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.Properties;
-import net.minecraft.state.property.Property;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.BlockLocating;
@@ -39,13 +38,9 @@ import net.minecraft.world.poi.PointOfInterest;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 @Mixin(value = PortalForcer.class,priority = 200000)
@@ -96,18 +91,16 @@ public class PortalForcerMixin
                 poiPos
         );
         if (REMSSettings.teleportToPoiWithoutPortals) {
-            // 强制返回 1x1 的"传送门"区域
             return Optional.of(new BlockLocating.Rectangle(poiPos, 1, 1));
         } else {
-            // 原版逻辑：检测完整传送门结构
             BlockState blockState = this.world.getBlockState(poiPos);
             Direction.Axis axis = blockState.get(Properties.HORIZONTAL_AXIS);
             return Optional.of(BlockLocating.getLargestRectangle(
                     poiPos,
                     axis,
-                    21, // 最大横向扩展范围
+                    21,
                     Direction.Axis.Y,
-                    21, // 最大纵向扩展范围
+                    21,
                     testPos -> this.world.getBlockState(testPos) == blockState
             ));
         }

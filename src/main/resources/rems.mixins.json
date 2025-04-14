@@ -25,7 +25,7 @@
     "scheduledRandomTick.ChorusFlowerBlockMixin",
     "scheduledRandomTick.SugarCaneBlockMixin",
     "PortalPearlWarp.EnderPearlTeleportMixin",
-    "TeleportToPoiWithoutPortals1.PortalForcerMixin"
+    "TeleportToPoiWithoutPortals.PortalForcerMixin"
   ],
   "client": [
   ],
