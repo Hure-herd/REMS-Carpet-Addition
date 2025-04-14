@@ -70,27 +70,7 @@ public class REMSSettings
     @Rule(
             categories = {REMS, FEATURE, SURVIVAL}
     )
-    public static boolean scheduledRandomTickBamboo = false;
-
-    @Rule(
-            categories = {REMS, FEATURE, SURVIVAL}
-    )
-    public static boolean scheduledRandomTickCactus = false;
-
-    @Rule(
-            categories = {REMS, FEATURE, SURVIVAL}
-    )
-    public static boolean scheduledRandomTickChorusFlower = false;
-
-    @Rule(
-            categories = {REMS, FEATURE, SURVIVAL}
-    )
-    public static boolean scheduledRandomTickSugarCane = false;
-
-    @Rule(
-            categories = {REMS, FEATURE, SURVIVAL}
-    )
-    public static boolean scheduledRandomTickAllPlants = false;
+    public static boolean scheduledRandomTickPlants = false;
 
     @Rule(
             categories = {REMS, FEATURE, SURVIVAL,TNT}
@@ -132,6 +112,11 @@ public class REMSSettings
             categories = {REMS, EXPERIMENTAL}
     )
     public static boolean teleportToPoiWithoutPortals = false;
+
+    @Rule(
+            categories = {REMS, SURVIVAL}
+    )
+    public static boolean SignCommand = false;
 
     //#if MC>=12102
     //$$ @Rule(

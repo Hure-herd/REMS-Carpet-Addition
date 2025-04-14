@@ -14,20 +14,8 @@
   "carpet.rule.PortalPearlWarp.name": "PortalPearlWarp",
   "carpet.rule.PortalPearlWarp.desc": "It allows the player to be teleported 8x the distance of their current coords",
 
-  "carpet.rule.scheduledRandomTickCactus.name": "scheduledRandomTickCactus",
-  "carpet.rule.scheduledRandomTickCactus.desc": "Make cactus accepts scheduled tick as random tick",
-
-  "carpet.rule.scheduledRandomTickBamboo.name": "scheduledRandomTickBamboo",
-  "carpet.rule.scheduledRandomTickBamboo.desc": "Make bamboo accepts scheduled tick as random tick",
-
-  "carpet.rule.scheduledRandomTickChorusFlower.name": "scheduledRandomTickChorusFlower",
-  "carpet.rule.scheduledRandomTickChorusFlower.desc": "Make chorus flower accepts scheduled tick as random tick",
-
-  "carpet.rule.scheduledRandomTickSugarCane.name": "scheduledRandomTickSugarCane",
-  "carpet.rule.scheduledRandomTickSugarCane.desc": "Make sugar cane accepts scheduled tick as random tick",
-
-  "carpet.rule.scheduledRandomTickAllPlants.name": "scheduledRandomTickAllPlants",
-  "carpet.rule.scheduledRandomTickAllPlants.desc": "Make all plants accepts scheduled tick as random tick",
+  "carpet.rule.scheduledRandomTickPlants.name": "scheduledRandomTickPlants",
+  "carpet.rule.scheduledRandomTickPlants.desc": "Make all plants accepts scheduled tick as random tick",
 
   "carpet.rule.mergeTNTPro.name": "MergeTNTPro",
   "carpet.rule.mergeTNTPro.desc": "Combined with large amounts of TNT to reduce lag caused by entities and explosions",
@@ -40,7 +28,7 @@
 
   "carpet.rule.projectileRaycastLength.name": "projectileRaycastLengthValidato",
   "carpet.rule.projectileRaycastLength.desc": "Changes the distance projectiles check for collisions. If set to 0 all Blocks to the destination will be checked which is the Vanilla behaviour.",
-  "carpet.rule.projectileRaycastLength.extra.0": "This reduces lag for fast projectiles. In 1.12 the value was 200.",
+  "carpet.rule.projectileRaycastLength.extra": "This reduces lag for fast projectiles. In 1.12 the value was 200.",
 
   "carpet.rule.pearlPosVelocity.name": "pearlPosVelocity",
   "carpet.rule.pearlPosVelocity.desc": "Can check the real position and speed of the ender pearl when the ender PearlTickets is enabled.",
@@ -70,5 +58,11 @@
   "carpet.rule.itemShadowing.desc" : "Reintroducing the logic of swapping between inventory in 1.16.5",
 
   "carpet.rule.magicBox.name": "MagicBox",
-  "carpet.rule.magicBox.desc" : "Control whether CastSuppressor(CCESuppressor) is available"
+  "carpet.rule.magicBox.desc" : "Control whether CastSuppressor(CCESuppressor) is available",
+
+  "carpet.rule.SignCommand.name": "SignCommand",
+  "carpet.rule.SignCommand.desc" : "The player right-clicks the sign to execute the command on the sign",
+  "carpet.rule.SignCommand.extra.0" : "Texts must start with '/'.",
+  "carpet.rule.SignCommand.extra.1" : "only can use palyer,say,tick command"
+
 }

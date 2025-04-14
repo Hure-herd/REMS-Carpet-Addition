@@ -14,20 +14,8 @@
   "carpet.rule.PortalPearlWarp.name": "珍珠超传",
   "carpet.rule.PortalPearlWarp.desc": "它可以移植回来1.13的超传，在某些特定的地方",
 
-  "carpet.rule.scheduledRandomTickCactus.name": "计划刻催熟仙人掌",
-  "carpet.rule.scheduledRandomTickCactus.desc": "当仙人掌方块收到计划刻时仍会给予生长随机刻",
-
-  "carpet.rule.scheduledRandomTickBamboo.name": "计划刻催熟竹子",
-  "carpet.rule.scheduledRandomTickBamboo.desc": "当竹子方块收到计划刻时仍会给予生长随机刻",
-
-  "carpet.rule.scheduledRandomTickChorusFlower.name": "计划刻催熟紫颂花",
-  "carpet.rule.scheduledRandomTickChorusFlower.desc": "当紫颂花方块收到计划刻时仍会给予生长随机刻",
-
-  "carpet.rule.scheduledRandomTickSugarCane.name": "计划刻催熟甘蔗",
-  "carpet.rule.scheduledRandomTickSugarCane.desc": "当甘蔗方块收到计划刻时仍会给予生长随机刻",
-
-  "carpet.rule.scheduledRandomTickAllPlants.name": "计划刻催熟所有作物",
-  "carpet.rule.scheduledRandomTickAllPlants.desc": "当所有作物方块收到计划刻时仍会给予生长随机刻",
+  "carpet.rule.scheduledRandomTickPlants.name": "计划刻催熟作物",
+  "carpet.rule.scheduledRandomTickPlants.desc": "当作物方块收到计划刻时仍会给予生长随机刻",
 
   "carpet.rule.mergeTNTPro.name": "更好的合并TNT",
   "carpet.rule.mergeTNTPro.desc": "合并大量TNT以减小实体及爆炸带来的卡顿",
@@ -37,7 +25,7 @@
 
   "carpet.rule.projectileRaycastLength.name": "投掷物Raycast长度",
   "carpet.rule.projectileRaycastLength.desc": "更改Raycast的距离。如果设置为0，将检查所有到达目的地的块，Vanilla!",
-  "carpet.rule.projectileRaycastLength.extra.0": "这减少了快速移动的延迟。在1.12中该值为200。",
+  "carpet.rule.projectileRaycastLength.extra": "这减少了快速移动的延迟。在1.12中该值为200。",
 
   "carpet.rule.pearlPosVelocity.name": "末影珍珠真实位置与速度",
   "carpet.rule.pearlPosVelocity.desc": "可以查看开启末影珍珠加载区块的末影珍珠真实位置与速度",
@@ -70,5 +58,10 @@
   "carpet.rule.itemShadowing.desc" : "重新引入1.16.5物品栏之间交换的逻辑",
 
   "carpet.rule.magicBox.name": "CCE抑制器",
-  "carpet.rule.magicBox.desc" : "控制基于类型转换的更新抑制是否可用"
+  "carpet.rule.magicBox.desc" : "控制基于类型转换的更新抑制是否可用",
+
+  "carpet.rule.SignCommand.name": "告示牌命令",
+  "carpet.rule.SignCommand.desc" : "玩家右键单击标牌，执行标牌上的命令",
+  "carpet.rule.SignCommand.extra.0" : "需要以/开头",
+  "carpet.rule.SignCommand.extra.1" : "只允许palyer say tick命令"
 }

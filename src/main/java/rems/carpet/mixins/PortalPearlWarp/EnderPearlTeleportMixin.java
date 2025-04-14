@@ -38,6 +38,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 
+import java.util.Objects;
+
 import static net.minecraft.particle.ParticleTypes.PORTAL;
 
 @Mixin(EnderPearlEntity.class)
@@ -100,7 +102,7 @@ public abstract class EnderPearlTeleportMixin {
             || pearl.getX() < -3749941 && pearl.getX() > -3749943 && pearl.getZ() < -3749941 && pearl.getZ() > -3749943
             || pearl.getX() < -468734 && pearl.getX() > -468736 && pearl.getZ() < -468734 && pearl.getZ() > -468736
             || pearl.getX() < -58584 && pearl.getX() > -58586 && pearl.getZ() < -58584 && pearl.getZ() > -58586//主世界的地狱门位置
-            ){
+            ) {
 
         Entity owner = pearl.getOwner();
         if (!(owner instanceof ServerPlayerEntity player)) return;

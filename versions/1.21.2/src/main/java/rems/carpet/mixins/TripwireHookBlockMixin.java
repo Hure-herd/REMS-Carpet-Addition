@@ -28,7 +28,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 
 @SuppressWarnings("SimplifiableConditionalExpression")
-@GameVersion(version = "Minecraft >= 1.21.2", desc = "https://bugs.mojang.com/browse/MC-59471")
 @Mixin(TripwireHookBlock.class)
 public abstract class TripwireHookBlockMixin {
     @ModifyExpressionValue(

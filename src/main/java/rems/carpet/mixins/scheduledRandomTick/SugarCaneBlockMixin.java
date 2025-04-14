@@ -48,14 +48,14 @@ public abstract class SugarCaneBlockMixin {
         cancellable = true
     )
     private void scheduleTickMixinInvoke(CallbackInfo ci) {
-        if (REMSSettings.scheduledRandomTickSugarCane || REMSSettings.scheduledRandomTickAllPlants) {
+        if (REMSSettings.scheduledRandomTickPlants) {
             ci.cancel();
         }
     }
 
     @Inject(method = "scheduledTick", at = @At("TAIL"))
     private void scheduleTickMixinTail(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (REMSSettings.scheduledRandomTickSugarCane || REMSSettings.scheduledRandomTickAllPlants) {
+        if (REMSSettings.scheduledRandomTickPlants) {
             this.randomTick(state, world, pos, random);
         }
     }

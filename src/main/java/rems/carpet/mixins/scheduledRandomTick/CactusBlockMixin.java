@@ -47,7 +47,7 @@ public abstract class CactusBlockMixin{
             cancellable = true
     )
     private void scheduleTickMixinInvoke(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-        if (REMSSettings.scheduledRandomTickCactus || REMSSettings.scheduledRandomTickAllPlants) {
+        if (REMSSettings.scheduledRandomTickPlants) {
             ci.cancel();
         }
     }
@@ -57,7 +57,7 @@ public abstract class CactusBlockMixin{
             at = @At("TAIL")
     )
     private void scheduleTickMixinTail(BlockState state, ServerWorld world, BlockPos pos, Random random, CallbackInfo ci) {
-            if (REMSSettings.scheduledRandomTickCactus || REMSSettings.scheduledRandomTickAllPlants) {
+        if (REMSSettings.scheduledRandomTickPlants) {
             this.randomTick(state, world, pos, random);
         }
     }

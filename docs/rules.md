@@ -2,7 +2,7 @@
 
 ## 活塞头加载(PistonBlockChunkLoader)
 开启后，当该活塞/黏性活塞头产生活塞头的推出/拉回事件时，在创建推出/拉回事件的那一游戏刻为**活塞头方块所在区块**添加类型为"piston_block"的加载票，持续时间为60gt（3s）。
-## 活塞上面方块类型
+### 活塞上面方块类型
 | 方块类型 |   加载大小   |
 |:----:|:--------:|
 | 钻石矿  | 弱加载1x1区块 |
@@ -16,8 +16,7 @@
 > 如果不想使用地狱门加载链的话，此规则可作为替代方案。
 
 ## 更好的TNT合并(MergeTNTPro)
-合并大量TNT以减小实体及爆炸带来的卡顿，能显著降低mspt  
-TNT当量为1753+184的情况下，开启TIS-Carpet的optimizedFastEntityMovement,optimizedTNT和mergeTNTPro的mspt比未开启的降低5-6mspt
+合并大量TNT以减小实体及爆炸带来的卡顿，能显著降低mspt
 
 * 默认值: `false`
 * 可选参数: `true`, `false`
@@ -91,20 +90,15 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 开启方法: `/carpet endGatewayChunkLoader true`
 * 分类: `REMS` , `Survival`
 
-## 计划刻催熟植物
-| 植物类型 |                     命令                      |
-|:----:|:-------------------------------------------:|
-| 仙人掌  |     /carpet scheduledRandomTickCactus true  |
-|  竹子  |/carpet scheduledRandomTickBamboo true    |
-| 紫颂花  |/carpet scheduledRandomTickChorusFlower true    |
-|  甘蔗  |/carpet scheduledRandomTickSugarCane true    |
-|  全选  |/carpet scheduledRandomTickAllPlants true    |
+## 计划刻催熟植物(ScheduledRandomTickPlants)
+可以让计划刻事件触发以下所有植物的随机刻生长行为，用于恢复1.15版本的强制催熟特性。  
 
-当表上的植物收到计划刻时仍会给予生长随机刻
+仙人掌、竹子、紫颂花、甘蔗、海带、缠怨藤、垂泪藤
 * 默认值: `false`
 * 可选参数: `true`, `false`
+* 开启方法: `/carpet scheduledRandomTickPlants true`
 * 分类: `REMS` , `Feature`,`Survival`
-* 开启方法: `/carpet XXX true`
+
 
 **移植自：**[OhMyVanillaMinecraft](https://github.com/hit-mc/OhMyVanillaMinecraft)
 
@@ -150,6 +144,14 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet sharedVillagerDiscounts true`
 * 分类: `REMS` , `Survival`,`Feature`
+
+## 命令告示牌(SignCommand)
+玩家右键单击标牌，执行标牌上的命令  
+在告示牌以/开头（只允许say tick和player）
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet SignCommand true`
+* 分类: `REMS` , `Survival`
 
 ## 物品分身(ItemShadowing)
 重新引入1.16.5物品栏之间交换的逻辑

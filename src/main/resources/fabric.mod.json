@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "id": "rems-additions",
-  "version": "1.0.9",
+  "id": "${id}",
+  "version": "${version}",
 
   "name": "RMES-Carpet-additions",
-  "description": "Additional, less vanilla additions to the carpet mod",
+  "description": "This is an extension for the Carpet mod, which includes some features that I found useful and some features that I want but don't have.",
   "authors": [
-    "gnembon,Hureherd"
+    "Hureherd"
   ],
   "contact": {
     "sources": "https://github.com/Hure-herd/REMS-Carpet-extra"
