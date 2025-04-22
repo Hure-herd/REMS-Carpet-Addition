@@ -10,7 +10,7 @@
 - [支持](docs/support.md)
 - [规则](docs/rules.md)
 
-# Works Cited
+# 引用
 - gnembon [fabric-carpet](https://github.com/gnembon/fabric-carpet)
 - Copetan [lunaar-carpet-addons](https://github.com/Lunaar-SMP/lunaar-carpet-addons)
 - 1024-byteeeee [Carpet-AMS-Addition](https://github.com/Minecraft-AMS/Carpet-AMS-Addition)
