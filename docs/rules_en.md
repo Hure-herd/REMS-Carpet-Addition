@@ -25,13 +25,13 @@ Merging a large amount of TNT to reduce the lag caused by entities and explosion
 * Open Method: `/carpet mergeTNTPro true`
 * Categories: `REMS`, `Feature`, `Survival`,`TNT`
 
-## TeleportToPoiWithoutPortals
-Re-added rules for teleporting to portal POIs without portal blocks
+## ~~TeleportToPoiWithoutPortals~~
+~~Re-added rules for teleporting to portal POIs without portal blocks~~
 
-* Default Value: `false`
-* Optional Parameters: `true`, `false`
-* Open Method: `/carpet teleportToPoiWithoutPortals true`
-* Categories: `REMS`, `Experimental`
+* ~~Default Value: `false`~~
+* ~~Optional Parameters: `true`, `false`~~
+* ~~Open Method: `/carpet teleportToPoiWithoutPortals true`~~
+* ~~Categories: `REMS`, `Experimental`~~
 
 ## PearlTickets
 This mod allows ender pearl entities to selectively load chunks that they are about to pass through, so that pearls fired by the pearl cannon will not be lost due to entering unloaded chunks. It can be used instead of the nether portal loading chain in 1.14+.
