@@ -5,14 +5,11 @@
   "mixins": [
     "DisableBatCanSpawn.BatEntityMixin",
     "CactusWrenchSound.BlockRotatorMixin",
-    "keepWorldTickUpdate",
     "DisablePortalUpdate.NetherPortalBlockMixin",
     "MergeTNTPro.TntEntityMixin",
-    "TripwireHookBlockMixin",
     "ChestMinecartEntityChunkLoader.ChestMinecartEntityMixin",
     "EnderGatewayChunkLoader.EndGatewayBlockEntityMixin",
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
-    "EnderPearlChunkLoader.EnderPearlEntityMixins",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
     "ItemShadowing.ScreenHandlerMixin",
     "MagicBox.BlockEntityMixin",
@@ -24,10 +21,13 @@
     "scheduledRandomTick.CactusBlockMixin",
     "scheduledRandomTick.ChorusFlowerBlockMixin",
     "scheduledRandomTick.SugarCaneBlockMixin",
+    "scheduledRandomTick.AbstractPlantPartBlockMixin",
     "PortalPearlWarp.EnderPearlTeleportMixin",
     "TeleportToPoiWithoutPortals.PortalForcerMixin",
     "SignCommand.SignBlockEntityMixin",
-    "SignCommand.AbstractSignBlockMixin"
+    "SignCommand.AbstractSignBlockMixin",
+    "keepWorldTickUpdate",
+    "TripwireHookBlockMixin"
   ],
   "client": [
   ],
