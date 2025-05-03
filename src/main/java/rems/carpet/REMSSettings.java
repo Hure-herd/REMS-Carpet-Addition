@@ -108,10 +108,10 @@ public class REMSSettings
     )
     public static boolean sharedVillagerDiscounts = false;
 
-    @Rule(
-            categories = {REMS, EXPERIMENTAL}
-    )
-    public static boolean teleportToPoiWithoutPortals = false;
+    // @Rule(
+    //         categories = {REMS, EXPERIMENTAL}
+    // )
+    // public static boolean teleportToPoiWithoutPortals = false;
 
     @Rule(
             categories = {REMS, SURVIVAL}

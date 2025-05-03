@@ -23,7 +23,6 @@
     "scheduledRandomTick.SugarCaneBlockMixin",
     "scheduledRandomTick.AbstractPlantPartBlockMixin",
     "PortalPearlWarp.EnderPearlTeleportMixin",
-    "TeleportToPoiWithoutPortals.PortalForcerMixin",
     "SignCommand.SignBlockEntityMixin",
     "SignCommand.AbstractSignBlockMixin",
     "keepWorldTickUpdate",
