@@ -37,6 +37,8 @@ public class REMSServer implements CarpetExtension, ModInitializer
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
+    public static Boolean shouldKeepPearl;
+
     public static MinecraftServer getServer() {
         return minecraftServer;
     }
@@ -52,6 +54,7 @@ public class REMSServer implements CarpetExtension, ModInitializer
     @Override
     public void onInitialize() {
         REMSServer.loadExtension();
+        shouldKeepPearl = Boolean.getBoolean("pearl.keep");
     }
 
     @Override

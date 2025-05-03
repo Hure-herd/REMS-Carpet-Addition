@@ -63,5 +63,11 @@
   "carpet.rule.SignCommand.name": "告示牌命令",
   "carpet.rule.SignCommand.desc" : "玩家右键单击标牌，执行标牌上的命令",
   "carpet.rule.SignCommand.extra.0" : "需要以/开头",
-  "carpet.rule.SignCommand.extra.1" : "只允许palyer say tick命令"
+  "carpet.rule.SignCommand.extra.1" : "只允许palyer say tick命令",
+
+  "carpet.rule.enderpearlloadchunk.name": "珍珠加载区块",
+  "carpet.rule.enderpearlloadchunk.desc" : "珍珠可以加载区块就像1.21.2一样。当加载超过40gt后自动删除",
+
+  "carpet.rule.Pearltime.name": "珍珠飞行时间",
+  "carpet.rule.Pearltime.desc": "这个可以控制珍珠飞行多久就销毁"
 }

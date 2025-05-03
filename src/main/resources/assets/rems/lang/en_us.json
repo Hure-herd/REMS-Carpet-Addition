@@ -63,6 +63,11 @@
   "carpet.rule.SignCommand.name": "SignCommand",
   "carpet.rule.SignCommand.desc" : "The player right-clicks the sign to execute the command on the sign",
   "carpet.rule.SignCommand.extra.0" : "Texts must start with '/'.",
-  "carpet.rule.SignCommand.extra.1" : "only can use palyer,say,tick command"
+  "carpet.rule.SignCommand.extra.1" : "only can use palyer,say,tick command",
 
+  "carpet.rule.enderpearlloadchunk.name": "Enderpearlloadchunk",
+  "carpet.rule.enderpearlloadchunk.desc" : "Enderpearl can load chunk like 1.21.2,when load more than Pealtime gt,enderpeal will discard",
+
+  "carpet.rule.Pearltime.name": "Pealtime",
+  "carpet.rule.Pearltime.desc": "This can control how long the pearl flies before it is destroyed. "
 }

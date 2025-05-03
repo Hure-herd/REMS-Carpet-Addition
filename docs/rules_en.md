@@ -170,6 +170,23 @@ The player right-clicks the sign to execute the command on the sign.The sign sta
 * Open Method: `/carpet SignCommand true`
 * Categories: `REMS` , `Survival`
 
+## Enderpearlloadchunk
+This ender pearl loading is ported from 1.21.2. Very useful.
+
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet enderpearlloadchunk true`
+* Categories: `REMS` , `FEATURE`
+
+## Pearltime
+This rule controls how many gts the pearl will be destroyed after it exceeds 20m/gt.
+
+* Default Value: `40`
+* Optional Parameters: `40`, `0`
+* Open Method: `/carpet pearltime true`
+* Categories: `REMS` , `FEATURE`
+
+
 ## ItemShadowing
 Reintroduced the logic of swapping between inventory slots in 1.16.5.
 

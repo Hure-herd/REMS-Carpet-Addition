@@ -153,6 +153,21 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 开启方法: `/carpet SignCommand true`
 * 分类: `REMS` , `Survival`
 
+## 末影珍珠加载(Enderpearlloadchunk)
+这个末影珍珠加载是从1.21.2移植下来的。十分好用
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet enderpearlloadchunk true`
+* 分类: `REMS` , `FEATURE`
+
+## 珍珠加载时间(Pearltime)
+这个规则可以控制珍珠在大于20m/gt后多少gt被销毁
+* 默认值: `40`
+* 可选参数: `40`, `0`
+* 开启方法: `/carpet pearltime true`
+* 分类: `REMS` , `FEATURE`
+
+
 ## 物品分身(ItemShadowing)
 重新引入1.16.5物品栏之间交换的逻辑
 * 默认值: `false`

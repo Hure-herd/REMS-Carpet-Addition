@@ -10,7 +10,6 @@
     "ChestMinecartEntityChunkLoader.ChestMinecartEntityMixin",
     "EnderGatewayChunkLoader.EndGatewayBlockEntityMixin",
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
-    "EnderPearlChunkLoader.EnderPearlEntityMixins",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
     "ItemShadowing.ScreenHandlerMixin",
     "MagicBox.BlockEntityMixin",

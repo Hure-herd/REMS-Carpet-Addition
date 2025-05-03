@@ -27,11 +27,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.*;
+import net.minecraft.server.world.ChunkLevelType;
+import net.minecraft.server.world.ChunkTicketType;
+import net.minecraft.server.world.ServerChunkManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -49,9 +50,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSServer;
 import rems.carpet.REMSSettings;
+import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 
 import java.util.Comparator;
-import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 @Mixin(EnderPearlEntity.class)
@@ -76,9 +78,9 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
 
     private static boolean isEntityTickingChunk(WorldChunk chunk) {
         //#if MC<12001
-        return (chunk != null && chunk.getLevelType() == ChunkHolder.LevelType.ENTITY_TICKING);
+        //$$ return (chunk != null && chunk.getLevelType() == ChunkHolder.LevelType.ENTITY_TICKING);
         //#else
-        //$$ return (chunk != null && chunk.getLevelType() == ChunkLevelType.ENTITY_TICKING);
+        return (chunk != null && chunk.getLevelType() == ChunkLevelType.ENTITY_TICKING);
         //#endif
     }
 
@@ -274,8 +276,8 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                             && entity instanceof ServerPlayerEntity serverPlayerEntity
             ) {
                 this.chunkTicketExpiryTicks = this.handleThrownEnderPearl();
-                if (!serverPlayerEntity.getWorld().entityList.has(this)) {
-                    serverPlayerEntity.getWorld().entityList.add(this);
+                if (!serverPlayerEntity.getServerWorld().entityList.has(this)) {
+                    serverPlayerEntity.getServerWorld().entityList.add(this);
                 }
             }
         }

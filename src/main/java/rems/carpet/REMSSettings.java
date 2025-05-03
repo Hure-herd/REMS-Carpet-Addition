@@ -118,6 +118,18 @@ public class REMSSettings
     )
     public static boolean SignCommand = false;
 
+    @Rule(
+            categories = {REMS,FEATURE},
+            options = {"0","40"},
+            strict = false
+    )
+    public static int Pearltime = 40;
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean enderpearlloadchunk = false;
+
     //#if MC>=12102
     //$$ @Rule(
     //$$ categories = {REMS, FEATURE, SURVIVAL}
