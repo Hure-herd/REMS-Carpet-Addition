@@ -118,6 +118,7 @@ public class REMSSettings
     )
     public static boolean SignCommand = false;
 
+    //#if MC<12102
     @Rule(
             categories = {REMS,FEATURE},
             options = {"0","40"},
@@ -129,6 +130,7 @@ public class REMSSettings
             categories = {REMS, FEATURE}
     )
     public static boolean enderpearlloadchunk = false;
+    //#endif
 
     //#if MC>=12102
     //$$ @Rule(
