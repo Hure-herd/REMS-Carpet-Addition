@@ -53,9 +53,9 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 ## 投掷物Raycast长度(ProjectileRaycastLength)
 更改Raycast的距离。如果设置为0，将检查所有到达目的地的块。  
 这减少了快速移动的延迟。在1.12中该值为200。
-* 默认值: `false`
-* 可选参数: `true`, `false`
-* 开启方法: `/carpet ProjectileRaycastLength true`
+* 默认值: `0`
+* 可选参数: `0`, `200`
+* 开启方法: `/carpet ProjectileRaycastLength 200`
 * 分类: `REMS` , `Survival`
 
 **移植自：**[EpsilonSMP](https://github.com/EpsilonSMP/Epsilon-Carpet)

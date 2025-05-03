@@ -33,7 +33,7 @@ Re-added rules for teleporting to portal POIs without portal blocks
 * Open Method: `/carpet teleportToPoiWithoutPortals true`
 * Categories: `REMS`, `Experimental`
 
-## 末影珍珠加载(PearlTickets)
+## PearlTickets
 This mod allows ender pearl entities to selectively load chunks that they are about to pass through, so that pearls fired by the pearl cannon will not be lost due to entering unloaded chunks. It can be used instead of the nether portal loading chain in 1.14+.
 This mod has a significant performance improvement over the enderPearlChunkLoading function of @gnembon/carpet-extra mod.  
 (When enabled in Minecraft>=1.21.2, it can significantly improve the performance of the Pearl Cannon)
@@ -58,9 +58,9 @@ When the ender pearl loading (PearlTickets) is turned on, the pearl will only sh
 Changes the distance of the Raycast. If set to 0, all chunks will be checked to reach the destination.
 This reduces lag for fast travel. In 1.12 this value is 200.
 
-* Default Value: `false`
-* Optional Parameters: `true`, `false`
-* Open Method: `/carpet ProjectileRaycastLength true`
+* Default Value: `0`
+* Optional Parameters: `0`, `200`
+* Open Method: `/carpet ProjectileRaycastLength 200`
 * Categories: `REMS` , `Survival`
 
 **Ported from：**[EpsilonSMP](https://github.com/EpsilonSMP/Epsilon-Carpet)
