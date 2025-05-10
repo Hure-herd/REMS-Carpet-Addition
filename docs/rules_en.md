@@ -46,6 +46,23 @@ This mod has a significant performance improvement over the enderPearlChunkLoadi
 **Ported from：**
 SunnySlopes's [PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
+## Soundsuppression
+#### When MC>1.21.1 can use it
+Keep the block entity data of the calibrated hidden sensor to the trapped chest! ! ! Note that it is a trapped chest
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet soundsuppression true`
+* Categories: `REMS` , `Feature`
+
+## ComparatorIgnoresStateUpdatesFromBelow
+#### When MC>=1.20.6 can use it
+When this option is turned on, the comparator ignores state updates from below.  
+Means that opening the trap gate will not destroy the comparator
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet ComparatorIgnoresStateUpdatesFromBelow true`
+* Categories: `REMS` , `Feature`
+
 ## PearlPosVelocity
 When the ender pearl loading (PearlTickets) is turned on, the pearl will only show the position of the first gt, and the real position and speed of the pearl cannot be checked. After turning this on, it will be displayed on the public screen.
 

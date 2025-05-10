@@ -60,6 +60,22 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 **移植自：**[EpsilonSMP](https://github.com/EpsilonSMP/Epsilon-Carpet)
 
+## 声音抑制移植(Soundsuppression) 
+#### MC>1.21.1时存在
+将校准幽匿感测体的方块实体数据保留到陷阱箱！！！注意是陷阱箱
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet soundsuppression true`
+* 分类: `REMS` , `Feature`
+
+## 比较器忽略来自下方的状态更新(ComparatorIgnoresStateUpdatesFromBelow)
+#### MC>=1.20.6时存在
+比较器会忽略来自下方的状态更新,意味着开启活板门不会破坏比较器
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet ComparatorIgnoresStateUpdatesFromBelow true`
+* 分类: `REMS` , `Feature`
+
 ## 珍珠超传(PortalPearlWarp)
 可以在某些特定的位置触发超传。  
 下面是地狱门的位置，都是正正或者负负
