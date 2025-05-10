@@ -132,6 +132,20 @@ public class REMSSettings
     public static boolean enderpearlloadchunk = false;
     //#endif
 
+    //#if MC>=12006
+    //$$ @Rule(
+    //$$        categories = {REMS, FEATURE}
+    //$$ )
+    //$$ public static boolean ComparatorIgnoresStateUpdatesFromBelow = false;
+    //#endif
+
+    //#if MC>=12101
+    //$$ @Rule(
+    //$$        categories = {REMS, FEATURE}
+    //$$ )
+    //$$ public static boolean soundsuppression = false;
+    //#endif
+
     //#if MC>=12102
     //$$ @Rule(
     //$$ categories = {REMS, FEATURE, SURVIVAL}

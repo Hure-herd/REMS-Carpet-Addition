@@ -18,34 +18,24 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MagicBox;
+package rems.carpet.mixins.ComparatorIgnoresStateUpdatesFromBelow;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.screen.ScreenHandler;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.minecraft.block.ComparatorBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import rems.carpet.REMSSettings;
-import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 
-@Mixin(ShulkerBoxBlock.class)
-public abstract class ShulkerBoxBlockMixin {
-    @WrapOperation(
-            method = "getComparatorOutput",
+@Mixin(ComparatorBlock.class)
+public abstract class ComparatorBlockMixin {
+    @ModifyExpressionValue(
+            method = "getStateForNeighborUpdate",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/screen/ScreenHandler;" +
-                            "calculateComparatorOutput(Lnet/minecraft/block/entity/BlockEntity;)I"
+                    target = "Lnet/minecraft/block/ComparatorBlock;canPlaceAbove(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)Z"
             )
     )
-    private int getComparatorOutputMixin(BlockEntity entity, Operation<Integer> original) {
-        if (REMSSettings.magicBox) {
-            return ScreenHandler.calculateComparatorOutput((Inventory) entity);
-        } else {
-            return original.call(entity);
-        }
+    private boolean getStateForNeighborUpdateMixin(boolean original) {
+        return REMSSettings.ComparatorIgnoresStateUpdatesFromBelow || original;
     }
 }

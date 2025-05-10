@@ -69,5 +69,12 @@
   "carpet.rule.enderpearlloadchunk.desc" : "Enderpearl can load chunk like 1.21.2,when load more than Pealtime gt,enderpeal will discard",
 
   "carpet.rule.Pearltime.name": "Pealtime",
-  "carpet.rule.Pearltime.desc": "This can control how long the pearl flies before it is destroyed. "
+  "carpet.rule.Pearltime.desc": "This can control how long the pearl flies before it is destroyed. ",
+
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.name": "ComparatorIgnoresStateUpdatesFromBelow",
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.desc": "When this option is turned on, the comparator ignores state updates from below",
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.extra": "Means that opening the trap gate will not destroy the comparator",
+
+  "carpet.rule.soundsuppression.name": "Soundsuppression",
+  "carpet.rule.soundsuppression.desc" : "Keep the block entity data of the calibrated hidden sensor to the trapped chest! ! ! Note that it is a trapped chest"
 }

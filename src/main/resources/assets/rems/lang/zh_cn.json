@@ -69,5 +69,12 @@
   "carpet.rule.enderpearlloadchunk.desc" : "珍珠可以加载区块就像1.21.2一样。当加载超过40gt后自动删除",
 
   "carpet.rule.Pearltime.name": "珍珠飞行时间",
-  "carpet.rule.Pearltime.desc": "这个可以控制珍珠飞行多久就销毁"
+  "carpet.rule.Pearltime.desc": "这个可以控制珍珠飞行多久就销毁",
+
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.name": "比较器忽略来自下方的状态更新",
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.desc": "开启此选项后, 比较器会忽略来自下方的状态更新",
+  "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.extra": "意味着开启活板门不会破坏比较器",
+
+  "carpet.rule.soundsuppression.name": "声音抑制",
+  "carpet.rule.soundsuppression.desc" : "将校准幽匿感测体的方块实体数据保留到陷阱箱！！！注意是陷阱箱"
 }
