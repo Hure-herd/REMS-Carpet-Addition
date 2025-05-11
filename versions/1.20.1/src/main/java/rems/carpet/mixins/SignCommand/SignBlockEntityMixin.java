@@ -57,7 +57,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Mixin(SignBlockEntity.class) // 向告示牌实体注入代码
+@Mixin(SignBlockEntity.class)
 public abstract class SignBlockEntityMixin {
     @Inject(method = "tryChangeText", at = @At("HEAD"), cancellable = true)
     public void PreventChangeTextWhenEmptyHands(PlayerEntity player, boolean front, List<FilteredMessage> messages, CallbackInfo ci) {

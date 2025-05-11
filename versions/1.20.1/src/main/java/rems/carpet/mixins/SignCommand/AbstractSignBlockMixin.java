@@ -69,24 +69,19 @@ public class AbstractSignBlockMixin {
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> ci) {
         if (REMSSettings.SignCommand) {
             if (world.getBlockEntity(pos) instanceof SignBlockEntity signBlockEntity) {
-                // 获取过滤标识（关键新增参数）
                 boolean filtered = player.shouldFilterText();
 
-                // 获取正确的 SignText 对象
                 boolean isFront = signBlockEntity.isPlayerFacingFront(player);
                 SignText signText = isFront ?
-                        signBlockEntity.getFrontText() :  // 使用明确方法获取
+                        signBlockEntity.getFrontText() :
                         signBlockEntity.getBackText();
 
-                // 传递两个参数（关键修复）
                 String fullCommand = processSignText(signText, filtered);
 
-                // 第二步：验证命令格式
                 if (!fullCommand.startsWith("/")) {
                     return;
                 }
 
-                // 第三步：白名单验证
                 String actualCommand = fullCommand.substring(1);
                 if (!isCommandAllowed(actualCommand)) {
                     player.sendMessage(Text.literal("§c该指令未被允许通过告示牌执行"), false);
@@ -94,7 +89,6 @@ public class AbstractSignBlockMixin {
                     return;
                 }
 
-                // 第四步：执行条件检查
                 if (player.getMainHandStack().isOf(Items.AIR) && !player.isSneaking()) {
                     ci.setReturnValue(ActionResult.success(true));
                     executeValidatedCommand(player, actualCommand);
@@ -103,46 +97,38 @@ public class AbstractSignBlockMixin {
         }
     }
 
-    // 文本处理核心方法
     @Unique
     private String processSignText(SignText signText, boolean filtered) {
         StringBuilder commandBuilder = new StringBuilder();
 
-        // 获取过滤后的文本列表
         List<Text> textLines = List.of(signText.getMessages(filtered));
 
         for (int i = 0; i < textLines.size(); i++) {
             String line = textLines.get(i).getString()
-                    .replaceAll("§.", "")       // 移除所有颜色代码
-                    .replaceAll("[\\x00-\\x1F]", "") // 过滤控制字符
+                    .replaceAll("§.", "")
+                    .replaceAll("[\\x00-\\x1F]", "")
                     .trim();
 
-            // 处理空行
             if (line.isEmpty()) continue;
 
-            // 处理续行符（行末的\）
             if (line.endsWith("\\")) {
                 commandBuilder.append(line, 0, line.length() - 1);
             } else {
                 commandBuilder.append(line);
-                // 在行尾添加空格（最后一行除外）
                 if (i != textLines.size() - 1) commandBuilder.append(" ");
             }
         }
 
         return commandBuilder.toString()
-                .replaceAll("\\s+", " ") // 合并连续空格
+                .replaceAll("\\s+", " ")
                 .trim();
     }
 
-    // 白名单验证逻辑
     @Unique
     private boolean isCommandAllowed(String rawCommand) {
-        // 提取基础命令
         String[] parts = rawCommand.split(" ", 2);
         String baseCommand = parts[0].toLowerCase();
 
-        // 处理命名空间（如 minecraft:give → give）
         int colonIndex = baseCommand.indexOf(':');
         if (colonIndex != -1) {
             baseCommand = baseCommand.substring(colonIndex + 1);
@@ -151,7 +137,6 @@ public class AbstractSignBlockMixin {
         return ALLOWED_COMMANDS.contains(baseCommand);
     }
 
-    // 命令执行方法
     @Unique
     private void executeValidatedCommand(PlayerEntity player, String command) {
         ServerWorld world = Objects.requireNonNull(player.getServer()).getOverworld();;

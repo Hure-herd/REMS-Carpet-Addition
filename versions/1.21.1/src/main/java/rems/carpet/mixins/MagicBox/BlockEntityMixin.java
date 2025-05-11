@@ -20,11 +20,25 @@
 
 package rems.carpet.mixins.MagicBox;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.LecternBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import rems.carpet.utils.compat.DummyClass;
-import top.byteeeee.annotationtoolbox.annotation.GameVersion;
+import org.spongepowered.asm.mixin.injection.At;
+import rems.carpet.REMSSettings;
 
-@GameVersion(version = "Minecraft >= 1.21.1")
-@Mixin(DummyClass.class)
+@Mixin(BlockEntity.class)
 public abstract class BlockEntityMixin {
+    @WrapWithCondition(
+            method = "<init>",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/entity/BlockEntity;validateSupports" +
+                            "(Lnet/minecraft/block/BlockState;)V"
+            )
+    )
+    private boolean initMixin(BlockEntity instance, BlockState blockState) {
+        return !(REMSSettings.magicBox && instance instanceof LecternBlockEntity);
+    }
 }
