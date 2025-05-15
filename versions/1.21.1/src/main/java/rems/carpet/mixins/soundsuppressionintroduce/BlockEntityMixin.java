@@ -26,10 +26,18 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CalibratedSculkSensorBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
 @Mixin(BlockEntity.class)
 public abstract class BlockEntityMixin{
+    @Inject(method = "validateSupports", at = @At("HEAD"), cancellable = true)
+    private void allowInvalidBlockEntities(BlockState blockState, CallbackInfo ci) {
+        if (REMSSettings.soundsuppression) {
+            ci.cancel();
+        }
+    }
     @WrapWithCondition(
             method = "<init>",
             at = @At(
