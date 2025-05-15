@@ -50,6 +50,13 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 开启方法: `/carpet pearlPosVelocity true`
 * 分类: `REMS` , `Survival`
 
+## 末地石农场(Endstonefram)
+你可以像1.16一样建造末地石农场，这个规则可以让他工作
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet endstonefram true`
+* 分类: `REMS` , `Experimental`
+
 ## 投掷物Raycast长度(ProjectileRaycastLength)
 更改Raycast的距离。如果设置为0，将检查所有到达目的地的块。  
 这减少了快速移动的延迟。在1.12中该值为200。
@@ -62,7 +69,7 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 ## 声音抑制移植(Soundsuppression) 
 #### MC>1.21.1时存在
-将校准幽匿感测体的方块实体数据保留到陷阱箱！！！注意是陷阱箱
+将校准幽匿感测体的方块实体数据保留到任何拥有方块数据的方块
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet soundsuppression true`
@@ -108,7 +115,6 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 ## 计划刻催熟植物(ScheduledRandomTickPlants)
 可以让计划刻事件触发以下所有植物的随机刻生长行为，用于恢复1.15版本的强制催熟特性。  
-
 仙人掌、竹子、紫颂花、甘蔗、海带、缠怨藤、垂泪藤
 * 默认值: `false`
 * 可选参数: `true`, `false`

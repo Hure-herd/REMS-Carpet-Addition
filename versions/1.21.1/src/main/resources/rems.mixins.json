@@ -25,12 +25,15 @@
     "PortalPearlWarp.EnderPearlTeleportMixin",
     "SignCommand.SignBlockEntityMixin",
     "SignCommand.AbstractSignBlockMixin",
-    "keepWorldTickUpdate",
-    "TripwireHookBlockMixin",
     "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
     "soundsuppressionintroduce.BlockEntityMixin",
     "soundsuppressionintroduce.SculkSensorBlockMixin",
-    "soundsuppressionintroduce.WorldChunkMixin"
+    "soundsuppressionintroduce.WorldChunkMixin",
+    "EndStoneFram.EndGatewayBlockEntityMixin",
+    "EndStoneFram.EndGatewayBlockMixin",
+    "SettingsManagerMixin",
+    "keepWorldTickUpdate",
+    "TripwireHookBlockMixin"
   ],
   "client": [
   ],

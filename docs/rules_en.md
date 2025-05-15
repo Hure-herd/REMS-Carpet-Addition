@@ -48,7 +48,7 @@ SunnySlopes's [PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 ## Soundsuppression
 #### When MC>1.21.1 can use it
-Keep the block entity data of the calibrated hidden sensor to the trapped chest! ! ! Note that it is a trapped chest
+Keep the block entity data of the calibrated hidden sensor to any blcok that is blockentity
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet soundsuppression true`
@@ -70,6 +70,13 @@ When the ender pearl loading (PearlTickets) is turned on, the pearl will only sh
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet pearlPosVelocity true`
 * Categories: `REMS` , `Survival`
+
+## Endstonefram
+You can build Endstonefram like 1.16,it can make it work
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet endstonefram true`
+* Categories: `REMS` , `Experimental`
 
 ## ProjectileRaycastLength
 Changes the distance of the Raycast. If set to 0, all chunks will be checked to reach the destination.

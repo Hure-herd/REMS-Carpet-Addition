@@ -8,6 +8,7 @@ plugins {
 preprocess {
 	def mc119 = createNode('1.19.4', 1_19_04, 'yarn')
 	def mc1201 = createNode('1.20.1', 1_20_01, 'yarn')
+	def mc1204 = createNode('1.20.4', 1_20_04, 'yarn')
 	def mc1206 = createNode('1.20.6', 1_20_06, 'yarn')
 	def mc121 = createNode('1.21', 1_21_00, 'yarn')
 	def mc1211 = createNode('1.21.1', 1_21_01, 'yarn')
@@ -15,8 +16,9 @@ preprocess {
 	def mc1213 = createNode('1.21.3', 1_21_03, 'yarn')
 	def mc1214 = createNode('1.21.4', 1_21_04, 'yarn')
 
-	mc119.link(mc1201, file('versions/mapping-1.19-1.20.txt'))
-	mc1201.link(mc1206, file('versions/mapping-1.20.1-1.20.6.txt'))
+	mc119.link(mc1201, file('versions/mapping-1.19-1.20.1.txt'))
+	mc1201.link(mc1204, file('versions/mapping-1.20.1-1.20.4.txt'))
+	mc1204.link(mc1206, file('versions/mapping-1.20.4-1.20.6.txt'))
 	mc1206.link(mc121, file('versions/mapping-1.20.6-1.21.txt'))
 	mc121.link(mc1211, file('versions/mapping-1.21-1.21.1.txt'))
 	mc1211.link(mc1212, file('versions/mapping-1.21.1-1.21.2.txt'))

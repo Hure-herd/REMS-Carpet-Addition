@@ -12,6 +12,7 @@
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
     "ItemShadowing.ScreenHandlerMixin",
+    "MagicBox.ShulkerBoxBlockMixin",
     "PistonBlockChunkLoader.PistonBlockMixin",
     "scheduledRandomTick.BambooBlockMixin",
     "scheduledRandomTick.CactusBlockMixin",
@@ -20,7 +21,10 @@
     "scheduledRandomTick.AbstractPlantPartBlockMixin",
     "PortalPearlWarp.EnderPearlTeleportMixin",
     "SignCommand.SignBlockEntityMixin",
+    "SignCommand.AbstractSignBlockMixin",
     "EndStoneFram.EndGatewayBlockEntityMixin",
+    "EndStoneFram.EndGatewayBlockMixin",
+    "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "SettingsManagerMixin"

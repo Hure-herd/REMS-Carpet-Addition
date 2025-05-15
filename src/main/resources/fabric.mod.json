@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "${id}",
+  "id": "remscarpetadditions",
   "version": "${version}",
 
   "name": "RMES-Carpet-additions",

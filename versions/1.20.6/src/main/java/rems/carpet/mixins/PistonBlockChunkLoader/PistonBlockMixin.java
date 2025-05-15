@@ -43,6 +43,8 @@ public abstract class PistonBlockMixin
 {
     private static final ChunkTicketType<ChunkPos> PISTON_BLOCK_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 60);
 
+    private static final ChunkTicketType<ChunkPos> PISTON_LAZY_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 10);
+
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
     {
@@ -63,7 +65,7 @@ public abstract class PistonBlockMixin
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
             }
             if (pistonBlock.isOf(Blocks.REDSTONE_ORE))
             {
@@ -88,7 +90,7 @@ public abstract class PistonBlockMixin
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
             }
         }
     }

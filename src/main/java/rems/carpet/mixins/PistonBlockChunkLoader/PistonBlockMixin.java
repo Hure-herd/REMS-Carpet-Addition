@@ -47,6 +47,8 @@ public abstract class PistonBlockMixin
 
     private static final ChunkTicketType<ChunkPos> PISTON_BLOCK_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 60);
 
+    private static final ChunkTicketType<ChunkPos> PISTON_LAZY_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 10);
+
     private static final int DiamondOreHash = new Identifier("minecraft", "diamond_ore").hashCode();
 
     private static final int GoldOreHash = new Identifier("minecraft", "gold_ore").hashCode();
@@ -79,7 +81,7 @@ public abstract class PistonBlockMixin
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
             }
             if (Registries.BLOCK.getId(block).hashCode() == RedStoneOreHash)
             {
@@ -104,7 +106,7 @@ public abstract class PistonBlockMixin
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 1, cp);
+                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
             }
         }
     }

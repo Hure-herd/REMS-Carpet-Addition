@@ -22,6 +22,7 @@ package rems.carpet;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import rems.carpet.utils.ComponentTranslate;
 import net.fabricmc.api.ModInitializer;
@@ -31,24 +32,33 @@ import java.util.Map;
 
 public class REMSServer implements CarpetExtension, ModInitializer
 {
-    public static String MOD_ID = "rems-additions";
+    public static String MOD_ID = "remscarpetadditions";
+
+    public static final String MOD_NAME = "Carpet REMS Additions";
+
+    public static final Logger LOGGER = LogManager.getLogger(MOD_NAME);
+
+    private static final REMSServer INSTANCE = new REMSServer();
 
     private static MinecraftServer minecraftServer;
-
-    public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     public static Boolean shouldKeepPearl;
 
     public static MinecraftServer getServer() {
-        return minecraftServer;
+        if (INSTANCE.minecraftServer == null) {
+            throw new RuntimeException("MinecraftServer hasn't finished initializing yet!");
+        } else {
+            return INSTANCE.minecraftServer;
+        }
     }
 
-    public String get_version() {
-        return "1.0.0";
+    public static String getVersion() {
+        return FabricLoader.getInstance().getModContainer(MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString();
     }
+
 
     public static void loadExtension() {
-        CarpetServer.manageExtension(new REMSServer());
+        CarpetServer.manageExtension(INSTANCE);
     }
 
     @Override
@@ -59,7 +69,7 @@ public class REMSServer implements CarpetExtension, ModInitializer
 
     @Override
     public void onGameStarted() {
-        LOGGER.info(MOD_ID + " " + "v" + get_version() + "载入成功");
+        LOGGER.info(MOD_ID + " " + "v" + getVersion() + "载入成功");
         LOGGER.info("开源链接：https://github.com/Hure-herd/REMS-Carpet-extra");
         CarpetServer.settingsManager.parseSettingsClass(REMSSettings.class);
 
@@ -72,6 +82,6 @@ public class REMSServer implements CarpetExtension, ModInitializer
 
     @Override
     public void onServerLoaded(MinecraftServer server) {
-        minecraftServer = server;
+        this.minecraftServer = server;
     }
 }

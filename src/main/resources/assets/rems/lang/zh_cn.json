@@ -76,5 +76,8 @@
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.extra": "意味着开启活板门不会破坏比较器",
 
   "carpet.rule.soundsuppression.name": "声音抑制",
-  "carpet.rule.soundsuppression.desc" : "将校准幽匿感测体的方块实体数据保留到陷阱箱！！！注意是陷阱箱"
+  "carpet.rule.soundsuppression.desc" : "将校准幽匿感测体的方块实体数据保留到任何拥有方块数据的方块",
+
+  "carpet.rule.endstonefram.name": "末地石农场",
+  "carpet.rule.endstonefram.desc": "你可以像1.16一样建造末地石农场，这个规则可以让他工作"
 }

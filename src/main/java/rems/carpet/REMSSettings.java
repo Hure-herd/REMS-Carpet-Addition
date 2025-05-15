@@ -108,6 +108,12 @@ public class REMSSettings
     )
     public static boolean sharedVillagerDiscounts = false;
 
+    @Rule(
+            categories = {REMS, EXPERIMENTAL}
+    )
+    public static boolean  endstonefram = false;
+
+
     // @Rule(
     //         categories = {REMS, EXPERIMENTAL}
     // )

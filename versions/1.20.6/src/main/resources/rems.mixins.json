@@ -22,9 +22,11 @@
     "PortalPearlWarp.EnderPearlTeleportMixin",
     "SignCommand.SignBlockEntityMixin",
     "SignCommand.AbstractSignBlockMixin",
+    "EndStoneFram.EndGatewayBlockEntityMixin",
+    "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
-    "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin"
+    "SettingsManagerMixin"
   ],
   "client": [
   ],
