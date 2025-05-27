@@ -126,7 +126,7 @@ public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
                         ci.cancel();
                     }
 
-                    if (pos.getX() >400|| pos.getZ() >400 ) {
+                    if (pos.getX() >400|| pos.getZ() >400) {
                         if (hasNoExit) {
                             Box detectionArea = new Box(pos.down(2)).expand(0);
                             List<HopperMinecartEntity> minecarts = world.getEntitiesByClass(
@@ -137,9 +137,9 @@ public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
                             noHopperMinecart = minecarts.isEmpty();
                             hasValidHopper = checkPointingHoppersWithItems(world, pos);
                         }
-                    }
-                    if (hasNoExit && hasValidHopper && noHopperMinecart) {
-                        ci.cancel();
+                        if (hasNoExit && hasValidHopper && noHopperMinecart) {
+                            ci.cancel();
+                        }
                     }
                 }
             }

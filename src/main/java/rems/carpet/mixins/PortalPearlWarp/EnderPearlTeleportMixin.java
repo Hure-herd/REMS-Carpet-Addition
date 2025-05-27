@@ -20,6 +20,8 @@
 
 package rems.carpet.mixins.PortalPearlWarp;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -36,6 +38,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rems.carpet.utils.PortalPearlWarpUtil;
 
 
 import java.util.Objects;
@@ -46,31 +49,23 @@ import static net.minecraft.particle.ParticleTypes.PORTAL;
 public abstract class EnderPearlTeleportMixin {
     //#if MC<12102
     //#if MC>12006
-    //$$ @Redirect(method ="canTeleportEntityTo",at=@At(value = "INVOKE",target = "Lnet/minecraft/entity/Entity;canUsePortals(Z)Z"))
-    //$$ private static boolean canTeleportEntityTo(Entity pearl, boolean b){
-    //$$    if(REMSSettings.PortalPearlWarp && pearl instanceof EnderPearlEntity){
-    //$$        if(pearl.getX() > 914 && pearl.getX() < 916 && pearl.getZ() > 914 && pearl.getZ() < 916
-    //$$            || pearl.getX() > 7323 && pearl.getX() < 7325 && pearl.getZ() > 7323 && pearl.getZ() < 7325
-    //$$            || pearl.getX() > 58591 && pearl.getX() < 58593 && pearl.getZ() > 58591 && pearl.getZ() < 58593
-    //$$            || pearl.getX() > 468742 && pearl.getX() < 468744 && pearl.getZ() > 468742 && pearl.getZ() < 468744
-    //$$            || pearl.getX() < -7323 && pearl.getX() > -7325 && pearl.getZ() < -7323 && pearl.getZ() > -7325
-    //$$            || pearl.getX() < -58591 && pearl.getX() > -58593 && pearl.getZ() < -58591 && pearl.getZ() > -58593
-    //$$            || pearl.getX() < -468742 && pearl.getX() > -468744 && pearl.getZ() < -468742 && pearl.getZ() > -468744 //地狱的地狱门位置
-    //$$            || pearl.getX() > 29999599 && pearl.getX() < 29999601 && pearl.getZ() > 29999599 && pearl.getZ() < 29999601
-    //$$            || pearl.getX() > 3749941 && pearl.getX() < 3749943 && pearl.getZ() > 3749941 && pearl.getZ() < 3749943
-    //$$            || pearl.getX() > 468734 && pearl.getX() < 468736 && pearl.getZ() > 468734 && pearl.getZ() < 468736
-    //$$            || pearl.getX() > 58584 && pearl.getX() < 58586 && pearl.getZ() > 58584 && pearl.getZ() < 58586
-    //$$            || pearl.getX() < -29999599 && pearl.getX() > -29999601 && pearl.getZ() < -29999599 && pearl.getZ() > -29999601
-    //$$            || pearl.getX() < -3749941 && pearl.getX() > -3749943 && pearl.getZ() < -3749941 && pearl.getZ() > -3749943
-    //$$            || pearl.getX() < -468734 && pearl.getX() > -468736 && pearl.getZ() < -468734 && pearl.getZ() > -468736
-    //$$            || pearl.getX() < -58584 && pearl.getX() > -58586 && pearl.getZ() < -58584 && pearl.getZ() > -58586
-    //$$          ){
-    //$$            return false;}
-    //$$        else {
-    //$$            return true;
-    //$$        }
+    //$$  @WrapOperation(
+    //$$         method = "canTeleportEntityTo",
+    //$$         at = @At(
+    //$$                 value = "INVOKE",
+    //$$                 target = "Lnet/minecraft/entity/Entity;canUsePortals(Z)Z"
+    //$$         )
+    //$$ )
+    //$$ private static boolean canTeleportEntityTo(Entity entity, boolean allowVehicles, Operation<Boolean> original) {
+    //$$      if (REMSSettings.PortalPearlWarp && entity instanceof EnderPearlEntity) {
+    //$$         if (PortalPearlWarpUtil.isInRange(entity.getX(), entity.getZ())) {
+    //$$             return false;
+    //$$         } else {
+    //$$             return original.call(entity, allowVehicles);
+    //$$         }
+    //$$     } else {
+    //$$        return original.call(entity, allowVehicles);
     //$$    }
-    //$$    return true;
     //$$ }
     //#endif
     @Inject(method = "onCollision", at = @At("HEAD"), cancellable = true)
@@ -87,22 +82,7 @@ public abstract class EnderPearlTeleportMixin {
 
         if (!world.getBlockState(hitPos).isOf(Blocks.OBSIDIAN)) return;
 
-        if(pearl.getX() > 914 && pearl.getX() < 916 && pearl.getZ() > 914 && pearl.getZ() < 916
-            || pearl.getX() > 7323 && pearl.getX() < 7325 && pearl.getZ() > 7323 && pearl.getZ() < 7325
-            || pearl.getX() > 58591 && pearl.getX() < 58593 && pearl.getZ() > 58591 && pearl.getZ() < 58593
-            || pearl.getX() > 468742 && pearl.getX() < 468744 && pearl.getZ() > 468742 && pearl.getZ() < 468744
-            || pearl.getX() < -7323 && pearl.getX() > -7325 && pearl.getZ() < -7323 && pearl.getZ() > -7325
-            || pearl.getX() < -58591 && pearl.getX() > -58593 && pearl.getZ() < -58591 && pearl.getZ() > -58593
-            || pearl.getX() < -468742 && pearl.getX() > -468744 && pearl.getZ() < -468742 && pearl.getZ() > -468744 //地狱的地狱门位置
-            || pearl.getX() > 29999599 && pearl.getX() < 29999601 && pearl.getZ() > 29999599 && pearl.getZ() < 29999601
-            || pearl.getX() > 3749941 && pearl.getX() < 3749943 && pearl.getZ() > 3749941 && pearl.getZ() < 3749943
-            || pearl.getX() > 468734 && pearl.getX() < 468736 && pearl.getZ() > 468734 && pearl.getZ() < 468736
-            || pearl.getX() > 58584 && pearl.getX() < 58586 && pearl.getZ() > 58584 && pearl.getZ() < 58586
-            || pearl.getX() < -29999599 && pearl.getX() > -29999601 && pearl.getZ() < -29999599 && pearl.getZ() > -29999601
-            || pearl.getX() < -3749941 && pearl.getX() > -3749943 && pearl.getZ() < -3749941 && pearl.getZ() > -3749943
-            || pearl.getX() < -468734 && pearl.getX() > -468736 && pearl.getZ() < -468734 && pearl.getZ() > -468736
-            || pearl.getX() < -58584 && pearl.getX() > -58586 && pearl.getZ() < -58584 && pearl.getZ() > -58586//主世界的地狱门位置
-            ) {
+        if (PortalPearlWarpUtil.isInRange(pearl.getX(), pearl.getZ())) {
 
         Entity owner = pearl.getOwner();
         if (!(owner instanceof ServerPlayerEntity player)) return;

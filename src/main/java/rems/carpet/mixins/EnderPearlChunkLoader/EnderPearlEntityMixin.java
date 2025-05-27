@@ -20,6 +20,7 @@
 
 package rems.carpet.mixins.EnderPearlChunkLoader;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.entity.Entity;
@@ -205,23 +206,10 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
 
     //#if MC<12102
     @Unique
-    private long highSpeedTick = -1L;
-
-    @Unique
     private long chunkTicketExpiryTicks = 0L;
 
-    private static int getSectionCoordFloored(double coord) {
-        return MathHelper.floor(coord) >> 4;
-    }
-
-    private static int getSectionCoord(int coord) {
-        return coord >> 4;
-    }
-
-    private static long addEnderPearlTicket(ServerWorld ServerWolrd, ChunkPos chunkPos) {
-        ServerWolrd.getChunkManager().addTicket(ENDER_PEARL_TICKETS, chunkPos, 2, chunkPos);
-        return ENDER_PEARL_TICKETS.getExpiryTicks();
-    }
+    @Unique
+    private int highSpeedAge = 0;
 
     @Inject(
             method = "tick",
@@ -238,24 +226,18 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
     )
     private void loadingChunks(
             CallbackInfo ci,
+            @Local(ordinal = 0) Entity entity,
             @Share("i") LocalIntRef i,
             @Share("j") LocalIntRef j
     ) {
-        Entity entity = this.getOwner();
-        if(!REMSSettings.enderpearlloadchunk){
-            return;
+        if (!REMSSettings.enderpearlloadchunk) return;
+
+        if (this.isHighSpeed()) {
+            ++this.highSpeedAge;
+        } else {
+            this.highSpeedAge = 0;
         }
-
-        double xVel = Math.abs(this.getVelocity().getX());
-        double zVel = Math.abs(this.getVelocity().getZ());
-        boolean highSpeed = xVel >= 20d || zVel >= 20d;
-
-        if (highSpeed && this.highSpeedTick == -1L) {
-            this.highSpeedTick = this.age;
-        }
-
-        if (!REMSServer.shouldKeepPearl && highSpeedTick != -1L && this.age - highSpeedTick > REMSSettings.Pearltime
-        ) {
+        if (this.isAlive() && this.highSpeedAge > REMSSettings.Pearltime) {
             REMSServer.LOGGER.warn(
                     "The pearl(own: {}) has been in high speed for a long time and has been removed",
                     entity instanceof ServerPlayerEntity ? entity.getName().getString() : "unknown"
@@ -274,11 +256,26 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                             && entity instanceof ServerPlayerEntity serverPlayerEntity
             ) {
                 this.chunkTicketExpiryTicks = this.handleThrownEnderPearl();
-                if (!serverPlayerEntity.getWorld().entityList.has(this)) {
-                    serverPlayerEntity.getWorld().entityList.add(this);
+                if (
+                    //#if MC<12001
+                           !serverPlayerEntity.getWorld().entityList.has(this)
+                    //#else
+                    //$$   !serverPlayerEntity.getServerWorld().entityList.has(this)
+                    //#endif
+                ) {
+                    //#if MC<12001
+                            serverPlayerEntity.getWorld().entityList.add(this);
+                    //#else
+                    //$$    serverPlayerEntity.getServerWorld().entityList.add(this);
+                    //#endif
                 }
             }
         }
+    }
+
+    @Unique
+    private boolean isHighSpeed() {
+        return Math.abs(this.getVelocity().getX()) > 20.0d || Math.abs(this.getVelocity().getZ()) > 20.0d;
     }
 
     @Unique
@@ -290,6 +287,19 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         } else {
             return 0L;
         }
+    }
+
+    private static int getSectionCoordFloored(double coord) {
+        return MathHelper.floor(coord) >> 4;
+    }
+
+    private static int getSectionCoord(int coord) {
+        return coord >> 4;
+    }
+
+    private static long addEnderPearlTicket(ServerWorld ServerWolrd, ChunkPos chunkPos) {
+        ServerWolrd.getChunkManager().addTicket(ENDER_PEARL_TICKETS, chunkPos, 2, chunkPos);
+        return ENDER_PEARL_TICKETS.getExpiryTicks();
     }
     //#endif
 }

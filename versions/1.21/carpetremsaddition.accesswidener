@@ -1,7 +1,6 @@
 accessWidener	v2	named
 
 accessible field net/minecraft/server/world/ServerWorld entityList Lnet/minecraft/world/EntityList;
-accessible field net/minecraft/block/entity/EndGatewayBlockEntity age J
 accessible field net/minecraft/block/entity/EndGatewayBlockEntity exitPortalPos Lnet/minecraft/util/math/BlockPos;
 accessible field net/minecraft/block/entity/EndGatewayBlockEntity exactTeleport Z
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity setupExitPortalLocation (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockPos;

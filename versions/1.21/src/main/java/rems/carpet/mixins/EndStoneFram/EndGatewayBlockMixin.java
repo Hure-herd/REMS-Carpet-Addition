@@ -87,9 +87,9 @@ public abstract class EndGatewayBlockMixin extends Block {
                             noHopperMinecart = minecarts.isEmpty();
                             hasValidHopper = checkPointingHoppersWithItems(world, pos);
                         }
-                    }
-                    if (hasNoExit && hasValidHopper && noHopperMinecart) {
-                        ci.cancel();
+                        if (hasNoExit && hasValidHopper && noHopperMinecart) {
+                            ci.cancel();
+                        }
                     }
                 }
             }

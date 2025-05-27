@@ -23,6 +23,7 @@ package rems.carpet;
 
 import static rems.carpet.utils.REMSRuleCategory.*;
 import carpet.api.settings.Rule;
+import carpet.api.settings.Validators;
 
 
 public class REMSSettings
@@ -31,7 +32,8 @@ public class REMSSettings
     @Rule(
             categories = {REMS,EXPERIMENTAL,OPTIMIZATION},
             options = {"0","200"},
-            strict = false
+            strict = false,
+            validators = Validators.NonNegativeNumber.class
     )
     public static int projectileRaycastLength = 0;
 
@@ -128,7 +130,8 @@ public class REMSSettings
     @Rule(
             categories = {REMS,FEATURE},
             options = {"0","40"},
-            strict = false
+            strict = false,
+            validators = Validators.NonNegativeNumber.class
     )
     public static int Pearltime = 40;
 
