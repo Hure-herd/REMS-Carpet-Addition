@@ -22,14 +22,16 @@ package rems.carpet;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
+import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
-import rems.carpet.utils.ComponentTranslate;
-import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import rems.carpet.command.soundsuppressionintroduce.UpdateDepressionCommands;
+import rems.carpet.utils.ComponentTranslate;
+
 import java.util.Map;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 
 public class REMSServer implements CarpetExtension, ModInitializer
 {
@@ -66,6 +68,8 @@ public class REMSServer implements CarpetExtension, ModInitializer
     public void onInitialize() {
         REMSServer.loadExtension();
         shouldKeepPearl = Boolean.getBoolean("pearl.keep");
+        CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
+                UpdateDepressionCommands.register(dispatcher, context));
     }
 
     @Override

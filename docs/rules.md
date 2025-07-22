@@ -2,13 +2,9 @@
 
 ## 活塞头加载(PistonBlockChunkLoader)
 开启后，当该活塞/黏性活塞头产生活塞头的推出/拉回事件时，在创建推出/拉回事件的那一游戏刻为**活塞头方块所在区块**添加类型为"piston_block"的加载票，持续时间为60gt（3s）。
-### 活塞上面方块类型
-| 方块类型 |   加载大小   |
-|:----:|:--------:|
-| 钻石矿  | 弱加载1x1区块 |
-| 红石矿  | 强加载3X3区块 |
-|  金矿  | 强加载1X1区块 |**
+### 在任何维度，活塞上方有钻石矿时可以弱加载1x1的区块
 ### 在地狱下方有基岩，后一格上方是红石火把时可以弱加载1x1的区块
+### 当有5X5的弱加载区块的时候，最中心的区块会变成强加载区块
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet pistonBlockChunkLoader ture`
@@ -74,6 +70,22 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet soundsuppression true`
 * 分类: `REMS` , `Feature`
+
+## 声音抑制器范围控制(SoundSuppressionRadius)
+#### MC>1.19.4时存在
+控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为16格，最大不能超过32
+* 默认值: `false`
+* 可选参数: `8`,`16`,`32`
+* 开启方法: `/carpet soundSuppressionRadius true`
+* 分类: `REMS` , `Feature`
+
+## 放置声音抑制器命令开关(Commandsetnoisesuppressor)
+#### MC>1.19.4时存在
+启用/setnoisesuppressor命令来放置声音抑制器
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet commandsetnoisesuppressor true`
+* 分类: `REMS` , `CREATIVE`
 
 ## 比较器忽略来自下方的状态更新(ComparatorIgnoresStateUpdatesFromBelow)
 #### MC>=1.20.6时存在

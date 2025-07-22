@@ -4,9 +4,8 @@
   "carpet.rule.pistonBlockChunkLoader.name": "活塞头区块加载",
   "carpet.rule.pistonBlockChunkLoader.desc": "活塞或黏性活塞被激活且能正常伸出时以活塞头将到达的区块为中心加载,持续3s",
   "carpet.rule.pistonBlockChunkLoader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载3x3的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "当活塞/黏性活塞上方有金原矿时，强加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.2": "当有5X5的弱加载区块的时候，最中心的区块会变成强加载区块",
 
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
@@ -79,5 +78,11 @@
   "carpet.rule.soundsuppression.desc" : "将校准幽匿感测体的方块实体数据保留到任何拥有方块数据的方块",
 
   "carpet.rule.endstonefram.name": "末地石农场",
-  "carpet.rule.endstonefram.desc": "你可以像1.16一样建造末地石农场，这个规则可以让他工作"
+  "carpet.rule.endstonefram.desc": "你可以像1.16一样建造末地石农场，这个规则可以让他工作",
+
+  "carpet.rule.soundSuppressionRadius.name": "声音抑制器范围控制",
+  "carpet.rule.soundSuppressionRadius.desc": "控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为17格，为了卡顿和性能考虑，最大不能超过32",
+
+  "carpet.rule.commandsetnoisesuppressor.name": "放置声音抑制器命令开关",
+  "carpet.rule.commandsetnoisesuppressor.desc": "启用/setnoisesuppressor命令来放置声音抑制器"
 }

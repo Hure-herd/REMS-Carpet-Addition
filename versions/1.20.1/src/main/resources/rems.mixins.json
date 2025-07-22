@@ -22,6 +22,7 @@
     "SignCommand.SignBlockEntityMixin",
     "SignCommand.AbstractSignBlockMixin",
     "EndStoneFram.EndGatewayBlockEntityMixin",
+    "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "SettingsManagerMixin"

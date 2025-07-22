@@ -152,11 +152,11 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                 if (this.realPos.y > highestMotionBlockingY
                         && nextPos.y > highestMotionBlockingY
                         && nextPos.y + nextVelocity.y > highestMotionBlockingY) {
-                        serverChunkManager.addTicket(ENDER_PEARL_TICKETS, currChunkPos, 2, currChunkPos);
-                        this.setVelocity(Vec3d.ZERO);
-                        this.setPosition(currPos);
-                        this.sync = false;
-                        if(REMSSettings.pearlPosVelocity){
+                    serverChunkManager.addTicket(ENDER_PEARL_TICKETS, currChunkPos, 2, currChunkPos);
+                    this.setVelocity(Vec3d.ZERO);
+                    this.setPosition(currPos);
+                    this.sync = false;
+                    if(REMSSettings.pearlPosVelocity){
                         owner.sendMessage(Text.of("EnderPearlY" + realPos), false);
                         owner.sendMessage(Text.of("EnderPearlV" + realVelocity), false);}
                 } else {
@@ -258,13 +258,13 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                 this.chunkTicketExpiryTicks = this.handleThrownEnderPearl();
                 if (
                     //#if MC<12001
-                           !serverPlayerEntity.getWorld().entityList.has(this)
+                        !serverPlayerEntity.getWorld().entityList.has(this)
                     //#else
                     //$$   !serverPlayerEntity.getServerWorld().entityList.has(this)
                     //#endif
                 ) {
                     //#if MC<12001
-                            serverPlayerEntity.getWorld().entityList.add(this);
+                    serverPlayerEntity.getWorld().entityList.add(this);
                     //#else
                     //$$    serverPlayerEntity.getServerWorld().entityList.add(this);
                     //#endif

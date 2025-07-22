@@ -29,6 +29,8 @@
     "soundsuppressionintroduce.BlockEntityMixin",
     "soundsuppressionintroduce.SculkSensorBlockMixin",
     "soundsuppressionintroduce.WorldChunkMixin",
+    "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
+    "soundsuppressionintroduce.GameEventMixin",
     "EndStoneFram.EndGatewayBlockEntityMixin",
     "EndStoneFram.EndGatewayBlockMixin",
     "SettingsManagerMixin",

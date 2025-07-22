@@ -4,9 +4,8 @@
   "carpet.rule.pistonBlockChunkLoader.name": "PistonBlockChunkLoader",
   "carpet.rule.pistonBlockChunkLoader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
   "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "When Emerald_ore is on the piston,Load 3x3 chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "When Gold_ore is on the piston,Load 1x1 chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.1": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.2": "When there are 5X5 weak loading chunks, the central chunk will become a Active loading chunk",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
@@ -79,5 +78,11 @@
   "carpet.rule.soundsuppression.desc" : "Keep the block entity data of the calibrated hidden sensor to any blcok that is blockentity",
 
   "carpet.rule.endstonefram.name": "Endstonefram",
-  "carpet.rule.endstonefram.desc": "You can build Endstonefram like 1.16,it can make it work"
+  "carpet.rule.endstonefram.desc": "You can build Endstonefram like 1.16,it can make it work",
+
+  "carpet.rule.soundSuppressionRadius.name": "SoundSuppressionRadius",
+  "carpet.rule.soundSuppressionRadius.desc": "Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 17 grids. For the sake of lag and performance, the maximum value cannot exceed 32.",
+
+  "carpet.rule.commandsetnoisesuppressor.name": "Commandsetnoisesuppressor",
+  "carpet.rule.commandsetnoisesuppressor.desc": "Enables /setnoisesuppressor command to place a sound suppressor"
 }

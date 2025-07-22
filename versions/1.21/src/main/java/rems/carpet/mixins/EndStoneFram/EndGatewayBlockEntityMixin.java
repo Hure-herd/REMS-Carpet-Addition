@@ -89,7 +89,11 @@ public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
             EndGatewayBlockEntity.createPortal(world, pos, config);
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if(!(blockEntity == null)){
-                world.removeBlockEntity(pos);
+                int absX = Math.abs(pos.getX());
+                int absZ = Math.abs(pos.getZ());
+                if(absZ <810 && absX < 810){
+                    world.removeBlockEntity(pos);
+                }
             }
         } else {
             EndGatewayBlockEntity.createPortal(world, pos, config);

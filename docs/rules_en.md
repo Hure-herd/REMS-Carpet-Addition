@@ -2,14 +2,9 @@
 
 ## PistonBlockChunkLoader
 If enabled, when this piston/sticky piston head generates a piston head push/pull event, a load ticket of type "piston_block" is added to the chunk where the piston head block is located at the game tick that created the push/pull event, with a duration of 60gt (3s).
-### Piston top block type
-|  Block type  |   Load chunk size   |
-|:------------:|:-------------------:|
-| Diamond_ore  | Lazy Load 1x1 chunk |
-| Redstone_ore |   Load 3x3 chunk    |
-|   Hold_ore   |   Load 1x1 chunk    |**
-### 
-If there is bedrock below the netherworld and a redstone torch above the next block, a 1x1 block can be lazy loaded.
+### In any dimension, a diamond ore can be weakly loaded into a 1x1 Active chunk above a piston.
+### If there is bedrock below the netherworld and a redstone torch above the next block, a 1x1 block can be lazy loaded.
+### When there are 5X5 weak loading chunks, the central chunk will become a Active loading chunk
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet pistonBlockChunkLoader ture`
@@ -53,6 +48,22 @@ Keep the block entity data of the calibrated hidden sensor to any blcok that is 
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet soundsuppression true`
 * Categories: `REMS` , `Feature`
+
+## SoundSuppressionRadius
+#### When MC>1.19.4 can use it
+Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 16 grids.The maximum value cannot exceed 32.
+* Default Value:  `false`
+* Optional Parameters: `8`,`16`,`32`
+* Open Method: `/carpet soundSuppressionRadius true`
+* Categories: `REMS` , `Feature`
+
+## Commandsetnoisesuppressor
+#### When MC>1.19.4 can use it
+Enables /setnoisesuppressor command to place a sound suppressor
+* Default Value:  `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet commandsetnoisesuppressor true`
+* Categories: `REMS` , `CREATIVE`
 
 ## ComparatorIgnoresStateUpdatesFromBelow
 #### When MC>=1.20.6 can use it

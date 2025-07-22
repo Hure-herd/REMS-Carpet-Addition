@@ -22,8 +22,12 @@ package rems.carpet;
 
 
 import static rems.carpet.utils.REMSRuleCategory.*;
+
+import carpet.api.settings.CarpetRule;
 import carpet.api.settings.Rule;
+import carpet.api.settings.Validator;
 import carpet.api.settings.Validators;
+import net.minecraft.server.command.ServerCommandSource;
 
 
 public class REMSSettings
@@ -126,6 +130,24 @@ public class REMSSettings
     )
     public static boolean SignCommand = false;
 
+    //#if MC>=12001
+    //$$ @Rule(
+    //$$         categories = {REMS,FEATURE},
+    //$$         options = {"8","16","32"},
+    //$$         strict = false,
+    //$$         validators = soundSuppressionMaxRadiusValue.class
+    //$$ )
+    //$$  public static int soundSuppressionRadius = 16;
+
+    //$$ private static class soundSuppressionMaxRadiusValue extends Validator<Integer> {
+    //$$    @Override public Integer validate(ServerCommandSource source, CarpetRule<Integer> currentRule, Integer newValue, String string) {
+    //$$        return newValue > 0 && newValue <= 64 ? newValue : null;
+    //$$    }
+    //$$    @Override
+    //$$    public String description() { return "You must choose a value from 1 to 64";}
+    //$$ }
+    //#endif
+
     //#if MC<12102
     @Rule(
             categories = {REMS,FEATURE},
@@ -139,6 +161,14 @@ public class REMSSettings
             categories = {REMS, FEATURE}
     )
     public static boolean enderpearlloadchunk = false;
+    //#endif
+
+    //#if MC>=12001
+    //$$ @Rule(
+    //$$         options = {"ops", "true", "false"},
+    //$$         categories = {REMS, CREATIVE}
+    //$$ )
+    //$$ public static String commandsetnoisesuppressor = "false";
     //#endif
 
     //#if MC>=12006

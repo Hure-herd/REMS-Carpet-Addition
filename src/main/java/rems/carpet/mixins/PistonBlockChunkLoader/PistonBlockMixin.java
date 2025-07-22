@@ -20,11 +20,14 @@
 
 package rems.carpet.mixins.PistonBlockChunkLoader;
 
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.world.ChunkHolder;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.chunk.ChunkManager;
 import rems.carpet.REMSSettings;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
@@ -37,27 +40,18 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rems.carpet.utils.ChunkLoaderState;
 
 import java.util.Comparator;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 @Mixin(PistonBlock.class)
 public abstract class PistonBlockMixin
 {
-
-    private static final ChunkTicketType<ChunkPos> PISTON_BLOCK_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 60);
-
-    private static final ChunkTicketType<ChunkPos> PISTON_LAZY_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 10);
-
-    private static final int DiamondOreHash = new Identifier("minecraft", "diamond_ore").hashCode();
-
-    private static final int GoldOreHash = new Identifier("minecraft", "gold_ore").hashCode();
-
-    private static final int RedStoneOreHash = new Identifier("minecraft", "redstone_ore").hashCode();
-
-    private static final int BedrockHash = new Identifier("minecraft", "bedrock").hashCode();
-
-    private static final int RedStoneTorchHash = new Identifier("minecraft", "redstone_torch").hashCode();
+    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
@@ -66,47 +60,82 @@ public abstract class PistonBlockMixin
         {
             Direction direction = state.get(FacingBlock.FACING);
 
-            BlockPos nbp = new BlockPos(pos.getX(), pos.getY() + 1, pos.getZ());
-            Block block = world.getBlockState(nbp).getBlock();
+            BlockState pistonBlock = world.getBlockState(pos.up(1));
 
-            BlockPos nbp1 = new BlockPos(pos.getX(), pos.getY() - 1, pos.getZ());
-            Block block1 = world.getBlockState(nbp1).getBlock();
+            BlockState pistonBlock1 = world.getBlockState(pos.down(1));
 
             BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
-            Block block2 = world.getBlockState(nbp2).getBlock();
+            BlockState pistonBlock2 = world.getBlockState(nbp2);
 
-            if (Registries.BLOCK.getId(block).hashCode() == DiamondOreHash)
+            if (pistonBlock.isOf(Blocks.DIAMOND_ORE))
             {
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
-            }
-            if (Registries.BLOCK.getId(block).hashCode() == RedStoneOreHash)
-            {
-                int x = pos.getX() + direction.getOffsetX();
-                int z = pos.getZ() + direction.getOffsetZ();
+                ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1, cp);
 
-                ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 3, cp);
-            }
-            if (Registries.BLOCK.getId(block).hashCode() == GoldOreHash)
-            {
-                int x = pos.getX() + direction.getOffsetX();
-                int z = pos.getZ() + direction.getOffsetZ();
+                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
 
-                ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_BLOCK_TICKET, cp, 2, cp);
+                int[] xOffsets = {-2, -1, 0, 1, 2};
+                int[] zOffsets = {-2, -1, 0, 1, 2};
+                boolean allLazy = true;
+
+                for (int dx : xOffsets) {
+                    for (int dz : zOffsets) {
+                        ChunkPos target = new ChunkPos(cp.x + dx, cp.z + dz);
+                        if (!ChunkLoaderState.isLazyChunk(((ServerWorld) world), target)) {
+                            allLazy = false;
+                            break;
+                        }
+                    }
+                    if (!allLazy) break;
+                }
+
+                if (allLazy) {
+                    ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2, cp);
+                }
+                scheduler.schedule(() -> {
+                    world.getServer().execute(() -> {
+                        ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
+                    });
+                }, 500, TimeUnit.MILLISECONDS);
             }
-            if (Registries.BLOCK.getId(block1).hashCode() == BedrockHash && Registries.BLOCK.getId(block2).hashCode() == RedStoneTorchHash &&
+
+            if (pistonBlock1.isOf(Blocks.BEDROCK) && pistonBlock2.isOf(Blocks.REDSTONE_TORCH) &&
                     world.getRegistryKey() == World.NETHER)
             {
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
-                ((ServerWorld) world).getChunkManager().addTicket(PISTON_LAZY_TICKET, cp, 1, cp);
+                ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1, cp);
+
+                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
+
+                int[] xOffsets = {-2, -1, 0, 1, 2};
+                int[] zOffsets = {-2, -1, 0, 1, 2};
+                boolean allLazy = true;
+
+                for (int dx : xOffsets) {
+                    for (int dz : zOffsets) {
+                        ChunkPos target = new ChunkPos(cp.x + dx, cp.z + dz);
+                        if (!ChunkLoaderState.isLazyChunk(((ServerWorld) world), target)) {
+                            allLazy = false;
+                            break;
+                        }
+                    }
+                    if (!allLazy) break;
+                }
+
+                if (allLazy) {
+                    ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2, cp);
+                }
+                scheduler.schedule(() -> {
+                    world.getServer().execute(() -> {
+                        ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
+                    });
+                }, 500, TimeUnit.MILLISECONDS);
             }
         }
     }

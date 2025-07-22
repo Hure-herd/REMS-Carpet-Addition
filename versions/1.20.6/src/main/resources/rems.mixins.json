@@ -24,6 +24,7 @@
     "SignCommand.AbstractSignBlockMixin",
     "EndStoneFram.EndGatewayBlockEntityMixin",
     "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
+    "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "SettingsManagerMixin"

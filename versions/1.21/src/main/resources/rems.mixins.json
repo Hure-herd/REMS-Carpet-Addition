@@ -25,6 +25,7 @@
     "EndStoneFram.EndGatewayBlockEntityMixin",
     "EndStoneFram.EndGatewayBlockMixin",
     "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
+    "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "SettingsManagerMixin"
