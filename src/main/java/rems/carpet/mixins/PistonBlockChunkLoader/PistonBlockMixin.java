@@ -99,7 +99,7 @@ public abstract class PistonBlockMixin
                     world.getServer().execute(() -> {
                         ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
                     });
-                }, 500, TimeUnit.MILLISECONDS);
+                }, 1000, TimeUnit.MILLISECONDS);
             }
 
             if (pistonBlock1.isOf(Blocks.BEDROCK) && pistonBlock2.isOf(Blocks.REDSTONE_TORCH) &&
@@ -135,7 +135,7 @@ public abstract class PistonBlockMixin
                     world.getServer().execute(() -> {
                         ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
                     });
-                }, 500, TimeUnit.MILLISECONDS);
+                }, 1000, TimeUnit.MILLISECONDS);
             }
         }
     }
