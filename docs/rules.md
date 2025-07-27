@@ -28,6 +28,7 @@
 * ~~分类: `REMS`, `Experimental`~~
 
 ## 末影珍珠加载(PearlTickets)
+#### MC<1.21.5时存在
 这个规则允许末影珍珠实体选择性地加载即将通过的区块，这样珍珠炮打出的珍珠就不会因为进入未加载区块而丢失。在1.14+中可以替代地狱门加载链使用。   
 该mod相比于@gnembon/carpet-extra mod的enderPearlChunkLoading功能有显著的性能提升。  
 (Minecraft>=1.21.2时开启后，可以显著提升珍珠炮的性能)
@@ -88,7 +89,7 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 分类: `REMS` , `CREATIVE`
 
 ## 比较器忽略来自下方的状态更新(ComparatorIgnoresStateUpdatesFromBelow)
-#### MC>=1.20.6时存在
+#### MC>=1.20.2时存在
 比较器会忽略来自下方的状态更新,意味着开启活板门不会破坏比较器
 * 默认值: `false`
 * 可选参数: `true`, `false`
@@ -118,8 +119,8 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 分类: `REMS` , `Feature`
 
 ## 末地折跃门加载(EndGatewayChunkLoader)
-当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载。  
-(Minecraft<1.21时允许开启)
+#### MC<1.21时存在
+当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载。
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet endGatewayChunkLoader true`
@@ -165,8 +166,8 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 分类: `REMS` , `Survival` ,`Experimental`
 
 ## 重新引入拌线骗特性(StringDupeReintroduced)
-重新引入拌线骗特性，可以通过此规则来继续使用刷线机  
-(Minecraft>=1.21.2时允许开启)
+#### MC>1.21.2时存在
+重新引入拌线骗特性，可以通过此规则来继续使用刷线机
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet stringDupeReintroduced true`
@@ -212,8 +213,8 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 **移植自：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
 
 ## CCE抑制器(MagicBox)
-重新引入类型转换的更新抑制  
-(Minecraft>=1.20.6时允许开启)
+#### MC>=1.20.2时存在
+重新引入类型转换的更新抑制
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet magicBox true`

@@ -29,6 +29,7 @@ Merging a large amount of TNT to reduce the lag caused by entities and explosion
 * ~~Categories: `REMS`, `Experimental`~~
 
 ## PearlTickets
+#### When MC<1.21.5 can use it
 This mod allows ender pearl entities to selectively load chunks that they are about to pass through, so that pearls fired by the pearl cannon will not be lost due to entering unloaded chunks. It can be used instead of the nether portal loading chain in 1.14+.
 This mod has a significant performance improvement over the enderPearlChunkLoading function of @gnembon/carpet-extra mod.  
 (When enabled in Minecraft>=1.21.2, it can significantly improve the performance of the Pearl Cannon)
@@ -66,7 +67,7 @@ Enables /setnoisesuppressor command to place a sound suppressor
 * Categories: `REMS` , `CREATIVE`
 
 ## ComparatorIgnoresStateUpdatesFromBelow
-#### When MC>=1.20.6 can use it
+#### When MC>=1.20.2 can use it
 When this option is turned on, the comparator ignores state updates from below.  
 Means that opening the trap gate will not destroy the comparator
 * Default Value: `false`
@@ -125,8 +126,8 @@ A chest minecart can force load a 1x1 chunk for 2 seconds. This is enabled when 
 * Categories: `REMS` , `Feature`
 
 ## EndGatewayChunkLoader
-When an entity passes through the End gateway, the target chunk will be loaded for 3 seconds like a nether portal.  
-(Minecraft < 1.21 can be enabled)
+#### When MC<1.21 can use it
+When an entity passes through the End gateway, the target chunk will be loaded for 3 seconds like a nether portal.
 
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
@@ -180,8 +181,8 @@ Nether portal blocks do not react to block updates.
 * Categories: `REMS` , `Survival` ,`Experimental`
 
 ## StringDupeReintroduced
-Reintroduced the line-stirring feature, and you can continue to use the line-stirring machine through this rule.  
-(Minecraft>=1.21.2 can be enabled)
+#### When MC>=1.21.2 can use it
+Reintroduced the line-stirring feature, and you can continue to use the line-stirring machine through this rule.
 
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
@@ -233,8 +234,8 @@ Reintroduced the logic of swapping between inventory slots in 1.16.5.
 **Ported from：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
 
 ## MagicBox
-Reintroduced update suppression for type conversions  
-(Minecraft>=1.20.6 can enable it)
+#### When MC>=1.20.2 can use it
+Reintroduced update suppression for type conversions
 
 * Default Value: `false`
 * Optional Parameters: `true`, `false`

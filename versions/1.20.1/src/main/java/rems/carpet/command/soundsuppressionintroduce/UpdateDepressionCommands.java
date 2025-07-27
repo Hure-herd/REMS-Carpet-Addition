@@ -21,10 +21,8 @@
 package rems.carpet.command.soundsuppressionintroduce;
 
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
-import rems.carpet.REMSSettings;
 
 public class UpdateDepressionCommands {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess context) {

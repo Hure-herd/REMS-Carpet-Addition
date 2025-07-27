@@ -46,7 +46,6 @@ public abstract class SignBlockEntityMixin {
     @Shadow
     protected abstract Text[] getTexts(boolean filtered);
 
-    // 允许的命令白名单
     private static final Set<String> ALLOWED_COMMANDS = new HashSet<>(Arrays.asList(
             "say",
             "player",
@@ -70,7 +69,6 @@ public abstract class SignBlockEntityMixin {
                 return;
             }
 
-            // 第三步：白名单验证
             String actualCommand = fullCommand.substring(1);
             if (!isCommandAllowed(actualCommand)) {
                 player.sendMessage(Text.literal("§c该指令未被允许通过告示牌执行"), false);
@@ -78,7 +76,6 @@ public abstract class SignBlockEntityMixin {
                 return;
             }
 
-            // 第四步：执行条件检查
             if (player.getMainHandStack().isOf(Items.AIR) && !player.isSneaking()) {
                 ci.setReturnValue(true);
                 executeValidatedCommand(player, actualCommand);
@@ -86,25 +83,21 @@ public abstract class SignBlockEntityMixin {
         }
     }
 
-    // 文本处理核心方法
     private String processSignText(Text[] texts) {
         StringBuilder commandBuilder = new StringBuilder();
 
         for (int i = 0; i < texts.length; i++) {
             String line = texts[i].getString()
-                    .replaceAll("§.", "")       // 移除所有颜色代码
-                    .replaceAll("[\\x00-\\x1F]", "") // 过滤控制字符
+                    .replaceAll("§.", "")
+                    .replaceAll("[\\x00-\\x1F]", "")
                     .trim();
 
-            // 处理空行
             if (line.isEmpty()) continue;
 
-            // 处理续行符（行末的\）
             if (line.endsWith("\\")) {
                 commandBuilder.append(line, 0, line.length() - 1);
             } else {
                 commandBuilder.append(line);
-                // 在行尾添加空格（最后一行除外）
                 if (i != texts.length - 1) commandBuilder.append(" ");
             }
         }
@@ -114,13 +107,10 @@ public abstract class SignBlockEntityMixin {
                 .trim();
     }
 
-    // 白名单验证逻辑
     private boolean isCommandAllowed(String rawCommand) {
-        // 提取基础命令
         String[] parts = rawCommand.split(" ", 2);
         String baseCommand = parts[0].toLowerCase();
 
-        // 处理命名空间（如 minecraft:give → give）
         int colonIndex = baseCommand.indexOf(':');
         if (colonIndex != -1) {
             baseCommand = baseCommand.substring(colonIndex + 1);
@@ -129,7 +119,6 @@ public abstract class SignBlockEntityMixin {
         return ALLOWED_COMMANDS.contains(baseCommand);
     }
 
-    // 命令执行方法
     private void executeValidatedCommand(ServerPlayerEntity player, String command) {
         ServerWorld world = player.getWorld();
         ServerCommandSource commandSource = new ServerCommandSource(

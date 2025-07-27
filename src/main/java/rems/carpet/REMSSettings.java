@@ -58,10 +58,12 @@ public class REMSSettings
     )
     public static boolean pistonBlockChunkLoader =  false;
 
+    //#if MC<12105
     @Rule(
             categories = {REMS, SURVIVAL}
     )
     public static boolean pearlTickets =  false;
+    //#endif
 
     @Rule(
             categories = {REMS, SURVIVAL}
@@ -166,7 +168,7 @@ public class REMSSettings
     //#if MC>=12001
     //$$ @Rule(
     //$$         options = {"ops", "true", "false"},
-    //$$         categories = {REMS, CREATIVE}
+    //$$         categories = {REMS, CREATIVE,COMMAND}
     //$$ )
     //$$ public static String commandsetnoisesuppressor = "false";
     //#endif

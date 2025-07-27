@@ -112,9 +112,17 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
     {
         if(REMSSettings.mergeTNTPro){
             Vec3d velocity = getVelocity();
+            //#if MC<12106
             if(!getEntityWorld().isClient && mergeBool && velocity.x == 0 && velocity.y == 0 && velocity.z == 0){
+            //#else
+            //$$ if(!getWorld().isClient && mergeBool && velocity.x == 0 && velocity.y == 0 && velocity.z == 0){
+            //#endif
                 mergeBool = false;
+                //#if MC<12106
                 for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
+                //#else
+                //$$ for(Entity entity : getWorld().getOtherEntities(this, this.getBoundingBox())){
+                //#endif
                     if(entity instanceof TntEntity && !entity.isRemoved()){
                         TntEntity entityTNTPrimed = (TntEntity)entity;
                         Vec3d tntVelocity = entityTNTPrimed.getVelocity();
@@ -136,7 +144,11 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
     private void setMergeable(CallbackInfo ci)
     {
         Vec3d velocity = getVelocity();
+        //#if MC<12106
         if(!getEntityWorld().isClient && (velocity.y != 0 || velocity.x != 0 || velocity.z != 0)){
+        //#else
+        //$$ if(!getWorld().isClient && (velocity.y != 0 || velocity.x != 0 || velocity.z != 0)){
+        //#endif
             mergeBool = true;
         }
     }
