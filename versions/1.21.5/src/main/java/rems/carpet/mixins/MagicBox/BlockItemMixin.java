@@ -56,24 +56,13 @@ public class BlockItemMixin {
         World world = context.getWorld();
         if (world.isClient) return;
 
-        if (!(magicboxutils.isisSuppressed(pos)&&magicboxutils.isSuppressed(pos))){
+        if (!(magicboxutils.isisSuppressed(pos)))return;
+
         magicboxutils.isclaer();
-        magicboxutils.clear();
         BlockState state = world.getBlockState(pos);
         if (!state.hasBlockEntity()) return;
-        if (world instanceof ServerWorld serverWorld) {
-                MinecraftServer server = serverWorld.getServer();
-                Text message1 = Text.literal("方块在 " + pos.toShortString() + " 替换成功")
-                        .styled(style -> style.withColor(Formatting.RED));
-                server.getPlayerManager().broadcast(message1, false);
-            }
-
-            BlockEntity blockEntity = new LecternBlockEntity(pos, state);
-            world.removeBlockEntity(pos);
-            world.addBlockEntity(blockEntity);
-        }else {
-            magicboxutils.isclaer();
-            magicboxutils.clear();
-        }
+        BlockEntity blockEntity = new LecternBlockEntity(pos, state);
+        world.removeBlockEntity(pos);
+        world.addBlockEntity(blockEntity);
     }
 }

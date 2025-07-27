@@ -55,18 +55,13 @@ public class BlockItemMixin {
         World world = context.getWorld();
         if (world.isClient) return;
 
-        if (!(Soundsuppressionutils.isisSuppressed(pos)&&Soundsuppressionutils.isSuppressed(pos))){
-            Soundsuppressionutils.isclaer();
-            Soundsuppressionutils.clear();
+        if (!(Soundsuppressionutils.isisSuppressed(pos)))return;
 
-            BlockState state = world.getBlockState(pos);
-            if (!state.hasBlockEntity()) return;
-            BlockEntity blockEntity = new CalibratedSculkSensorBlockEntity(pos, state);
-            world.removeBlockEntity(pos);
-            world.addBlockEntity(blockEntity);
-        }else {
-            Soundsuppressionutils.isclaer();
-            Soundsuppressionutils.clear();
-        }
+        Soundsuppressionutils.isclaer();
+        BlockState state = world.getBlockState(pos);
+        if (!state.hasBlockEntity()) return;
+        BlockEntity blockEntity = new CalibratedSculkSensorBlockEntity(pos, state);
+        world.removeBlockEntity(pos);
+        world.addBlockEntity(blockEntity);
     }
 }

@@ -53,8 +53,9 @@ public abstract class SculkSensorBlockMixin extends BlockWithEntity {
             boolean moved,
             CallbackInfo ci
     ) {
-        if (REMSSettings.soundsuppression) {
+        if (REMSSettings.soundsuppression && Soundsuppressionutils.isSuppressed(pos)) {
             Soundsuppressionutils.ismark(pos);
+            Soundsuppressionutils.clear();
             //Text message1 = Text.literal("方块在 " + pos.toShortString() + " 标记成功")
             //        .styled(style -> style.withColor(Formatting.GOLD));
             //world.getServer().getPlayerManager().broadcast(message1, false);

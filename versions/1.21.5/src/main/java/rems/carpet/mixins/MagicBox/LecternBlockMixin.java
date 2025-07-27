@@ -59,8 +59,9 @@ public abstract class LecternBlockMixin extends BlockWithEntity  {
             boolean moved,
             CallbackInfo ci
     ) {
-        if (REMSSettings.magicBox) {
+        if (REMSSettings.magicBox &&magicboxutils.isSuppressed(pos)) {
             magicboxutils.ismark(pos);
+            magicboxutils.clear();
             //Text message1 = Text.literal("方块在 " + pos.toShortString() + " 标记成功")
             //        .styled(style -> style.withColor(Formatting.GOLD));
             //world.getServer().getPlayerManager().broadcast(message1, false);
