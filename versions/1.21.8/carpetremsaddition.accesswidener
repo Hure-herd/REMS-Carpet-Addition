@@ -1,0 +1,15 @@
+accessWidener	v2	named
+
+accessible field net/minecraft/block/entity/EndGatewayBlockEntity exitPortalPos Lnet/minecraft/util/math/BlockPos;
+accessible field net/minecraft/block/entity/EndGatewayBlockEntity exactTeleport Z
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity setupExitPortalLocation (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockPos;
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity createPortal (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/gen/feature/EndGatewayFeatureConfig;)V
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity findBestPortalExitPos (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/BlockPos;
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity findTeleportLocation (Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;)Lnet/minecraft/util/math/Vec3d;
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity findPortalPosition (Lnet/minecraft/world/chunk/WorldChunk;)Lnet/minecraft/util/math/BlockPos;
+accessible method net/minecraft/block/entity/EndGatewayBlockEntity findExitPortalPos (Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;IZ)Lnet/minecraft/util/math/BlockPos;
+accessible class net/minecraft/block/entity/CalibratedSculkSensorBlockEntity$Callback
+accessible method net/minecraft/server/world/ChunkTicketType register (Ljava/lang/String;JZLnet/minecraft/server/world/ChunkTicketType$Use;)Lnet/minecraft/server/world/ChunkTicketType;
+accessible method net/minecraft/block/SculkSensorBlock updateNeighbors (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V
+accessible method net/minecraft/world/chunk/WorldChunk updateTicker (Lnet/minecraft/block/entity/BlockEntity;)V
+accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
