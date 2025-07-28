@@ -219,5 +219,3 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet magicBox true`
 * 分类: `REMS` , `ExperimentalL`
-
-**移植自：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
