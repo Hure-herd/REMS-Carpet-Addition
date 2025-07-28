@@ -10,8 +10,7 @@
 
 # 文档
 
-- [支持](docs/support.md)
-- [规则](docs/rules.md)
+- 见文档网页：https://hure-herd.github.io/docs
 
 # 引用
 - gnembon [fabric-carpet](https://github.com/gnembon/fabric-carpet)

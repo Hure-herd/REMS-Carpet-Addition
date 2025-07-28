@@ -10,8 +10,7 @@ This is an extension for the [Carpet mod](https://github.com/gnembon/fabric-carp
 
 # Document
 
-- [Support](docs/support_en.md)
-- [Rules](docs/rules_en.md)
+- See the document website: https://hure-herd.github.io/docs
 
 # Works Cited
 - gnembon [fabric-carpet](https://github.com/gnembon/fabric-carpet)
