@@ -1,8 +1,5 @@
 name: Release
 
-# release: <default> (release title)
-# dispatch (all): Manual release for $target_release_tag
-# dispatch (specified): Manual release for $target_release_tag (subproject: $target_subproject)
 run-name: |-
   ${{ github.event_name == 'workflow_dispatch' && format('Manual release for {0}{1}', inputs.target_release_tag, inputs.target_subproject && format(' (subproject: {0})', inputs.target_subproject) || '') || '' }}
 
@@ -42,7 +39,6 @@ jobs:
     with:
       target_subproject: ${{ github.event.inputs.target_subproject }}
 
-  # ensure the input release tag is valid
   validate_release:
     runs-on: ubuntu-latest
     steps:
@@ -68,8 +64,6 @@ jobs:
       - build
     runs-on: ubuntu-latest
 
-    # allow the mod publish step to add asserts to release
-    # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#permissions-for-the-github_token
     permissions:
       contents: write
 
@@ -168,7 +162,7 @@ jobs:
       - name: Publish Minecraft Mods
         uses: Kira-NT/mc-publish@v3.3
         with:
-          modrinth-id: jE0SjGuf  # https://modrinth.com/mod/carpet-tis-addition
+          modrinth-id: 175yf82Z
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
 
           github-tag: ${{ steps.release_info.outputs.tag_name }}
@@ -183,7 +177,7 @@ jobs:
           loaders: fabric
           game-versions: ${{ steps.properties_v.outputs.game_versions }}
           game-version-filter: any
-          dependencies: |-  # declare the dependencies explicitly, so mc-publish won't try to load from fabric.mod.json
+          dependencies: |-  
             carpet(required)
 
           github-changelog: ${{ steps.get_release.outputs.body }}
