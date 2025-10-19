@@ -10,20 +10,40 @@ on:
     types: [published]
 
 jobs:
-  # -------------------
-  # 1️⃣ 构建所有版本（只执行一次）
-  # -------------------
-  build:
+  publish:
+    permissions:
+      contents: write
     runs-on: ubuntu-24.04
+    env:
+      MC_VERSIONS: 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Validate Gradle wrapper
+        uses: gradle/actions/wrapper-validation@v4
 
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'microsoft'
+
+      - name: Get release tag
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            echo "TAG=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          else
+            echo "TAG=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
+          fi
+
+      - name: Get release info
+        id: getByTag
+        uses: cardinalby/git-get-release-action@1.2.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag: ${{ env.TAG }}
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -42,61 +62,28 @@ jobs:
         run: ./gradlew build
         env:
           BUILD_RELEASE: "true"
-          CHANGELOG: ${{ github.event.inputs.tag }}
+          CHANGELOG: ${{ steps.getByTag.outputs.body }}
 
-      # 上传每个版本的 jar 为单独 artifact
-      - name: Upload artifacts per version
-        run: |
-          for v in 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8; do
-            echo "Uploading artifact for $v"
-            npx @actions/upload-artifact@v4 \
-              --name build-artifact-$v \
-              --path versions/$v/build/libs/*[!sources][!shadow].jar
-          done
-
-  # -------------------
-  # 2️⃣ Matrix 上传，每个 Job 使用对应版本的 artifact
-  # -------------------
-  upload:
-    needs: build
-    runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        mc_version: [1.19.4, 1.20.1, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.2, 1.21.4, 1.21.5, 1.21.8]
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download artifact for this version
-        uses: actions/download-artifact@v4
-        with:
-          name: build-artifact-${{ matrix.mc_version }}
-          path: build-artifacts
-
-      - name: Set jar path
-        id: jar
-        run: echo "path=build-artifacts/*" >> $GITHUB_OUTPUT
-
-      - name: Upload to Modrinth
-        uses: Kira-NT/mc-publish@v3.3
-        with:
-          modrinth-id: 175yf82Z
-          modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
-          files: ${{ steps.jar.outputs.path }}
-          name: ${{ format('MyMod {0} for MC {1}', github.event.inputs.tag, matrix.mc_version) }}
-          version: ${{ format('{0}-mc{1}', github.event.inputs.tag, matrix.mc_version) }}
-          version-type: release
-          loaders: fabric
-          game-versions: ${{ matrix.mc_version }}
-          dependencies: |-
-            carpet(required)
-          modrinth-changelog: "Released for Minecraft ${{ matrix.mc_version }} (GitHub Actions run ${{ github.run_id }})"
-          retry-attempts: 3
-          retry-delay: 10000
-
-      - name: Upload to GitHub Release
+      - name: Publish to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.event.inputs.tag }}
-          files: ${{ steps.jar.outputs.path }}
+          tag_name: ${{ env.TAG }}
+          files: versions/*/build/libs/*[!sources][!shadow].jar
+
+      - name: Upload each version to Modrinth
+        run: |
+          for v in $MC_VERSIONS; do
+            JAR_FILE=$(ls versions/$v/build/libs/*[!sources][!shadow].jar | head -n 1)
+            echo "Uploading MC $v: $JAR_FILE"
+            gh run workflow dispatch mc-publish.yml \
+              -f modrinth-id=175yf82Z \
+              -f modrinth-token=${{ secrets.MODRINTH_API_TOKEN }} \
+              -f files=$JAR_FILE \
+              -f name="MyMod ${{ env.TAG }} for MC $v" \
+              -f version="${{ env.TAG }}-mc$v" \
+              -f version-type=release \
+              -f loaders=fabric \
+              -f game-versions=$v \
+              -f dependencies="carpet(required)" \
+              -f modrinth-changelog="${{ steps.getByTag.outputs.body }}"
+          done
