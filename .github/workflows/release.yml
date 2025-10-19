@@ -27,29 +27,37 @@ jobs:
           java-version: '21'
           distribution: 'microsoft'
 
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
       - name: Build all versions
-        run: |
-          mkdir -p build-artifacts
-          for v in 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8; do
-            ./gradlew :versions:$v:build
-            cp versions/$v/build/libs/*.jar build-artifacts/$v.jar
-          done
+        run: ./gradlew build
+        env:
+          BUILD_RELEASE: "true"
+          CHANGELOG: ${{ github.event.inputs.tag }}
 
-      - name: Set artifacts path
-        id: set-path
-        run: echo "path=build-artifacts" >> $GITHUB_OUTPUT
-
-      - name: Upload artifacts
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: build-artifacts
+          path: versions/*/build/libs/*[!sources][!shadow].jar
+
+      - name: Set artifacts path
+        id: set-path
+        run: echo "path=versions/*/build/libs/*[!sources][!shadow].jar" >> $GITHUB_OUTPUT
 
   # -------------------
-  # 2️⃣ matrix 上传，每个 Job 使用构建好的 jar
+  # 2️⃣ Matrix 上传，每个 Job 使用构建好的 jar
   # -------------------
   upload:
     needs: build
@@ -70,12 +78,12 @@ jobs:
 
       - name: Set jar path
         id: jar
-        run: echo "path=build-artifacts/${{ matrix.mc_version }}.jar" >> $GITHUB_OUTPUT
+        run: echo "path=build-artifacts/*${{ matrix.mc_version }}*.jar" >> $GITHUB_OUTPUT
 
       - name: Upload to Modrinth
         uses: Kira-NT/mc-publish@v3.3
         with:
-          modrinth-id: 175yf82Z 
+          modrinth-id: 175yf82Z
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
           files: ${{ steps.jar.outputs.path }}
           name: ${{ format('MyMod {0} for MC {1}', github.event.inputs.tag, matrix.mc_version) }}
