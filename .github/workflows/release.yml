@@ -14,8 +14,6 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-24.04
-    env:
-      MC_VERSIONS: 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -72,18 +70,21 @@ jobs:
 
       - name: Upload each version to Modrinth
         run: |
+          shopt -s extglob
+          MC_VERSIONS="1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8"
           for v in $MC_VERSIONS; do
-            JAR_FILE=$(ls versions/$v/build/libs/*[!sources][!shadow].jar | head -n 1)
+            JAR_FILE=$(ls versions/$v/build/libs/!(*-sources|*-dev|*-shadow).jar | head -n 1)
             echo "Uploading MC $v: $JAR_FILE"
-            gh run workflow dispatch mc-publish.yml \
-              -f modrinth-id=175yf82Z \
-              -f modrinth-token=${{ secrets.MODRINTH_API_TOKEN }} \
-              -f files=$JAR_FILE \
-              -f name="MyMod ${{ env.TAG }} for MC $v" \
-              -f version="${{ env.TAG }}-mc$v" \
-              -f version-type=release \
-              -f loaders=fabric \
-              -f game-versions=$v \
-              -f dependencies="carpet(required)" \
-              -f modrinth-changelog="${{ steps.getByTag.outputs.body }}"
+
+            # 使用 mc-publish@v3.3 上传 Modrinth
+            gh workflow run -f modrinth-id=175yf82Z \
+                            -f modrinth-token=${{ secrets.MODRINTH_API_TOKEN }} \
+                            -f files=$JAR_FILE \
+                            -f name="REMS Carpet Addition ${{ env.TAG }} for MC $v" \
+                            -f version="${{ env.TAG }}-mc$v" \
+                            -f version-type=release \
+                            -f loaders=fabric \
+                            -f game-versions=$v \
+                            -f dependencies="carpet(required)" \
+                            -f modrinth-changelog="${{ steps.getByTag.outputs.body }}"
           done
