@@ -43,13 +43,25 @@ jobs:
           BUILD_RELEASE: "true"
           CHANGELOG: ${{ github.event.inputs.tag }}
 
-      - name: Save built jars
-        id: set-output
+      - name: Prepare built jars
+        id: set-jars
+        shell: bash
         run: |
           mkdir -p build-artifacts
-          # 列出所有非 sources/dev/shadow 的 jar
-          JARS=$(ls versions/*/build/libs/!(*-sources|*-dev|*-shadow).jar | tr '\n' ',' | sed 's/,$//')
-          echo "jars=$JARS" >> $GITHUB_OUTPUT
+          # 找到所有非 sources/dev/shadow 的 jar
+          JARS=()
+          for f in versions/*/build/libs/*.jar; do
+            if [[ ! "$f" =~ -sources\.jar$ ]] && [[ ! "$f" =~ -shadow\.jar$ ]] && [[ ! "$f" =~ -dev\.jar$ ]]; then
+              JARS+=("$f")
+            fi
+          done
+          if [ ${#JARS[@]} -eq 0 ]; then
+            echo "No jars found!"
+            exit 1
+          fi
+          # 输出为逗号分隔字符串
+          JARS_CSV=$(IFS=','; echo "${JARS[*]}")
+          echo "jars=$JARS_CSV" >> $GITHUB_OUTPUT
 
   publish_github:
     needs: build
