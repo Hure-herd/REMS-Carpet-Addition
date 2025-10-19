@@ -171,7 +171,7 @@ jobs:
           files: ${{ steps.file_info.outputs.path }}
 
           name: ${{ format('{0} {1}', steps.properties_g.outputs.mod_name, steps.properties_g.outputs.mod_version, steps.properties_v.outputs.minecraft_version) }}
-          version: ${{ format('v{1}', steps.properties_v.outputs.minecraft_version, steps.properties_g.outputs.mod_version) }}
+          version: ${{ format('{1}', steps.properties_v.outputs.minecraft_version, steps.properties_g.outputs.mod_version) }}
           version-type: release
 
           loaders: fabric
