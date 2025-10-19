@@ -58,7 +58,7 @@ public class REMSSettings
     )
     public static boolean pistonBlockChunkLoader =  false;
 
-    //#if MC<12105
+    //#if MC<12102
     @Rule(
             categories = {REMS, SURVIVAL}
     )
@@ -121,6 +121,10 @@ public class REMSSettings
     )
     public static boolean  endstonefram = false;
 
+    @Rule(
+            categories = {REMS, SURVIVAL}
+    )
+    public static boolean reloadrefreshirongolem = false;
 
     // @Rule(
     //         categories = {REMS, EXPERIMENTAL}
@@ -194,6 +198,20 @@ public class REMSSettings
     //$$ public static boolean stringDupeReintroduced = false;
     //#endif
 
+    //#if MC>=12102
+    //$$ @Rule(
+    //$$ categories = {REMS, FEATURE}
+    //$$ )
+    //$$ public static boolean pre21ThrowableEntityMovement = false;
+    //#endif
+
+    //#if MC>=12102
+    //$$ @Rule(
+    //$$ categories = {REMS, BUGFIX}
+    //$$ )
+    //$$ public static boolean fixedpearlloading = false;
+    //#endif
+
     //#if MC>=12006
     //$$ @Rule(
     //$$ categories = {REMS,EXPERIMENTAL}
@@ -201,3 +219,4 @@ public class REMSSettings
     //$$ public static boolean magicBox = false;
     //#endif
 }
+

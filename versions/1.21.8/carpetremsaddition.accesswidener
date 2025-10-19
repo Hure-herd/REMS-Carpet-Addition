@@ -13,3 +13,4 @@ accessible method net/minecraft/server/world/ChunkTicketType register (Ljava/lan
 accessible method net/minecraft/block/SculkSensorBlock updateNeighbors (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;)V
 accessible method net/minecraft/world/chunk/WorldChunk updateTicker (Lnet/minecraft/block/entity/BlockEntity;)V
 accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
+accessible field net/minecraft/server/world/ServerWorld entityList Lnet/minecraft/world/EntityList;

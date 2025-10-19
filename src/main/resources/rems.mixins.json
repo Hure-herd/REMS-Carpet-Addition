@@ -23,7 +23,8 @@
     "scheduledRandomTick.CactusBlockMixin",
     "scheduledRandomTick.ChorusFlowerBlockMixin",
     "scheduledRandomTick.SugarCaneBlockMixin",
-    "SignCommand.SignBlockEntityMixin"
+    "SignCommand.SignBlockEntityMixin",
+    "Reloadrefreshirongolem.VillagerEntityMixin"
   ],
   "client": [
   ],

@@ -34,7 +34,8 @@
     "EndStoneFram.EndGatewayBlockMixin",
     "SettingsManagerMixin",
     "keepWorldTickUpdate",
-    "TripwireHookBlockMixin"
+    "TripwireHookBlockMixin",
+    "Reloadrefreshirongolem.VillagerEntityMixin"
   ],
   "client": [
   ],

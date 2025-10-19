@@ -4,7 +4,7 @@
 开启后，当该活塞/黏性活塞头产生活塞头的推出/拉回事件时，在创建推出/拉回事件的那一游戏刻为**活塞头方块所在区块**添加类型为"piston_block"的加载票，持续时间为60gt（3s）。
 ### 在任何维度，活塞上方有钻石矿时可以弱加载1x1的区块
 ### 在地狱下方有基岩，后一格上方是红石火把时可以弱加载1x1的区块
-### 当有5X5的弱加载区块的时候，最中心的区块会变成强加载区块
+### 当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet pistonBlockChunkLoader ture`
@@ -219,3 +219,26 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet magicBox true`
 * 分类: `REMS` , `ExperimentalL`
+
+## 重载式刷铁机(Reloadrefreshirongolem)
+你可以像1.14一样在末地建造重载式刷铁机，这个规则可以让他工作
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet reloadrefreshirongolem true`
+* 分类: `REMS` , `survival`
+
+## 恢复1.21.2-的投掷物移动顺序(Pre21ThrowableEntityMovement)
+#### MC>=1.21.2时存在
+恢复1.21.2-的投掷物移动顺序,你可以使用1.21.2-的珍珠炮
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet pre21ThrowableEntityMovement true`
+* 分类: `REMS` , `Feature`
+
+## 修复珍珠加载(Fixedpearlloading)
+#### MC>=1.21.2时存在
+修复了在高速下，末影珍珠会因为无法加载当前区块而卸载
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet fixedpearlloading true`
+* 分类: `REMS` , `bugfix`

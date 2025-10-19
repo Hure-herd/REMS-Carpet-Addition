@@ -5,7 +5,7 @@
   "carpet.rule.pistonBlockChunkLoader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
   "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
   "carpet.rule.pistonBlockChunkLoader.extra.1": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "When there are 5X5 weak loading chunks, the central chunk will become a Active loading chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.2": "When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
@@ -84,5 +84,14 @@
   "carpet.rule.soundSuppressionRadius.desc": "Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 17 grids. For the sake of lag and performance, the maximum value cannot exceed 32.",
 
   "carpet.rule.commandsetnoisesuppressor.name": "Commandsetnoisesuppressor",
-  "carpet.rule.commandsetnoisesuppressor.desc": "Enables /setnoisesuppressor command to place a sound suppressor"
+  "carpet.rule.commandsetnoisesuppressor.desc": "Enables /setnoisesuppressor command to place a sound suppressor",
+
+  "carpet.rule.reloadrefreshirongolem.name": "Reloadrefreshirongolem",
+  "carpet.rule.reloadrefreshirongolem.desc": "You can build a heavy iron spawner in the end like in 1.14, this rule will make it work",
+
+  "carpet.rule.pre21ThrowableEntityMovement.name": "Pre21ThrowableEntityMovement",
+  "carpet.rule.pre21ThrowableEntityMovement.desc": "Restored the order of projectile movement from 1.21.2, you can use EnderPearl Cannon like in 1.21.2-",
+
+  "carpet.rule.fixedpearlloading.name": "Fixpearlloading",
+  "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk."
 }

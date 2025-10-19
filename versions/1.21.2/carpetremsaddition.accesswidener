@@ -9,3 +9,4 @@ accessible method net/minecraft/block/entity/EndGatewayBlockEntity findTeleportL
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity findPortalPosition (Lnet/minecraft/world/chunk/WorldChunk;)Lnet/minecraft/util/math/BlockPos;
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity findExitPortalPos (Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;IZ)Lnet/minecraft/util/math/BlockPos;
 accessible class net/minecraft/block/entity/CalibratedSculkSensorBlockEntity$Callback
+accessible field net/minecraft/server/world/ServerWorld entityList Lnet/minecraft/world/EntityList;

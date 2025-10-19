@@ -25,7 +25,8 @@
     "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
-    "SettingsManagerMixin"
+    "SettingsManagerMixin",
+    "Reloadrefreshirongolem.VillagerEntityMixin"
   ],
   "client": [
   ],

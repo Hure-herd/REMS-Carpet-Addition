@@ -77,8 +77,8 @@ public abstract class PistonBlockMixin
 
                 ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
 
-                int[] xOffsets = {-2, -1, 0, 1, 2};
-                int[] zOffsets = {-2, -1, 0, 1, 2};
+                int[] xOffsets = {-1, 0, 1};
+                int[] zOffsets = {-1, 0, 1};
                 boolean allLazy = true;
 
                 for (int dx : xOffsets) {
@@ -113,8 +113,8 @@ public abstract class PistonBlockMixin
 
                 ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
 
-                int[] xOffsets = {-2, -1, 0, 1, 2};
-                int[] zOffsets = {-2, -1, 0, 1, 2};
+                int[] xOffsets = {-1, 0, 1};
+                int[] zOffsets = {-1, 0,1};
                 boolean allLazy = true;
 
                 for (int dx : xOffsets) {

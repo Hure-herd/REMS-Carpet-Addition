@@ -11,3 +11,4 @@ accessible method net/minecraft/block/entity/EndGatewayBlockEntity findPortalPos
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity findExitPortalPos (Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;IZ)Lnet/minecraft/util/math/BlockPos;
 accessible field net/minecraft/block/entity/EndGatewayBlockEntity teleportCooldown I
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity startTeleportCooldown (Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Lnet/minecraft/block/entity/EndGatewayBlockEntity;)V
+accessible method net/minecraft/entity/ai/brain/Brain setMemory (Lnet/minecraft/entity/ai/brain/MemoryModuleType;Ljava/util/Optional;)V

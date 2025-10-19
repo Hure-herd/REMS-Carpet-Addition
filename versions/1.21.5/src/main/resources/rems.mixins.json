@@ -39,7 +39,8 @@
     "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityCallBackMixin",
     "soundsuppressionintroduce.BlockItemMixin",
     "MagicBox.NeighborUpdaterMixin",
-    "MagicBox.BlockItemMixin"
+    "MagicBox.BlockItemMixin",
+    "Reloadrefreshirongolem.VillagerEntityMixin"
   ],
   "client": [
   ],
