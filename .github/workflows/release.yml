@@ -89,6 +89,7 @@ jobs:
         shell: bash
         run: |
           IFS=',' read -ra JARS <<< "${{ needs.build.outputs.jars }}"
+          echo "All jars: ${JARS[@]}"
           FOUND=""
           for j in "${JARS[@]}"; do
             if [[ "$j" == *"mc${{ matrix.mc_version }}"* ]]; then
