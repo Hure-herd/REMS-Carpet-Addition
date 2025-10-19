@@ -1,4 +1,5 @@
 name: release
+
 on:
   workflow_dispatch:
     inputs:
@@ -13,51 +14,60 @@ jobs:
     permissions:
       contents: write
     runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        mc_version: [1.19.4, 1.20.1, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.2, 1.21.4, 1.21.5, 1.21.8]
+
     steps:
-      - name: checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: validate gradle wrapper
-        uses: gradle/actions/wrapper-validation@v4
-      - name: setup jdk
+
+      - name: Setup JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'microsoft'
-      - name: get tag
+
+      - name: Set release tag
         run: |
           if [ "${{ github.event_name }}" == "release" ]; then
             echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
           else
             echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
           fi
-      - name: get release info
-        id: getByTag
-        uses: cardinalby/git-get-release-action@1.2.4
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag: ${{ env.tag }}
-      - name: cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-      - name: make gradle wrapper executable
+
+      - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
-      - name: build and publish
-#        run: ./gradlew build publishMods
-        run: ./gradlew build
-        env:
-          BUILD_RELEASE: "true"
-          CHANGELOG: ${{ steps.getByTag.outputs.body }}
-#          MODRINTH_API_KEY: ${{ secrets.MODRINTH_API_KEY }}
-#          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
-      - name: publish to github
+
+      - name: Build mod for MC ${{ matrix.mc_version }}
+        run: ./gradlew :versions:${{ matrix.mc_version }}:build
+
+      - name: Find built jar
+        id: jar
+        run: |
+          FILE=$(ls versions/${{ matrix.mc_version }}/build/libs/*.jar | grep -vE "sources|dev|shadow")
+          echo "path=$FILE" >> $GITHUB_OUTPUT
+          echo "Found jar: $FILE"
+
+      - name: Upload to Modrinth
+        uses: Kira-NT/mc-publish@v3.3
+        with:
+          modrinth-id: 175yf82Z  
+          modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
+          files: ${{ steps.jar.outputs.path }}
+          name: ${{ format('MyMod {0} for MC {1}', env.tag, matrix.mc_version) }}
+          version: ${{ format('{0}-mc{1}', env.tag, matrix.mc_version) }}
+          version-type: release
+          loaders: fabric
+          game-versions: ${{ matrix.mc_version }}
+          dependencies: |-
+            carpet(required)
+          modrinth-changelog: "Released for Minecraft ${{ matrix.mc_version }} (GitHub Actions run ${{ github.run_id }})"
+          retry-attempts: 3
+          retry-delay: 10000
+
+      - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.tag }}
-          files: versions/*/build/libs/*[!sources][!shadow].jar
+          files: ${{ steps.jar.outputs.path }}
