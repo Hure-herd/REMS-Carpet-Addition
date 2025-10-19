@@ -10,14 +10,13 @@ on:
     types: [published]
 
 jobs:
-  publish:
-    permissions:
-      contents: write
+  # -------------------
+  # 1️⃣ 构建所有版本（只执行一次）
+  # -------------------
+  build:
     runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        mc_version: [1.19.4, 1.20.1, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.2, 1.21.4, 1.21.5, 1.21.8]
-
+    outputs:
+      artifacts-path: ${{ steps.set-path.outputs.path }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,35 +27,59 @@ jobs:
           java-version: '21'
           distribution: 'microsoft'
 
-      - name: Set release tag
-        run: |
-          if [ "${{ github.event_name }}" == "release" ]; then
-            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
-          else
-            echo "tag=${{ github.event.inputs.tag }}" >> $GITHUB_ENV
-          fi
-
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Build mod for MC ${{ matrix.mc_version }}
-        run: ./gradlew :versions:${{ matrix.mc_version }}:build
-
-      - name: Find built jar
-        id: jar
+      - name: Build all versions
         run: |
-          FILE=$(ls versions/${{ matrix.mc_version }}/build/libs/*.jar | grep -vE "sources|dev|shadow")
-          echo "path=$FILE" >> $GITHUB_OUTPUT
-          echo "Found jar: $FILE"
+          mkdir -p build-artifacts
+          for v in 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8; do
+            ./gradlew :versions:$v:build
+            cp versions/$v/build/libs/*.jar build-artifacts/$v.jar
+          done
+
+      - name: Set artifacts path
+        id: set-path
+        run: echo "path=build-artifacts" >> $GITHUB_OUTPUT
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build-artifacts
+
+  # -------------------
+  # 2️⃣ matrix 上传，每个 Job 使用构建好的 jar
+  # -------------------
+  upload:
+    needs: build
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        mc_version: [1.19.4, 1.20.1, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.2, 1.21.4, 1.21.5, 1.21.8]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+          path: build-artifacts
+
+      - name: Set jar path
+        id: jar
+        run: echo "path=build-artifacts/${{ matrix.mc_version }}.jar" >> $GITHUB_OUTPUT
 
       - name: Upload to Modrinth
         uses: Kira-NT/mc-publish@v3.3
         with:
-          modrinth-id: 175yf82Z  
+          modrinth-id: 175yf82Z 
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
           files: ${{ steps.jar.outputs.path }}
-          name: ${{ format('MyMod {0} for MC {1}', env.tag, matrix.mc_version) }}
-          version: ${{ format('{0}-mc{1}', env.tag, matrix.mc_version) }}
+          name: ${{ format('MyMod {0} for MC {1}', github.event.inputs.tag, matrix.mc_version) }}
+          version: ${{ format('{0}-mc{1}', github.event.inputs.tag, matrix.mc_version) }}
           version-type: release
           loaders: fabric
           game-versions: ${{ matrix.mc_version }}
@@ -69,5 +92,5 @@ jobs:
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.tag }}
+          tag_name: ${{ github.event.inputs.tag }}
           files: ${{ steps.jar.outputs.path }}
