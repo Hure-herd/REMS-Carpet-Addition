@@ -15,8 +15,6 @@ jobs:
   # -------------------
   build:
     runs-on: ubuntu-24.04
-    outputs:
-      artifacts-path: ${{ steps.set-path.outputs.path }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,18 +44,18 @@ jobs:
           BUILD_RELEASE: "true"
           CHANGELOG: ${{ github.event.inputs.tag }}
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-artifacts
-          path: versions/*/build/libs/*[!sources][!shadow].jar
-
-      - name: Set artifacts path
-        id: set-path
-        run: echo "path=versions/*/build/libs/*[!sources][!shadow].jar" >> $GITHUB_OUTPUT
+      # 上传每个版本的 jar 为单独 artifact
+      - name: Upload artifacts per version
+        run: |
+          for v in 1.19.4 1.20.1 1.20.4 1.20.6 1.21 1.21.1 1.21.2 1.21.4 1.21.5 1.21.8; do
+            echo "Uploading artifact for $v"
+            npx @actions/upload-artifact@v4 \
+              --name build-artifact-$v \
+              --path versions/$v/build/libs/*[!sources][!shadow].jar
+          done
 
   # -------------------
-  # 2️⃣ Matrix 上传，每个 Job 使用构建好的 jar
+  # 2️⃣ Matrix 上传，每个 Job 使用对应版本的 artifact
   # -------------------
   upload:
     needs: build
@@ -70,15 +68,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download build artifacts
+      - name: Download artifact for this version
         uses: actions/download-artifact@v4
         with:
-          name: build-artifacts
+          name: build-artifact-${{ matrix.mc_version }}
           path: build-artifacts
 
       - name: Set jar path
         id: jar
-        run: echo "path=build-artifacts/*${{ matrix.mc_version }}*.jar" >> $GITHUB_OUTPUT
+        run: echo "path=build-artifacts/*" >> $GITHUB_OUTPUT
 
       - name: Upload to Modrinth
         uses: Kira-NT/mc-publish@v3.3
