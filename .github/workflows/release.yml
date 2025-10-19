@@ -34,6 +34,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Make Gradle Wrapper executable
+        run: chmod +x ./gradlew
+
       - name: Build all versions
         run: ./gradlew build
         env:
