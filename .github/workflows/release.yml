@@ -168,7 +168,7 @@ jobs:
       - name: Publish Minecraft Mods
         uses: Kira-NT/mc-publish@v3.3
         with:
-          modrinth-id: 175yf82Z
+          modrinth-id: 175yf82Z  
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
 
           github-tag: ${{ steps.release_info.outputs.tag_name }}
@@ -188,7 +188,6 @@ jobs:
 
           github-changelog: ${{ steps.get_release.outputs.body }}
           modrinth-changelog: ${{ steps.changelog.outputs.result }}
-          curseforge-changelog: ${{ steps.changelog.outputs.result }}
 
           retry-attempts: 3
           retry-delay: 10000
