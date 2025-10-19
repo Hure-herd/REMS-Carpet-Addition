@@ -35,7 +35,7 @@ def main():
 	target_subprojects = list(filter(None, target_subproject_env.split(',') if target_subproject_env != '' else []))
 	print('target_subprojects: {}'.format(target_subprojects))
 
-	with open('settings.json') as f:
+	with open('minecraftVersions.json') as f:
 		settings: dict = json.load(f)
 
 	with open(os.environ['GITHUB_STEP_SUMMARY'], 'w') as f:
