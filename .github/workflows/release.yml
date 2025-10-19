@@ -79,17 +79,15 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        mc_version: [1.19.4, 1.20.1, 1.20.4, 1.20.6, 1.21, 1.21.1, 1.21.2, 1.21.4, 1.21.5, 1.21.8]
+        mc_version: [1.19.4,1.20.1,1.20.4,1.20.6,1.21,1.21.1,1.21.2,1.21.4,1.21.5,1.21.8]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Select jar for this MC version
         id: select_jar
-        shell: bash
         run: |
           IFS=',' read -ra JARS <<< "${{ needs.build.outputs.jars }}"
-          echo "All jars: ${JARS[@]}"
           FOUND=""
           for j in "${JARS[@]}"; do
             if [[ "$j" == *"mc${{ matrix.mc_version }}"* ]]; then
@@ -102,19 +100,36 @@ jobs:
             exit 1
           fi
           echo "jar=$FOUND" >> $GITHUB_OUTPUT
+          echo "Selected jar: $FOUND"
 
       - name: Upload to Modrinth
         uses: Kira-NT/mc-publish@v3.3
         with:
-          modrinth-id: 175yf82Z
+          modrinth-id: jE0SjGuf
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
           files: ${{ steps.select_jar.outputs.jar }}
-          name: REMS Carpet Addition ${{ github.event.inputs.tag }} for MC ${{ matrix.mc_version }}
-          version: ${{ github.event.inputs.tag }}-mc${{ matrix.mc_version }}
+          name: "REMS Carpet Addition v${{ github.event.inputs.tag }} for MC${{ matrix.mc_version }}"
+          version: "${{ github.event.inputs.tag }}-mc${{ matrix.mc_version }}"
           version-type: release
           loaders: fabric
           game-versions: ${{ matrix.mc_version }}
           game-version-filter: any
           dependencies: |
             carpet(required)
-          modrinth-changelog: ${{ github.event.inputs.tag }}
+          github-changelog: ${{ github.event.release.body || '' }}
+          modrinth-changelog: "Release ${{ github.event.inputs.tag }} for MC${{ matrix.mc_version }}"
+          retry-attempts: 3
+          retry-delay: 10000
+
+  release:
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Upload all jars to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag }}
+          files: versions/*/build/libs/*[!sources][!shadow].jar
