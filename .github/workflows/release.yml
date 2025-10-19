@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     outputs:
-      jars: ${{ steps.set-output.outputs.jars }}
+      jars: ${{ steps.set-jars.outputs.jars }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -23,6 +23,9 @@ jobs:
         with:
           java-version: '21'
           distribution: 'microsoft'
+
+      - name: Make Gradle Wrapper executable
+        run: chmod +x ./gradlew
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -34,9 +37,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Make Gradle Wrapper executable
-        run: chmod +x ./gradlew
-
       - name: Build all versions
         run: ./gradlew build
         env:
@@ -47,8 +47,6 @@ jobs:
         id: set-jars
         shell: bash
         run: |
-          mkdir -p build-artifacts
-          # 找到所有非 sources/dev/shadow 的 jar
           JARS=()
           for f in versions/*/build/libs/*.jar; do
             if [[ ! "$f" =~ -sources\.jar$ ]] && [[ ! "$f" =~ -shadow\.jar$ ]] && [[ ! "$f" =~ -dev\.jar$ ]]; then
@@ -70,7 +68,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Publish to GitHub Release
+      - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ github.event.inputs.tag }}
@@ -86,18 +84,33 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Select jar for this MC version
+        id: select_jar
+        shell: bash
+        run: |
+          IFS=',' read -ra JARS <<< "${{ needs.build.outputs.jars }}"
+          FOUND=""
+          for j in "${JARS[@]}"; do
+            if [[ "$j" == *"mc${{ matrix.mc_version }}"* ]]; then
+              FOUND="$j"
+              break
+            fi
+          done
+          if [ -z "$FOUND" ]; then
+            echo "No jar found for MC ${{ matrix.mc_version }}"
+            exit 1
+          fi
+          echo "jar=$FOUND" >> $GITHUB_OUTPUT
+
       - name: Upload to Modrinth
         uses: Kira-NT/mc-publish@v3.3
         with:
           modrinth-id: 175yf82Z
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
-
-          # 只上传对应 MC 版本的 jar
-          files: ${{ needs.build.outputs.jars }}
+          files: ${{ steps.select_jar.outputs.jar }}
           name: REMS Carpet Addition ${{ github.event.inputs.tag }} for MC ${{ matrix.mc_version }}
           version: ${{ github.event.inputs.tag }}-mc${{ matrix.mc_version }}
           version-type: release
-
           loaders: fabric
           game-versions: ${{ matrix.mc_version }}
           game-version-filter: any
