@@ -64,11 +64,7 @@ public abstract class SignBlockEntityMixin {
         if (REMSSettings.SignCommand) {
             if (player instanceof ServerPlayerEntity) {
                 REMSServer.LOGGER.debug("Player is trying to change the text, checking sign text");
-                //#if MC<12106
                 ServerWorld world = (ServerWorld) player.getEntityWorld();
-                //#else
-                //$$ ServerWorld world = (ServerWorld) player.getWorld();
-                //#endif
                 BlockPos pos = ((SignBlockEntity) (Object) this).getPos();
                 if (world.getBlockEntity(pos) instanceof SignBlockEntity signBlockEntity) {
                     boolean isFront = signBlockEntity.isPlayerFacingFront(player);

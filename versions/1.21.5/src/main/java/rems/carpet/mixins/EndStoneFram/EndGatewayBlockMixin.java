@@ -56,10 +56,14 @@ public abstract class EndGatewayBlockMixin extends Block {
             cancellable = true
     )
     private void onEntityCollisionCheck(
+            //#if MC<12109
             BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, CallbackInfo ci
+            //#else
+            //$$ BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl, CallbackInfo ci
+            //#endif
     ) {
         if(REMSSettings.endstonefram) {
-            if (!world.isClient && entity.canUsePortals(false)) {
+            if (!world.isClient() && entity.canUsePortals(false)) {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof EndGatewayBlockEntity) {
                     EndGatewayBlockEntity endGateway = (EndGatewayBlockEntity) blockEntity;

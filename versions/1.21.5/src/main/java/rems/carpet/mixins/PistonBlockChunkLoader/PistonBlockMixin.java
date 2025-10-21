@@ -49,7 +49,7 @@ public abstract class PistonBlockMixin
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
     {
-        if(REMSSettings.pistonBlockChunkLoader && !world.isClient)
+        if(REMSSettings.pistonBlockChunkLoader && !world.isClient())
         {
             Direction direction = state.get(FacingBlock.FACING);
 
@@ -70,8 +70,8 @@ public abstract class PistonBlockMixin
 
                 ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
 
-                int[] xOffsets = {-2, -1, 0, 1, 2};
-                int[] zOffsets = {-2, -1, 0, 1, 2};
+                int[] xOffsets = {-1, 0, 1};
+                int[] zOffsets = {-1, 0, 1};
                 boolean allLazy = true;
 
                 for (int dx : xOffsets) {
@@ -106,8 +106,8 @@ public abstract class PistonBlockMixin
 
                 ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
 
-                int[] xOffsets = {-2, -1, 0, 1, 2};
-                int[] zOffsets = {-2, -1, 0, 1, 2};
+                int[] xOffsets = {-1, 0, 1};
+                int[] zOffsets = {-1, 0, 1};
                 boolean allLazy = true;
 
                 for (int dx : xOffsets) {

@@ -30,9 +30,7 @@ public class Soundsuppressionutils {
 
     public static final Set<BlockPos> issuppressedPositions = new HashSet<>();
 
-    public static void mark(BlockPos pos) {
-        suppressedPositions.add(pos.toImmutable()); // 防止外部更改
-    }
+    public static void mark(BlockPos pos) {suppressedPositions.add(pos.toImmutable());}
 
     public static boolean isSuppressed(BlockPos pos) {
         return suppressedPositions.contains(pos);

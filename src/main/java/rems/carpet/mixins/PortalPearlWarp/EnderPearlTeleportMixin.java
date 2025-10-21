@@ -47,7 +47,6 @@ import static net.minecraft.particle.ParticleTypes.PORTAL;
 
 @Mixin(EnderPearlEntity.class)
 public abstract class EnderPearlTeleportMixin {
-    //#if MC<12102
     //#if MC>12006
     //$$  @WrapOperation(
     //$$         method = "canTeleportEntityTo",
@@ -114,5 +113,4 @@ public abstract class EnderPearlTeleportMixin {
         }
     }
     }
-    //#endif
 }

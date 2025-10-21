@@ -20,29 +20,15 @@
 
 package rems.carpet.mixins.MagicBox;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.LecternBlockEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
-import net.minecraft.world.block.WireOrientation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
-import rems.carpet.utils.ChunkLoaderState;
-import rems.carpet.utils.Soundsuppressionutils;
 import rems.carpet.utils.magicboxutils;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 
 @Mixin(LecternBlock.class)

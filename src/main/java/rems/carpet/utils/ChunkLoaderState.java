@@ -32,7 +32,21 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ChunkLoaderState {
 
+    //#if MC<12105
     public static final ChunkTicketType<ChunkPos> PISTON_BLOCK_TICKET = ChunkTicketType.create("piston_block", Comparator.comparingLong(ChunkPos::toLong), 60);
+    //#elseif MC<12109
+    //$$ public static final ChunkTicketType CHEST_MINECART_TICKET = ChunkTicketType.register("chest_minecart_loader", 40,true,ChunkTicketType.Use.LOADING_AND_SIMULATION);
+    //#else
+    //$$ public static final ChunkTicketType CHEST_MINECART_TICKET = ChunkTicketType.register("chest_minecart_loader", 40,15);
+    //#endif
+
+    //#if MC<12105
+    public static final ChunkTicketType<ChunkPos> CHEST_MINECART_TICKET = ChunkTicketType.create("chest_minecart_loader", Comparator.comparingLong(ChunkPos::toLong), 40);
+    //#elseif MC<12109
+    //$$ public static final ChunkTicketType PISTON_BLOCK_TICKET = ChunkTicketType.register("piston_block",60,true,ChunkTicketType.Use.LOADING_AND_SIMULATION);
+    //#else
+    //$$ public static final ChunkTicketType PISTON_BLOCK_TICKET = ChunkTicketType.register("piston_block",60,15);
+    //#endif
 
     private static final Map<RegistryKey<World>, Set<ChunkPos>> LAZY_CHUNKS_BY_DIM = new ConcurrentHashMap<>();
 

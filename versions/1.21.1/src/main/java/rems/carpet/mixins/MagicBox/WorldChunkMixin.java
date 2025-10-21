@@ -38,7 +38,6 @@ public abstract class WorldChunkMixin {
     @Shadow
     public abstract BlockState getBlockState(BlockPos pos);
 
-    // ME0.5 needs to be modified again
     @ModifyExpressionValue(
             method = "setBlockState",
             at = @At(

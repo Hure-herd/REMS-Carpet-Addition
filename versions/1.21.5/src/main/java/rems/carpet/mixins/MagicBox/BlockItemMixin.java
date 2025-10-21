@@ -54,7 +54,7 @@ public class BlockItemMixin {
         BlockPos pos = context.getBlockPos();
 
         World world = context.getWorld();
-        if (world.isClient) return;
+        if (world.isClient()) return;
 
         if (!(magicboxutils.isisSuppressed(pos)))return;
 

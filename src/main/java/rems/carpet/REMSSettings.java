@@ -46,12 +46,10 @@ public class REMSSettings
     )
     public static boolean chestMinecartChunkLoader = false;
 
-    //#if MC<12102
     @Rule(
            categories = {REMS, FEATURE}
     )
     public static boolean PortalPearlWarp = false;
-    //#endif
 
     @Rule(
             categories = {REMS, SURVIVAL}

@@ -18,5 +18,5 @@ This is an extension for the [Carpet mod](https://github.com/gnembon/fabric-carp
 - 1024-byteeeee [Carpet-AMS-Addition](https://github.com/Minecraft-AMS/Carpet-AMS-Addition)
 - totorewa [totos-carpet-tweaks](https://github.com/totorewa/totos-carpet-tweaks)
 - Crystal_0404 [CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
-
+- TISUnion [Carpet-TIS-Addition](https://github.com/TISUnion/Carpet-TIS-Addition)
 

@@ -31,22 +31,27 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.ChunkLoaderState;
+
 import java.util.Comparator;
 
 @Mixin(Entity.class)
 public class ChestMinecartEntityMixin {
-    private static final ChunkTicketType<ChunkPos> CHEST_MINECART_TICKET = ChunkTicketType.create("chest_minecart_loader", Comparator.comparingLong(ChunkPos::toLong), 40);
-
     @Inject(method = "move", at = @At("HEAD"))
     private void onTick(CallbackInfo ci) {
         if ((Object) this instanceof ChestMinecartEntity) {
             ChestMinecartEntity self = (ChestMinecartEntity) (Object) this;
             World world = self.getEntityWorld();
-            if (REMSSettings.chestMinecartChunkLoader && self.hasCustomName() && !world.isClient && "Load".equals(self.getCustomName().getString())) {
+            if (REMSSettings.chestMinecartChunkLoader && self.hasCustomName() &&
+                    !world.isClient() && "Load".equals(self.getCustomName().getString())) {
                 int chunkX = (int) Math.floor(self.getX()) >> 4;
                 int chunkZ = (int) Math.floor(self.getZ()) >> 4;
                 ChunkPos chunkPos = new ChunkPos(chunkX, chunkZ);
-                ((ServerWorld) world).getChunkManager().addTicket(CHEST_MINECART_TICKET, chunkPos, 2,chunkPos);
+                //#if MC<12105
+                ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.CHEST_MINECART_TICKET, chunkPos, 2,chunkPos);
+                //#else
+                //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.CHEST_MINECART_TICKET, chunkPos, 2);
+                //#endif
             }
         }
     }

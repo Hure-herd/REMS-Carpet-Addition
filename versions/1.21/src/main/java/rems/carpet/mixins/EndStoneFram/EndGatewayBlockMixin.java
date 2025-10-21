@@ -62,7 +62,7 @@ public abstract class EndGatewayBlockMixin extends Block {
             CallbackInfo ci
     ) {
         if(REMSSettings.endstonefram) {
-            if (!world.isClient && entity.canUsePortals(false)) {
+            if (!world.isClient() && entity.canUsePortals(false)) {
                 BlockEntity blockEntity = world.getBlockEntity(pos);
                 if (blockEntity instanceof EndGatewayBlockEntity) {
                     EndGatewayBlockEntity endGateway = (EndGatewayBlockEntity) blockEntity;
