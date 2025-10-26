@@ -94,5 +94,8 @@
   "carpet.rule.pre21ThrowableEntityMovement.desc": "恢复1.21.2-的投掷物移动顺序,你可以使用1.21.2-的珍珠炮",
 
   "carpet.rule.fixedpearlloading.name": "修复珍珠加载",
-  "carpet.rule.fixedpearlloading.desc": "修复了在高速下，末影珍珠会因为无法加载当前区块而卸载"
+  "carpet.rule.fixedpearlloading.desc": "修复了在高速下，末影珍珠会因为无法加载当前区块而卸载",
+
+  "carpet.rule.notloadingchunk.name": "珍珠不加载",
+  "carpet.rule.notloadingchunk.desc": "这个会使珍珠不加载任何区块"
 }

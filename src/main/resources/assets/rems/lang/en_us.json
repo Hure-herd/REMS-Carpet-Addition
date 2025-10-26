@@ -93,5 +93,8 @@
   "carpet.rule.pre21ThrowableEntityMovement.desc": "Restored the order of projectile movement from 1.21.2, you can use EnderPearl Cannon like in 1.21.2-",
 
   "carpet.rule.fixedpearlloading.name": "Fixpearlloading",
-  "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk."
+  "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk.",
+
+  "carpet.rule.notloadingchunk.name": "Notloadingchunk",
+  "carpet.rule.notloadingchunk.desc": "It will make Enderpearl no load any chunk"
 }

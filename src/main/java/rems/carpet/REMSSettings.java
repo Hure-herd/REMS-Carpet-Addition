@@ -97,7 +97,7 @@ public class REMSSettings
             categories = {REMS, CREATIVE}
     )
     public static boolean disablePortalUpdate = false;
-    //#if MC<121
+    //#if MC<12100
     @Rule(
             categories = {REMS, SURVIVAL}
     )
@@ -201,6 +201,13 @@ public class REMSSettings
     //$$ categories = {REMS, FEATURE}
     //$$ )
     //$$ public static boolean pre21ThrowableEntityMovement = false;
+    //#endif
+
+    //#if MC>=12102
+    //$$ @Rule(
+    //$$ categories = {REMS, FEATURE}
+    //$$ )
+    //$$ public static boolean notloadingchunk = false;
     //#endif
 
     //#if MC>=12102

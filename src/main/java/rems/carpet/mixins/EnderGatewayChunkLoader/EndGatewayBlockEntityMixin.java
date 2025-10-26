@@ -40,10 +40,9 @@ import java.util.Objects;
 
 @Mixin(EndGatewayBlockEntity.class)
 public class EndGatewayBlockEntityMixin {
-    //#if MC<121
+    //#if MC<12100
     private static final ChunkTicketType<BlockPos> TheEndGateway =
             ChunkTicketType.create("TheEndGateway", Comparator.comparingLong(ChunkPos::toLong), 60);
-
     @Inject(method ="tryTeleportingEntity",at = @At(value = "INVOKE",
             target = "Lnet/minecraft/entity/Entity;teleport(DDD)V", shift = At.Shift.AFTER))
     private static void load(World world, BlockPos pos, BlockState state, Entity entity, EndGatewayBlockEntity blockEntity, CallbackInfo ci){

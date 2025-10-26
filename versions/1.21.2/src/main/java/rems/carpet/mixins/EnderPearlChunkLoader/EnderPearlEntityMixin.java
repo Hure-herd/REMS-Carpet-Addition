@@ -20,6 +20,7 @@
 
 package rems.carpet.mixins.EnderPearlChunkLoader;
 
+import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -28,6 +29,7 @@ import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -35,6 +37,8 @@ import rems.carpet.REMSSettings;
 
 @Mixin(EnderPearlEntity.class)
 public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
+    @Shadow protected abstract void removeFromOwner();
+
     protected EnderPearlEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -48,6 +52,14 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
             if (!serverPlayerEntity.getServerWorld().entityList.has(this)) {
                 serverPlayerEntity.getServerWorld().entityList.add(this);
             }
+        }
+    }
+    @Inject(method = "tick",at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;isAlive()Z"),cancellable = true)
+    private void noloadingchunk(
+            CallbackInfo ci
+    ){
+        if(REMSSettings.notloadingchunk){
+            ci.cancel();
         }
     }
 }
