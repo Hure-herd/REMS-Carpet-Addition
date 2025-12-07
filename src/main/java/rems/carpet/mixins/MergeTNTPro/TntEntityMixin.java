@@ -1,21 +1,21 @@
 /*
- * This file is part of the Carpet AMS Addition project, licensed under the
+ * This file is part of the Carpet REMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
  * Copyright (C) 2025 A Minecraft Server and contributors
  *
- * Carpet AMS Addition is free software: you can redistribute it and/or modify
+ * Carpet REMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Carpet AMS Addition is distributed in the hope that it will be useful,
+ * Carpet REMS Addition is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Carpet AMS Addition. If not, see <https://www.gnu.org/licenses/>.
+ * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package rems.carpet.mixins.MergeTNTPro;
@@ -30,6 +30,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -43,8 +44,11 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
 {
     @Shadow public abstract int getFuse();
 
+    @Unique
     private TNTLogHelper logHelper;
+    @Unique
     private boolean mergeBool = false;
+    @Unique
     private int mergedTNT = 1;
 
     public TntEntityMixin(EntityType<?> entityType_1, World world_1)
@@ -95,7 +99,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
             logHelper.onExploded(getX(), getY(), getZ(), this.getWorld().getTime());
 
         if (mergedTNT > 1)
-            for (int i = mergedTNT; i < mergedTNT - 1; i++){
+            for (int i = 1; i < mergedTNT - 1; i++){
                 this.getWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
                         this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
             }
