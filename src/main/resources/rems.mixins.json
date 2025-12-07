@@ -24,7 +24,8 @@
     "scheduledRandomTick.ChorusFlowerBlockMixin",
     "scheduledRandomTick.SugarCaneBlockMixin",
     "SignCommand.SignBlockEntityMixin",
-    "Reloadrefreshirongolem.VillagerEntityMixin"
+    "Reloadrefreshirongolem.VillagerEntityMixin",
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
   ],
   "client": [
   ],

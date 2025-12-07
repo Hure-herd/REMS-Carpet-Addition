@@ -96,5 +96,8 @@
   "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk.",
 
   "carpet.rule.notloadingchunk.name": "Notloadingchunk",
-  "carpet.rule.notloadingchunk.desc": "It will make Enderpearl no load any chunk"
+  "carpet.rule.notloadingchunk.desc": "It will make Enderpearl no load any chunk",
+
+  "carpet.rule.wanderingTraderNoDisappear.name": "WanderingTraderNoDisappear",
+  "carpet.rule.wanderingTraderNoDisappear.desc": "Wandering Trader will no disappear customName is Load"
 }

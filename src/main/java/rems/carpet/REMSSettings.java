@@ -47,6 +47,11 @@ public class REMSSettings
     public static boolean chestMinecartChunkLoader = false;
 
     @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean wanderingTraderNoDisappear = false;
+
+    @Rule(
            categories = {REMS, FEATURE}
     )
     public static boolean PortalPearlWarp = false;

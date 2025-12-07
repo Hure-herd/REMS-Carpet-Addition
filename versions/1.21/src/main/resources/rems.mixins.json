@@ -29,7 +29,8 @@
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "SettingsManagerMixin",
-    "Reloadrefreshirongolem.VillagerEntityMixin"
+    "Reloadrefreshirongolem.VillagerEntityMixin",
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
   ],
   "client": [
   ],

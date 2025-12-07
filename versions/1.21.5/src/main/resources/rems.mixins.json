@@ -40,7 +40,9 @@
     "soundsuppressionintroduce.BlockItemMixin",
     "MagicBox.NeighborUpdaterMixin",
     "MagicBox.BlockItemMixin",
-    "Reloadrefreshirongolem.VillagerEntityMixin"
+    "Reloadrefreshirongolem.VillagerEntityMixin",
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin",
+    "Recover212ThrownEntity.ThrownEntityMixin"
   ],
   "client": [
   ],

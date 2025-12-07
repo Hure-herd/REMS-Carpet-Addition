@@ -56,7 +56,7 @@ public interface NeighborUpdaterMixin {
 
             BlockPos blockPos;
 
-            int[] Offsets = {-2,-1,0,1,2};
+            int[] Offsets = {-3,-2,-1,0,1,2,3};
             int[] yOffsets = {-1,0};
             for (int dy : yOffsets) {
                 for (int dx : Offsets) {

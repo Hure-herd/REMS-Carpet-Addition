@@ -97,5 +97,8 @@
   "carpet.rule.fixedpearlloading.desc": "修复了在高速下，末影珍珠会因为无法加载当前区块而卸载",
 
   "carpet.rule.notloadingchunk.name": "珍珠不加载",
-  "carpet.rule.notloadingchunk.desc": "这个会使珍珠不加载任何区块"
+  "carpet.rule.notloadingchunk.desc": "这个会使珍珠不加载任何区块",
+
+  "carpet.rule.wanderingTraderNoDisappear.name": "流商不消失",
+  "carpet.rule.wanderingTraderNoDisappear.desc": "名字是Load的流浪商人不会消失"
 }

@@ -36,7 +36,8 @@
     "keepWorldTickUpdate",
     "TripwireHookBlockMixin",
     "Reloadrefreshirongolem.VillagerEntityMixin",
-    "Recover212ThrownEntity.ThrownEntityMixin"
+    "Recover212ThrownEntity.ThrownEntityMixin",
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
   ],
   "client": [
   ],
