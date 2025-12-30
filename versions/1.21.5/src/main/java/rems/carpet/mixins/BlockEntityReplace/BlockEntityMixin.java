@@ -18,45 +18,35 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MagicBox;
+package rems.carpet.mixins.BlockEntityReplace;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.LecternBlockEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
-@Mixin(WorldChunk.class)
-public abstract class WorldChunkMixin {
-    @Shadow
-    public abstract BlockState getBlockState(BlockPos pos);
+@Mixin(BlockEntity.class)
+public abstract class BlockEntityMixin {
 
-    @ModifyExpressionValue(
-            method = "setBlockState",
+    @Inject(method = "validateSupports", at = @At("HEAD"), cancellable = true)
+    private void allowInvalidBlockEntities(BlockState blockState, CallbackInfo ci) {
+        if (REMSSettings.blockentityreplacement) {
+            ci.cancel();
+        }
+    }
+    @WrapWithCondition(
+            method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/block/entity/BlockEntity;supports(Lnet/minecraft/block/BlockState;)Z"
+                    target = "Lnet/minecraft/block/entity/BlockEntity;validateSupports" +
+                            "(Lnet/minecraft/block/BlockState;)V"
             )
     )
-    private boolean setBlockStateMixin(boolean original, @Local(ordinal = 0) BlockEntity blockEntity) {
-        if (!REMSSettings.magicBox) {
-            return original;
-        }
-
-        if (
-                blockEntity instanceof LecternBlockEntity
-                        && this.getBlockState(blockEntity.getPos()).getBlock() instanceof ShulkerBoxBlock
-        ) {
-            return true;
-        } else {
-            return original;
-        }
+    private boolean initMixin(BlockEntity instance, BlockState blockState) {
+        return !(REMSSettings.blockentityreplacement);
     }
 }

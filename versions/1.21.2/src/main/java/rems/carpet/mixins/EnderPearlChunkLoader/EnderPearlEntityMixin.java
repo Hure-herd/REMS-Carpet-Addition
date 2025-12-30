@@ -58,7 +58,7 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
     private void noloadingchunk(
             CallbackInfo ci
     ){
-        if(REMSSettings.notloadingchunk){
+        if(REMSSettings.pearlnotloadingchunk){
             ci.cancel();
         }
     }

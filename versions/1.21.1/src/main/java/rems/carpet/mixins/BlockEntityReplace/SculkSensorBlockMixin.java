@@ -18,48 +18,60 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.soundsuppressionintroduce;
+package rems.carpet.mixins.BlockEntityReplace;
 
-import net.minecraft.block.*;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.LecternBlockEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.SculkSensorBlock;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
-import rems.carpet.utils.Soundsuppressionutils;
-
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 @Mixin(SculkSensorBlock.class)
 public abstract class SculkSensorBlockMixin extends BlockWithEntity {
-
-    protected SculkSensorBlockMixin(AbstractBlock.Settings settings) {
+    protected SculkSensorBlockMixin(Settings settings) {
         super(settings);
     }
 
-    @Inject(method = "onStateReplaced", at = @At("TAIL"))
-    private void onStateReplaced(
+    @WrapWithCondition(
+            method = "onStateReplaced",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/BlockWithEntity;onStateReplaced" +
+                            "(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;" +
+                            "Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;Z)V"
+            )
+    )
+    private boolean removeOnStateReplacedMixin(
+            BlockWithEntity instance,
+            BlockState blockState,
+            World world,
+            BlockPos blockPos,
+            BlockState newState,
+            boolean b
+    ) {
+        return !REMSSettings.blockentityreplacement;
+    }
+
+    @Inject(
+            method = "onStateReplaced",
+            at = @At("TAIL")
+    )
+    private void onStateReplacedMixin(
             BlockState state,
-            ServerWorld world,
+            World world,
             BlockPos pos,
+            BlockState newState,
             boolean moved,
             CallbackInfo ci
     ) {
-        if (REMSSettings.soundsuppression && Soundsuppressionutils.isSuppressed(pos)) {
-            Soundsuppressionutils.ismark(pos);
-            Soundsuppressionutils.clear();
-            //Text message1 = Text.literal("方块在 " + pos.toShortString() + " 标记成功")
-            //        .styled(style -> style.withColor(Formatting.GOLD));
-            //world.getServer().getPlayerManager().broadcast(message1, false);
+        if (REMSSettings.blockentityreplacement) {
+            super.onStateReplaced(state, world, pos, newState, moved);
         }
     }
 }
-

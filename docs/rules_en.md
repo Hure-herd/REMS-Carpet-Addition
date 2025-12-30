@@ -3,6 +3,7 @@
 ## PistonBlockChunkLoader
 If enabled, when this piston/sticky piston head generates a piston head push/pull event, a load ticket of type "piston_block" is added to the chunk where the piston head block is located at the game tick that created the push/pull event, with a duration of 60gt (3s).
 ### In any dimension, a diamond ore can be weakly loaded into a 1x1 Active chunk above a piston.
+### In any dimension, a redstone ore can be weakly loaded into a 1x1 Active chunk above a piston.
 ### If there is bedrock below the netherworld and a redstone torch above the next block, a 1x1 block can be lazy loaded.
 ### When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk
 * Default Value: `false`
@@ -42,17 +43,9 @@ This mod has a significant performance improvement over the enderPearlChunkLoadi
 **Ported from：**
 SunnySlopes's [PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
-## Soundsuppression
-#### When MC>1.21.1 can use it
-Keep the block entity data of the calibrated hidden sensor to any blcok that is blockentity
-* Default Value: `false`
-* Optional Parameters: `true`, `false`
-* Open Method: `/carpet soundsuppression true`
-* Categories: `REMS` , `Feature`
-
 ## SoundSuppressionRadius
 #### When MC>1.19.4 can use it
-Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 16 grids.The maximum value cannot exceed 32.
+Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 16 grids.The maximum value cannot exceed 64.
 * Default Value:  `false`
 * Optional Parameters: `8`,`16`,`32`
 * Open Method: `/carpet soundSuppressionRadius true`
@@ -233,13 +226,13 @@ Reintroduced the logic of swapping between inventory slots in 1.16.5.
 
 **Ported from：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
 
-## MagicBox
+## Blockentityreplacement
 #### When MC>=1.20.2 can use it
-Reintroduced update suppression for type conversions
+Allows saving and replacing of block entities, used for creating CCE and IAE.
 
 * Default Value: `false`
 * Optional Parameters:  `true`, `false`
-* Open Method: `/carpet magicBox true`
+* Open Method: `/carpet blockentityreplacement true`
 * Categories: `REMS` , `ExperimentalL`
 
 **Ported from：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
@@ -266,3 +259,17 @@ Fixed an issue where ender pearls would unload at high speeds due to being unabl
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet fixedpearlloading true`
 * Categories: `REMS` , `bugfix`
+
+## WanderingTraderNoDisappear
+Wandering Trader will no disappear customName is Load
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet wanderingTraderNoDisappear true`
+* Categories: `REMS` , `feature`
+
+## Pearlnotloadingchunk
+Enderpearl no load any chunk
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet pearlnotloadingchunk true`
+* Categories: `REMS` , `feature`

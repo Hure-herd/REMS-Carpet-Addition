@@ -18,39 +18,32 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MagicBox;
+package rems.carpet.mixins.BlockEntityReplace;
 
-import net.minecraft.block.*;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
-import rems.carpet.utils.magicboxutils;
 
+@Mixin(HopperBlockEntity.class)
+public class HopperBlockEntityMixin {
 
-@Mixin(LecternBlock.class)
-public abstract class LecternBlockMixin extends BlockWithEntity  {
-    protected LecternBlockMixin(Settings settings) {
-        super(settings);
-    }
-
-    @Inject(method = "onStateReplaced", at = @At("TAIL"))
-    private void cancelIfMagicBox(
-            BlockState state,
-            ServerWorld world,
-            BlockPos pos,
-            boolean moved,
-            CallbackInfo ci
-    ) {
-        if (REMSSettings.magicBox &&magicboxutils.isSuppressed(pos)) {
-            magicboxutils.ismark(pos);
-            magicboxutils.clear();
-            //Text message1 = Text.literal("方块在 " + pos.toShortString() + " 标记成功")
-            //        .styled(style -> style.withColor(Formatting.GOLD));
-            //world.getServer().getPlayerManager().broadcast(message1, false);
+    @Inject(
+            method = "serverTick",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    private static void abortIfInvalid(World world, BlockPos pos, BlockState state, HopperBlockEntity blockEntity, CallbackInfo ci) {
+        if (REMSSettings.blockentityreplacement) {
+            if (!(state.getBlock() == Blocks.HOPPER)) {
+                ci.cancel();
+            }
         }
     }
 }

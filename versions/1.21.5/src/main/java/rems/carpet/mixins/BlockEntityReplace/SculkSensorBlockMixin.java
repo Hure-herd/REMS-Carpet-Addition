@@ -18,35 +18,23 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.soundsuppressionintroduce;
+package rems.carpet.mixins.BlockEntityReplace;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.CalibratedSculkSensorBlockEntity;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.SculkSensorBlock;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
-@Mixin(BlockEntity.class)
-public abstract class BlockEntityMixin{
-    @Inject(method = "validateSupports", at = @At("HEAD"), cancellable = true)
-    private void allowInvalidBlockEntities(BlockState blockState, CallbackInfo ci) {
-        if (REMSSettings.soundsuppression) {
-            ci.cancel();
-        }
-    }
-    @WrapWithCondition(
-            method = "<init>",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/entity/BlockEntity;validateSupports" +
-                            "(Lnet/minecraft/block/BlockState;)V"
-            )
-    )
-    private boolean initMixin(BlockEntity instance, BlockState blockState) {
-        return !(REMSSettings.soundsuppression && instance instanceof CalibratedSculkSensorBlockEntity);
+@Mixin(SculkSensorBlock.class)
+public abstract class SculkSensorBlockMixin extends BlockWithEntity {
+    protected SculkSensorBlockMixin(Settings settings) {
+        super(settings);
     }
 }

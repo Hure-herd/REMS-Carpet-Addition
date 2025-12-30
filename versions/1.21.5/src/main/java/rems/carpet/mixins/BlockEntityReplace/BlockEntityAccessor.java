@@ -18,39 +18,15 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.utils;
+package rems.carpet.mixins.BlockEntityReplace;
 
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.block.entity.BlockEntity;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-import java.util.HashSet;
-import java.util.Set;
+@Mixin(BlockEntity.class)
+public interface BlockEntityAccessor {
 
-public class magicboxutils {
-    public static final Set<BlockPos> magicbox = new HashSet<>();
-
-    public static final Set<BlockPos> ismagicbox = new HashSet<>();
-
-    public static void mark(BlockPos pos) {
-        magicbox.add(pos.toImmutable()); // 防止外部更改
-    }
-
-    public static boolean isSuppressed(BlockPos pos) {
-        return magicbox.contains(pos);
-    }
-
-    public static void clear() {
-        magicbox.clear();
-    }
-
-    public static void ismark(BlockPos pos) {
-        ismagicbox.add(pos.toImmutable());
-    }
-
-    public static boolean isisSuppressed(BlockPos pos) {
-        return ismagicbox.contains(pos);
-    }
-
-    public static void isclaer() {
-        ismagicbox.clear();
-    }
+    @Accessor("removed")
+    void setRemoved(boolean removed);
 }

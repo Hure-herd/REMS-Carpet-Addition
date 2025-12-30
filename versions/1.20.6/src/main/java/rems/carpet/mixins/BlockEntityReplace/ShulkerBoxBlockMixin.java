@@ -18,7 +18,7 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MagicBox;
+package rems.carpet.mixins.BlockEntityReplace;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -29,7 +29,6 @@ import net.minecraft.screen.ScreenHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import rems.carpet.REMSSettings;
-import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 
 @Mixin(ShulkerBoxBlock.class)
 public abstract class ShulkerBoxBlockMixin {
@@ -42,7 +41,7 @@ public abstract class ShulkerBoxBlockMixin {
             )
     )
     private int getComparatorOutputMixin(BlockEntity entity, Operation<Integer> original) {
-        if (REMSSettings.magicBox) {
+        if (REMSSettings.blockentityreplacement) {
             return ScreenHandler.calculateComparatorOutput((Inventory) entity);
         } else {
             return original.call(entity);

@@ -18,27 +18,25 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MagicBox;
+package rems.carpet.mixins.soundsuppressionintroduce;
 
-import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.LecternBlockEntity;
+import net.minecraft.world.event.GameEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
 
-@Mixin(BlockEntity.class)
-public abstract class BlockEntityMixin {
-    @WrapWithCondition(
-            method = "<init>",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/entity/BlockEntity;validateSupports" +
-                            "(Lnet/minecraft/block/BlockState;)V"
-            )
-    )
-    private boolean initMixin(BlockEntity instance, BlockState blockState) {
-        return !(REMSSettings.magicBox && instance instanceof LecternBlockEntity);
+@Mixin(GameEvent.class)
+public abstract class GameEventMixin {
+
+    @Inject(method = "getRange", at = @At("HEAD"), cancellable = true)
+    private void modifyRadius(CallbackInfoReturnable<Integer> cir) {
+
+        GameEvent self = (GameEvent) (Object) this;
+
+        if (self == GameEvent.BLOCK_CLOSE) {
+            cir.setReturnValue(REMSSettings.soundSuppressionRadius);
+        }
     }
 }

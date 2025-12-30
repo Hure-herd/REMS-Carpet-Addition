@@ -18,37 +18,24 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.utils;
+package rems.carpet.mixins.BlockEntityReplace;
 
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.LecternBlock;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rems.carpet.REMSSettings;
 
-import java.util.HashSet;
-import java.util.Set;
 
-public class Soundsuppressionutils {
-    public static final Set<BlockPos> suppressedPositions = new HashSet<>();
-
-    public static final Set<BlockPos> issuppressedPositions = new HashSet<>();
-
-    public static void mark(BlockPos pos) {suppressedPositions.add(pos.toImmutable());}
-
-    public static boolean isSuppressed(BlockPos pos) {
-        return suppressedPositions.contains(pos);
-    }
-
-    public static void clear() {
-        suppressedPositions.clear();
-    }
-
-    public static void ismark(BlockPos pos) {
-        issuppressedPositions.add(pos.toImmutable());
-    }
-
-    public static boolean isisSuppressed(BlockPos pos) {
-        return issuppressedPositions.contains(pos);
-    }
-
-    public static void isclaer() {
-        issuppressedPositions.clear();
+@Mixin(LecternBlock.class)
+public abstract class LecternBlockMixin extends BlockWithEntity {
+    protected LecternBlockMixin(Settings settings) {
+        super(settings);
     }
 }

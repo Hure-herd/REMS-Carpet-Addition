@@ -3,6 +3,7 @@
 ## 活塞头加载(PistonBlockChunkLoader)
 开启后，当该活塞/黏性活塞头产生活塞头的推出/拉回事件时，在创建推出/拉回事件的那一游戏刻为**活塞头方块所在区块**添加类型为"piston_block"的加载票，持续时间为60gt（3s）。
 ### 在任何维度，活塞上方有钻石矿时可以弱加载1x1的区块
+### 在任何维度，活塞上方有红石矿时可以强加载1x1的区块
 ### 在地狱下方有基岩，后一格上方是红石火把时可以弱加载1x1的区块
 ### 当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块
 * 默认值: `false`
@@ -64,17 +65,10 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 **移植自：**[EpsilonSMP](https://github.com/EpsilonSMP/Epsilon-Carpet)
 
-## 声音抑制移植(Soundsuppression) 
-#### MC>1.21.1时存在
-将校准幽匿感测体的方块实体数据保留到任何拥有方块数据的方块
-* 默认值: `false`
-* 可选参数: `true`, `false`
-* 开启方法: `/carpet soundsuppression true`
-* 分类: `REMS` , `Feature`
 
 ## 声音抑制器范围控制(SoundSuppressionRadius)
 #### MC>1.19.4时存在
-控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为16格，最大不能超过32
+控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为16格，最大不能超过64
 * 默认值: `false`
 * 可选参数: `8`,`16`,`32`
 * 开启方法: `/carpet soundSuppressionRadius true`
@@ -212,12 +206,12 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 **移植自：**[CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
 
-## CCE抑制器(MagicBox)
+## 方块实体替换(Blockentityreplacement)
 #### MC>=1.20.2时存在
-重新引入类型转换的更新抑制
+允许方块实体的保存和替换，用于制作CCE和IAE
 * 默认值: `false`
 * 可选参数: `true`, `false`
-* 开启方法: `/carpet magicBox true`
+* 开启方法: `/carpet blockentityreplacement true`
 * 分类: `REMS` , `ExperimentalL`
 
 ## 重载式刷铁机(Reloadrefreshirongolem)
@@ -242,3 +236,17 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet fixedpearlloading true`
 * 分类: `REMS` , `bugfix`
+
+## 流商不消失(WanderingTraderNoDisappear)
+名字是Load的流浪商人不会消失
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet wanderingTraderNoDisappear true`
+* 分类: `REMS` , `feature`
+
+## 珍珠不加载(Pearlnotloadingchunk)
+珍珠不加载任何区块
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet pearlnotloadingchunk true`
+* 分类: `REMS` , `feature`

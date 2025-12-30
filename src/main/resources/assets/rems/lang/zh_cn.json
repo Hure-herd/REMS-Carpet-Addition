@@ -4,8 +4,9 @@
   "carpet.rule.pistonBlockChunkLoader.name": "活塞头区块加载",
   "carpet.rule.pistonBlockChunkLoader.desc": "活塞或黏性活塞被激活且能正常伸出时以活塞头将到达的区块为中心加载,持续3s",
   "carpet.rule.pistonBlockChunkLoader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载1x1的区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.2": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
+  "carpet.rule.pistonBlockChunkLoader.extra.3": "当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块",
 
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
@@ -56,9 +57,6 @@
   "carpet.rule.itemShadowing.name": "物品分身",
   "carpet.rule.itemShadowing.desc" : "重新引入1.16.5物品栏之间交换的逻辑",
 
-  "carpet.rule.magicBox.name": "CCE抑制器",
-  "carpet.rule.magicBox.desc" : "控制基于类型转换的更新抑制是否可用",
-
   "carpet.rule.SignCommand.name": "告示牌命令",
   "carpet.rule.SignCommand.desc" : "玩家右键单击标牌，执行标牌上的命令",
   "carpet.rule.SignCommand.extra.0" : "需要以/开头",
@@ -74,14 +72,11 @@
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.desc": "开启此选项后, 比较器会忽略来自下方的状态更新",
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.extra": "意味着开启活板门不会破坏比较器",
 
-  "carpet.rule.soundsuppression.name": "声音抑制",
-  "carpet.rule.soundsuppression.desc" : "将校准幽匿感测体的方块实体数据保留到任何拥有方块数据的方块",
-
   "carpet.rule.endstonefram.name": "末地石农场",
   "carpet.rule.endstonefram.desc": "你可以像1.16一样建造末地石农场，这个规则可以让他工作",
 
   "carpet.rule.soundSuppressionRadius.name": "声音抑制器范围控制",
-  "carpet.rule.soundSuppressionRadius.desc": "控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为17格，为了卡顿和性能考虑，最大不能超过32",
+  "carpet.rule.soundSuppressionRadius.desc": "控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为16格，为了卡顿和性能考虑，最大不能超过64",
 
   "carpet.rule.commandsetnoisesuppressor.name": "放置声音抑制器命令开关",
   "carpet.rule.commandsetnoisesuppressor.desc": "启用/setnoisesuppressor命令来放置声音抑制器",
@@ -96,9 +91,14 @@
   "carpet.rule.fixedpearlloading.name": "修复珍珠加载",
   "carpet.rule.fixedpearlloading.desc": "修复了在高速下，末影珍珠会因为无法加载当前区块而卸载",
 
-  "carpet.rule.notloadingchunk.name": "珍珠不加载",
-  "carpet.rule.notloadingchunk.desc": "这个会使珍珠不加载任何区块",
+  "carpet.rule.pearlnotloadingchunk.name": "珍珠不加载",
+  "carpet.rule.pearlnotloadingchunk.desc": "这个会使珍珠不加载任何区块",
 
   "carpet.rule.wanderingTraderNoDisappear.name": "流商不消失",
-  "carpet.rule.wanderingTraderNoDisappear.desc": "名字是Load的流浪商人不会消失"
+  "carpet.rule.wanderingTraderNoDisappear.desc": "名字是Load的流浪商人不会消失",
+
+  "carpet.rule.blockentityreplacement.name": "方块实体替换",
+  "carpet.rule.blockentityreplacement.desc": "允许方块实体的保存和替换，用于制作CCE和IAE",
+
+  "carpet.rule.soundSuppressionRadius.validate": "数值必须在 1 到 64 之间"
 }

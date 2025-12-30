@@ -12,7 +12,7 @@
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
     "ItemShadowing.ScreenHandlerMixin",
-    "MagicBox.ShulkerBoxBlockMixin",
+    "BlockEntityReplace.ShulkerBoxBlockMixin",
     "PistonBlockChunkLoader.PistonBlockMixin",
     "scheduledRandomTick.BambooBlockMixin",
     "scheduledRandomTick.CactusBlockMixin",
@@ -29,7 +29,8 @@
     "TripwireHookBlockMixin",
     "SettingsManagerMixin",
     "Reloadrefreshirongolem.VillagerEntityMixin",
-    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin",
+    "soundsuppressionintroduce.GameEventMixin"
   ],
   "client": [
   ],

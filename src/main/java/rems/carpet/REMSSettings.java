@@ -28,6 +28,7 @@ import carpet.api.settings.Rule;
 import carpet.api.settings.Validator;
 import carpet.api.settings.Validators;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.util.Language;
 
 
 public class REMSSettings
@@ -153,7 +154,7 @@ public class REMSSettings
     //$$        return newValue > 0 && newValue <= 64 ? newValue : null;
     //$$    }
     //$$    @Override
-    //$$    public String description() { return "You must choose a value from 1 to 64";}
+    //$$    public String description() { return Language.getInstance().get("carpet.rule.soundSuppressionRadius.validate");}
     //$$ }
     //#endif
 
@@ -187,13 +188,6 @@ public class REMSSettings
     //$$ public static boolean ComparatorIgnoresStateUpdatesFromBelow = false;
     //#endif
 
-    //#if MC>=12101
-    //$$ @Rule(
-    //$$        categories = {REMS, FEATURE}
-    //$$ )
-    //$$ public static boolean soundsuppression = false;
-    //#endif
-
     //#if MC>=12102
     //$$ @Rule(
     //$$ categories = {REMS, FEATURE, SURVIVAL}
@@ -212,7 +206,7 @@ public class REMSSettings
     //$$ @Rule(
     //$$ categories = {REMS, FEATURE}
     //$$ )
-    //$$ public static boolean notloadingchunk = false;
+    //$$ public static boolean pearlnotloadingchunk = false;
     //#endif
 
     //#if MC>=12102
@@ -226,7 +220,7 @@ public class REMSSettings
     //$$ @Rule(
     //$$ categories = {REMS,EXPERIMENTAL}
     //$$ )
-    //$$ public static boolean magicBox = false;
+    //$$ public static boolean blockentityreplacement = false;
     //#endif
 }
 

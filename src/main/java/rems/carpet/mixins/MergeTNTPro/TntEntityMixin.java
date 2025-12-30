@@ -30,7 +30,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -44,11 +43,8 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
 {
     @Shadow public abstract int getFuse();
 
-    @Unique
     private TNTLogHelper logHelper;
-    @Unique
     private boolean mergeBool = false;
-    @Unique
     private int mergedTNT = 1;
 
     public TntEntityMixin(EntityType<?> entityType_1, World world_1)
@@ -99,7 +95,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
             logHelper.onExploded(getX(), getY(), getZ(), this.getWorld().getTime());
 
         if (mergedTNT > 1)
-            for (int i = 1; i < mergedTNT - 1; i++){
+            for (int i = mergedTNT; i < mergedTNT - 1; i++){
                 this.getWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
                         this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
             }

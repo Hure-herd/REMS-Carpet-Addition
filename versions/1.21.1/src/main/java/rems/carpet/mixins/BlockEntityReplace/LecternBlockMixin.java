@@ -18,12 +18,12 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.soundsuppressionintroduce;
+package rems.carpet.mixins.BlockEntityReplace;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;
-import net.minecraft.block.SculkSensorBlock;
+import net.minecraft.block.LecternBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,9 +32,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
-@Mixin(SculkSensorBlock.class)
-public abstract class SculkSensorBlockMixin extends BlockWithEntity {
-    protected SculkSensorBlockMixin(Settings settings) {
+
+@Mixin(LecternBlock.class)
+public abstract class LecternBlockMixin extends BlockWithEntity {
+    protected LecternBlockMixin(Settings settings) {
         super(settings);
     }
 
@@ -55,7 +56,7 @@ public abstract class SculkSensorBlockMixin extends BlockWithEntity {
             BlockState newState,
             boolean b
     ) {
-        return !REMSSettings.soundsuppression;
+        return !REMSSettings.blockentityreplacement;
     }
 
     @Inject(
@@ -70,7 +71,7 @@ public abstract class SculkSensorBlockMixin extends BlockWithEntity {
             boolean moved,
             CallbackInfo ci
     ) {
-        if (REMSSettings.soundsuppression) {
+        if (REMSSettings.blockentityreplacement) {
             super.onStateReplaced(state, world, pos, newState, moved);
         }
     }

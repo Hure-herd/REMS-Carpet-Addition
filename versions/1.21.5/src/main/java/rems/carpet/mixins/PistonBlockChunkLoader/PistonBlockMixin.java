@@ -60,6 +60,17 @@ public abstract class PistonBlockMixin
             BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
             BlockState pistonBlock2 = world.getBlockState(nbp2);
 
+            if (pistonBlock.isOf(Blocks.REDSTONE_ORE))
+            {
+                int x = pos.getX() + direction.getOffsetX();
+                int z = pos.getZ() + direction.getOffsetZ();
+
+                ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2);
+
+                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
+            }
+
             if (pistonBlock.isOf(Blocks.DIAMOND_ORE))
             {
                 int x = pos.getX() + direction.getOffsetX();

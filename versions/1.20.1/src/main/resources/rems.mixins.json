@@ -27,7 +27,8 @@
     "TripwireHookBlockMixin",
     "SettingsManagerMixin",
     "Reloadrefreshirongolem.VillagerEntityMixin",
-    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin",
+    "soundsuppressionintroduce.GameEventMixin"
   ],
   "client": [
   ],

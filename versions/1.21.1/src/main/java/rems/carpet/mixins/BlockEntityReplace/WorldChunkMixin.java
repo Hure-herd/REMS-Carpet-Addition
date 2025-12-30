@@ -18,16 +18,16 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.soundsuppressionintroduce;
+package rems.carpet.mixins.BlockEntityReplace;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.TrappedChestBlock;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.CalibratedSculkSensorBlockEntity;
+import net.minecraft.block.entity.LecternBlockEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,14 +48,14 @@ public abstract class WorldChunkMixin {
             )
     )
     private boolean setBlockStateMixin(boolean original, @Local(ordinal = 0) BlockEntity blockEntity) {
-        if (!REMSSettings.soundsuppression) {
+        if (!REMSSettings.blockentityreplacement) {
             return original;
         }
 
         BlockState blockState = this.getBlockState(blockEntity.getPos());
         Block block = blockState.getBlock();
 
-        if (blockEntity instanceof CalibratedSculkSensorBlockEntity
+        if (blockEntity instanceof CalibratedSculkSensorBlockEntity || blockEntity instanceof LecternBlockEntity
                 && block instanceof BlockEntityProvider) {
             return true;
         } else {

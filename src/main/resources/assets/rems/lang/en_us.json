@@ -4,8 +4,9 @@
   "carpet.rule.pistonBlockChunkLoader.name": "PistonBlockChunkLoader",
   "carpet.rule.pistonBlockChunkLoader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
   "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.1": "When RedStone_ore is on the piston,Load 1x1 active chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.2": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
+  "carpet.rule.pistonBlockChunkLoader.extra.3": "When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
@@ -56,9 +57,6 @@
   "carpet.rule.itemShadowing.name": "ItemShadowing",
   "carpet.rule.itemShadowing.desc" : "Reintroducing the logic of swapping between inventory in 1.16.5",
 
-  "carpet.rule.magicBox.name": "MagicBox",
-  "carpet.rule.magicBox.desc" : "Control whether CastSuppressor(CCESuppressor) is available",
-
   "carpet.rule.SignCommand.name": "SignCommand",
   "carpet.rule.SignCommand.desc" : "The player right-clicks the sign to execute the command on the sign",
   "carpet.rule.SignCommand.extra.0" : "Texts must start with '/'.",
@@ -74,14 +72,11 @@
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.desc": "When this option is turned on, the comparator ignores state updates from below",
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.extra": "Means that opening the trap gate will not destroy the comparator",
 
-  "carpet.rule.soundsuppression.name": "Soundsuppression",
-  "carpet.rule.soundsuppression.desc" : "Keep the block entity data of the calibrated hidden sensor to any blcok that is blockentity",
-
   "carpet.rule.endstonefram.name": "Endstonefram",
   "carpet.rule.endstonefram.desc": "You can build Endstonefram like 1.16,it can make it work",
 
   "carpet.rule.soundSuppressionRadius.name": "SoundSuppressionRadius",
-  "carpet.rule.soundSuppressionRadius.desc": "Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 17 grids. For the sake of lag and performance, the maximum value cannot exceed 32.",
+  "carpet.rule.soundSuppressionRadius.desc": "Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 16 grids. For the sake of lag and performance, the maximum value cannot exceed 64.",
 
   "carpet.rule.commandsetnoisesuppressor.name": "Commandsetnoisesuppressor",
   "carpet.rule.commandsetnoisesuppressor.desc": "Enables /setnoisesuppressor command to place a sound suppressor",
@@ -95,9 +90,14 @@
   "carpet.rule.fixedpearlloading.name": "Fixpearlloading",
   "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk.",
 
-  "carpet.rule.notloadingchunk.name": "Notloadingchunk",
-  "carpet.rule.notloadingchunk.desc": "It will make Enderpearl no load any chunk",
+  "carpet.rule.pearlnotloadingchunk.name": "Notloadingchunk",
+  "carpet.rule.pearlnotloadingchunk.desc": "It will make Enderpearl no load any chunk",
 
   "carpet.rule.wanderingTraderNoDisappear.name": "WanderingTraderNoDisappear",
-  "carpet.rule.wanderingTraderNoDisappear.desc": "Wandering Trader will no disappear customName is Load"
+  "carpet.rule.wanderingTraderNoDisappear.desc": "Wandering Trader will no disappear customName is Load",
+
+  "carpet.rule.blockentityreplacement.name": "Blockentityreplacement",
+  "carpet.rule.blockentityreplacement.desc": "Allows saving and replacing of block entities, used for creating CCE and IAE.",
+
+  "carpet.rule.soundSuppressionRadius.validate": "You must choose a value from 1 to 64"
 }
