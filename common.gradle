@@ -19,6 +19,9 @@ repositories {
 	maven {
 		url = 'https://jitpack.io'
 	}
+	maven {
+		url = 'https://www.cursemaven.com'
+	}
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
@@ -27,6 +30,7 @@ configurations {
 }
 
 dependencies {
+
 	// loom
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -35,6 +39,11 @@ dependencies {
 	// mods
 	//modImplementation("maven.modrinth:Carpet:${project.carpet_core_version}") // modrinth
 	modImplementation "carpet:fabric-carpet:${project.carpet_core_version}" // masa
+	if (mcVersion <= 12001) {
+		modImplementation(project.lithium_dependency)
+	}else {
+		modCompileOnly(project.lithium_dependency)
+	}
 
 	// library mods
 	include(modImplementation("com.github.1024-byteeeee:AnnotationToolBox:${project.annotationtoolbox_version}"))
@@ -91,7 +100,7 @@ String fullModVersion = project.mod_version + versionSuffix
 
 version = 'v' + fullModVersion
 group = project.maven_group
-archivesBaseName = project.archives_base_name + '-mc' + project.minecraft_version
+base.archivesName = project.archives_base_name + '-mc' + project.minecraft_version
 
 processResources {
 	from "carpetremsaddition.accesswidener"
@@ -127,7 +136,7 @@ java {
 
 jar {
 	from(rootProject.file('LICENSE')) {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_${project.base.archivesName.get()}"}
 	}
 }
 
@@ -170,7 +179,7 @@ testClasses.dependsOn licenseFormatTest
 publishing {
 	publications {
 		mavenJava(MavenPublication) {
-			artifactId archivesBaseName
+			artifactId base.archivesName.get()
 			from components.java
 		}
 	}

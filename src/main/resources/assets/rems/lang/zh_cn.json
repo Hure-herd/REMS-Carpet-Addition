@@ -100,5 +100,8 @@
   "carpet.rule.blockentityreplacement.name": "方块实体替换",
   "carpet.rule.blockentityreplacement.desc": "允许方块实体的保存和替换，用于制作CCE和IAE",
 
-  "carpet.rule.soundSuppressionRadius.validate": "数值必须在 1 到 64 之间"
+  "carpet.rule.soundSuppressionRadius.validate": "数值必须在 1 到 64 之间",
+
+  "carpet.rule.durableItemShadow.name": "持久物品分身",
+  "carpet.rule.durableItemShadow.desc": "重启后物品分身不消失"
 }

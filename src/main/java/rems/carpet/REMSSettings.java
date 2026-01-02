@@ -58,9 +58,10 @@ public class REMSSettings
     public static boolean PortalPearlWarp = false;
 
     @Rule(
+            options = {"true", "false"},
             categories = {REMS, SURVIVAL}
     )
-    public static boolean pistonBlockChunkLoader =  false;
+    public static String pistonBlockChunkLoader =  "false";
 
     //#if MC<12102
     @Rule(
@@ -172,6 +173,11 @@ public class REMSSettings
     )
     public static boolean enderpearlloadchunk = false;
     //#endif
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean durableItemShadow = false;
 
     //#if MC>=12001
     //$$ @Rule(

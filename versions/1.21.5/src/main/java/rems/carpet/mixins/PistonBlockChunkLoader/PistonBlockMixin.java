@@ -34,8 +34,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
-import rems.carpet.utils.ChunkLoaderState;
+import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
 
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -49,7 +50,7 @@ public abstract class PistonBlockMixin
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
     {
-        if(REMSSettings.pistonBlockChunkLoader && !world.isClient())
+        if(Objects.equals(REMSSettings.pistonBlockChunkLoader, "true") && !world.isClient())
         {
             Direction direction = state.get(FacingBlock.FACING);
 

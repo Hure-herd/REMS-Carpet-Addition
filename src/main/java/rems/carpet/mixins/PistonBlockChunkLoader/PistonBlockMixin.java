@@ -20,29 +20,20 @@
 
 package rems.carpet.mixins.PistonBlockChunkLoader;
 
-import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ChunkHolder;
-import net.minecraft.server.world.ChunkTicketType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.world.chunk.ChunkManager;
 import rems.carpet.REMSSettings;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.registry.Registries;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rems.carpet.utils.ChunkLoaderState;
+import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
 
-import java.util.Comparator;
+import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +47,7 @@ public abstract class PistonBlockMixin
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
     {
-        if(REMSSettings.pistonBlockChunkLoader && !world.isClient())
+        if(Objects.equals(REMSSettings.pistonBlockChunkLoader, "true") && !world.isClient())
         {
             Direction direction = state.get(FacingBlock.FACING);
 

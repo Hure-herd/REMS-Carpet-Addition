@@ -250,3 +250,10 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet pearlnotloadingchunk true`
 * 分类: `REMS` , `feature`
+* 
+## 持久物品分身(DurableItemShadow)
+重启后物品分身不消失
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet durableItemShadow true`
+* 分类: `REMS` , `feature`

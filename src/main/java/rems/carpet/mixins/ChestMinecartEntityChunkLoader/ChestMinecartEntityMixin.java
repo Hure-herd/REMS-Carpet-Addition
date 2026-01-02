@@ -22,7 +22,6 @@ package rems.carpet.mixins.ChestMinecartEntityChunkLoader;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.vehicle.ChestMinecartEntity;
-import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
@@ -31,9 +30,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
-import rems.carpet.utils.ChunkLoaderState;
-
-import java.util.Comparator;
+import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
 
 @Mixin(Entity.class)
 public class ChestMinecartEntityMixin {

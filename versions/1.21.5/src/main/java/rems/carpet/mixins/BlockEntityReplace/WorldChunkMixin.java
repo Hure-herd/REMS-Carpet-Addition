@@ -20,7 +20,7 @@
 
 package rems.carpet.mixins.BlockEntityReplace;
 
-import rems.carpet.utils.SuppressionManager;
+import rems.carpet.utils.BlockEntityReplace.SuppressionManager;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import net.minecraft.block.BlockState;

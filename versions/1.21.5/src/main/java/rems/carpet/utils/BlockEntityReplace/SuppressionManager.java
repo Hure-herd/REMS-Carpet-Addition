@@ -18,7 +18,7 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.utils;
+package rems.carpet.utils.BlockEntityReplace;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;

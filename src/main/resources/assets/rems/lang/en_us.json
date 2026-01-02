@@ -99,5 +99,8 @@
   "carpet.rule.blockentityreplacement.name": "Blockentityreplacement",
   "carpet.rule.blockentityreplacement.desc": "Allows saving and replacing of block entities, used for creating CCE and IAE.",
 
-  "carpet.rule.soundSuppressionRadius.validate": "You must choose a value from 1 to 64"
+  "carpet.rule.soundSuppressionRadius.validate": "You must choose a value from 1 to 64",
+
+  "carpet.rule.durableItemShadow.name": "DurableItemShadow",
+  "carpet.rule.durableItemShadow.desc": "The item Shadow do not disappear after restarting."
 }

@@ -4,6 +4,8 @@ Currently, the main supported version is **1.19.4**. The main version under deve
 
 | Version | Support |
 |:-------:|:----:|
+| 1.21.11 |  ✔   |
+| 1.21.10 |  ✔   |
 | 1.21.8  |  ✔   |
 | 1.21.7  |  ✔   |
 | 1.21.6  |  ✔   |

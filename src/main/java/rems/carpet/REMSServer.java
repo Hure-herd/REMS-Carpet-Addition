@@ -22,6 +22,7 @@ package rems.carpet;
 
 import carpet.CarpetExtension;
 import carpet.CarpetServer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
 import rems.carpet.utils.ComponentTranslate;
@@ -30,6 +31,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import rems.carpet.command.soundsuppressionintroduce.UpdateDepressionCommands;
+import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
+
+import java.util.Map;
 
 public class REMSServer implements CarpetExtension, ModInitializer
 {
@@ -66,6 +71,13 @@ public class REMSServer implements CarpetExtension, ModInitializer
     public void onInitialize() {
         REMSServer.loadExtension();
         shouldKeepPearl = Boolean.getBoolean("pearl.keep");
+        //#if MC>=12001
+        //$$ CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
+        //$$         UpdateDepressionCommands.register(dispatcher, context));
+        //#endif
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            ShadowCacheManager.clearCache();
+        });
     }
 
     @Override

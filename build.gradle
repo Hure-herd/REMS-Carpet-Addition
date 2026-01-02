@@ -1,7 +1,7 @@
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
-	id 'fabric-loom' version '1.11-SNAPSHOT' apply false
+	id 'fabric-loom' version '1.14-SNAPSHOT' apply false
 	id 'com.replaymod.preprocess' version '7fa8d51'
 }
 
@@ -17,6 +17,7 @@ preprocess {
 	def mc1215 = createNode('1.21.5', 1_21_05, 'yarn')
 	def mc1218 = createNode('1.21.8', 1_21_08, 'yarn')
 	def mc12110 = createNode('1.21.10', 1_21_10, 'yarn')
+	def mc12111 = createNode('1.21.11', 1_21_11, 'yarn')
 
 	mc119.link(mc1201, file('versions/mapping-1.19-1.20.1.txt'))
 	mc1201.link(mc1204, file('versions/mapping-1.20.1-1.20.4.txt'))
@@ -28,6 +29,7 @@ preprocess {
 	mc1214.link(mc1215, file('versions/mapping-1.21.4-1.21.5.txt'))
 	mc1215.link(mc1218, file('versions/mapping-1.21.5-1.21.8.txt'))
 	mc1218.link(mc12110, file('versions/mapping-1.21.8-1.21.10.txt'))
+	mc12110.link(mc12111, file('versions/mapping-1.21.10-1.21.11.txt'))
 }
 
 tasks.register('buildAndGather') {

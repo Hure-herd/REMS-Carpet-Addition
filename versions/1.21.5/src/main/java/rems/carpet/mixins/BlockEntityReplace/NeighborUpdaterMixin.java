@@ -20,7 +20,7 @@
 
 package rems.carpet.mixins.BlockEntityReplace;
 
-import rems.carpet.utils.SuppressionManager;
+import rems.carpet.utils.BlockEntityReplace.SuppressionManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;

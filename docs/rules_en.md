@@ -273,3 +273,10 @@ Enderpearl no load any chunk
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet pearlnotloadingchunk true`
 * Categories: `REMS` , `feature`
+* 
+## DurableItemShadow
+The item Shadow do not disappear after restarting.
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet durableItemShadow true`
+* Categories: `REMS` , `feature`
