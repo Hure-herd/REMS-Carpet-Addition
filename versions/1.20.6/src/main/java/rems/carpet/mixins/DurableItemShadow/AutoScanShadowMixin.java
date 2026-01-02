@@ -35,7 +35,6 @@ import rems.carpet.REMSSettings;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Mixin(ServerPlayerEntity.class)
 public class AutoScanShadowMixin {
@@ -77,8 +76,6 @@ public class AutoScanShadowMixin {
         if (currentData.contains("ShadowID"))return;
 
         NbtCompound mutableNbt = currentData.copyNbt();
-        UUID newId = UUID.randomUUID();
-        mutableNbt.putUuid("ShadowID", newId);
         stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(mutableNbt));
     }
 }
