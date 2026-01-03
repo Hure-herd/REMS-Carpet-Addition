@@ -1,12 +1,12 @@
 {
   "carpet.category.REMS": "REMS",
 
-  "carpet.rule.pistonBlockChunkLoader.name": "PistonBlockChunkLoader",
-  "carpet.rule.pistonBlockChunkLoader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
-  "carpet.rule.pistonBlockChunkLoader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "When RedStone_ore is on the piston,Load 1x1 active chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk",
+  "carpet.rule.pistonBlockChunkloader.name": "PistonBlockChunkLoader",
+  "carpet.rule.pistonBlockChunkloader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
+  "carpet.rule.pistonBlockChunkloader.extra.0": "When Diamond_ore is on the piston,Load 1x1 lazy chunk",
+  "carpet.rule.pistonBlockChunkloader.extra.1": "When RedStone_ore is on the piston,Load 1x1 active chunk",
+  "carpet.rule.pistonBlockChunkloader.extra.2": "When a piston/sticky piston is in the netherworld with bedrock below and a redstone torch above the next block,Load 1x1 lazy chunk",
+  "carpet.rule.pistonBlockChunkloader.extra.3": "When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk",
 
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",

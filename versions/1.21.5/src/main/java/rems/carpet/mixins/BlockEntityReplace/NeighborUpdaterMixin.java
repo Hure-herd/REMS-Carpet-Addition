@@ -20,6 +20,9 @@
 
 package rems.carpet.mixins.BlockEntityReplace;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Unique;
 import rems.carpet.utils.BlockEntityReplace.SuppressionManager;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,60 +53,46 @@ public interface NeighborUpdaterMixin {
 
         if (REMSSettings.blockentityreplacement) {
 
-            BlockPos blockPos;
-
-            int[] Offsets = {-3, -2, -1, 0, 1, 2, 3};
+            MinecraftServer server = world.getServer();
+            int[] offsets = {-3, -2, -1, 0, 1, 2, 3};
             int[] yOffsets = {-1, 0};
+
             for (int dy : yOffsets) {
-                for (int dx : Offsets) {
-                    blockPos = pos.add(dx, dy, 0);
-                    if(SuppressionManager.isMarked2(blockPos)){
-                        SuppressionManager.mark(blockPos);
-                        if (!world.isClient) {
-                            net.minecraft.server.MinecraftServer server = world.getServer();
-                            if (server != null) {
-                            //    server.getPlayerManager().broadcast(
-                            //            net.minecraft.text.Text.literal("§a[标记系统] 标记 " + blockPos),false);
-                            }
-                        }
-                    }
-                }
-                for (int dz : Offsets) {
-                    blockPos = pos.add(0, dy, dz);
-                    if(SuppressionManager.isMarked2(blockPos)){
-                        SuppressionManager.mark(blockPos);
-                        if (!world.isClient) {
-                            net.minecraft.server.MinecraftServer server = world.getServer();
-                            if (server != null) {
-                            //    server.getPlayerManager().broadcast(
-                            //           net.minecraft.text.Text.literal("§a[标记系统] 标记 " + blockPos),false);
-                            }
-                        }
-                    }
+                for (int d : offsets) {
+                    handleMarkedPos(world, pos.add(d, dy, 0)); // X 方向
+                    handleMarkedPos(world, pos.add(0, dy, d)); // Z 方向
                 }
             }
+        }
+    }
+
+    @Unique
+    private static void handleMarkedPos(World world, BlockPos blockPos) {
+        if (!SuppressionManager.isMarked2(blockPos)) return;
+
+        SuppressionManager.mark(blockPos);
+
+        if (!world.isClient && world.getServer() != null) {
+            if (SuppressionManager.isMarked(SuppressionManager.getMarkedPos()) && SuppressionManager.isRestorable()) {
+
+                BlockPos markedPos = SuppressionManager.getMarkedPos();
+                Chunk chunk = world.getChunk(markedPos);
+
+                if (SuppressionManager.getMarkedOldState() != null) {
+                    SuppressionManager.forceSetBlockState(chunk, markedPos, SuppressionManager.getMarkedOldState());
+                }
+                ((BlockEntityAccessor) SuppressionManager.getMarkedCapturedBE()).setRemoved(false);
+                world.removeBlockEntity(markedPos);
+                world.addBlockEntity(SuppressionManager.getMarkedCapturedBE());
+                SuppressionManager.forceSetBlockState(chunk, markedPos, SuppressionManager.getMarkedState());
+            } else {
+                world.removeBlockEntity(SuppressionManager.getMarkedPos());
+            }
+
+            SuppressionManager.clear();
             SuppressionManager.clear2();
-            if (!world.isClient && world.getServer() != null) {
-                if(SuppressionManager.getMarkedPos() == null)return;
-                if (SuppressionManager.isMarked(SuppressionManager.getMarkedPos()) && SuppressionManager.isRestorable()) {
-                    Chunk chunk = world.getChunk(SuppressionManager.getMarkedPos());
-                    if (SuppressionManager.getMarkedOldState() != null) {
-                        SuppressionManager.forceSetBlockState(chunk,SuppressionManager.getMarkedPos(), SuppressionManager.getMarkedOldState());
-                    }
-                    ((BlockEntityAccessor) SuppressionManager.getMarkedCapturedBE()).setRemoved(false);
-                    world.removeBlockEntity(SuppressionManager.getMarkedPos());
-                    world.addBlockEntity(SuppressionManager.getMarkedCapturedBE());
-                    SuppressionManager.forceSetBlockState(chunk,SuppressionManager.getMarkedPos(),SuppressionManager.getMarkedState());
-                    String beName = SuppressionManager.getMarkedOldState().getBlock().getName().getString();
-                    //world.getServer().getPlayerManager().broadcast(
-                    //        Text.literal("§a[延迟恢复] 成功复活 BE @ " + SuppressionManager2.getMarkedPos().toShortString()+ "§a BE @ " + beName), false);
-                    SuppressionManager.clear();
-                }else {
-                    world.removeBlockEntity(SuppressionManager.getMarkedPos());
-                }
-                SuppressionManager.clears();
-                SuppressionManager.setRestorable(false);
-            }
+            SuppressionManager.clears();
+            SuppressionManager.setRestorable(false);
         }
     }
 }

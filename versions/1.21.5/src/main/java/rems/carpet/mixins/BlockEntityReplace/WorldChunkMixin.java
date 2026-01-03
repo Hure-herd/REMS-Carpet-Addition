@@ -59,12 +59,9 @@ public abstract class WorldChunkMixin {
         BlockEntity existingBe = this.getBlockEntity(pos);
 
         if (!this.world.isClient && this.world.getServer() != null) {
-            if (existingBe != null  && !(existingBe instanceof ComparatorBlockEntity)) {
+            if (existingBe != null && !(existingBe instanceof ComparatorBlockEntity)) {
                 BlockState trueOldState = existingBe.getCachedState();
-                String beName = trueOldState.getBlock().getName().getString();
                 SuppressionManager.mark2(pos);
-                 //this.world.getServer().getPlayerManager().broadcast(
-                 //       Text.literal("§e[Debug] 正在修改方块 @ " + pos.toShortString() +    " -> 发现BE: [§f" + beName + "§e]，已备份。"),false);
                 capturedBE.set(existingBe);
                 oldStateRef.set(trueOldState);
             }
@@ -73,20 +70,15 @@ public abstract class WorldChunkMixin {
         BlockState originalState = oldStateRef.get();
         if (savedBe == null) return;
         if (savedBe instanceof ComparatorBlockEntity) return;
-        if(!newState.hasBlockEntity()){
-        removeBlockEntity(pos);
-        if (!newState.isAir())return;
-        SuppressionManager.setRestorable(true);
-        SuppressionManager.posmark(pos);
-        SuppressionManager.capturedBEmark(savedBe);
-        SuppressionManager.statemark(newState);
-        SuppressionManager.oldStatemark(originalState);
-        //Objects.requireNonNull(world.getServer()).getPlayerManager().broadcast(
-        //        Text.literal("§a 传入数据 " + SuppressionManager2.getMarkedPos().toShortString()+
-        //                SuppressionManager2.getMarkedOldState().getBlock().getName().getString() +
-        //                SuppressionManager2.getMarkedState().toString() +
-        //                 SuppressionManager2.getMarkedOldState().toString()), false);
-    }
+        if (!newState.hasBlockEntity()) {
+            removeBlockEntity(pos);
+            if (!newState.isAir()) return;
+            SuppressionManager.setRestorable(true);
+            SuppressionManager.posmark(pos);
+            SuppressionManager.capturedBEmark(savedBe);
+            SuppressionManager.statemark(newState);
+            SuppressionManager.oldStatemark(originalState);
+        }
     }
 
 

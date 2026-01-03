@@ -1,12 +1,12 @@
 {
   "carpet.category.REMS": "REMS",
 
-  "carpet.rule.pistonBlockChunkLoader.name": "活塞头区块加载",
-  "carpet.rule.pistonBlockChunkLoader.desc": "活塞或黏性活塞被激活且能正常伸出时以活塞头将到达的区块为中心加载,持续3s",
-  "carpet.rule.pistonBlockChunkLoader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.2": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
-  "carpet.rule.pistonBlockChunkLoader.extra.3": "当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块",
+  "carpet.rule.pistonBlockChunkloader.name": "活塞头区块加载",
+  "carpet.rule.pistonBlockChunkloader.desc": "活塞或黏性活塞被激活且能正常伸出时以活塞头将到达的区块为中心加载,持续3s",
+  "carpet.rule.pistonBlockChunkloader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
+  "carpet.rule.pistonBlockChunkloader.extra.1": "当活塞/黏性活塞上方有红石原矿时，强加载1x1的区块",
+  "carpet.rule.pistonBlockChunkloader.extra.2": "当活塞/黏性活塞在地狱下方有基岩，后一格上方是红石火把时，弱加载1x1的区块",
+  "carpet.rule.pistonBlockChunkloader.extra.3": "当有3X3的弱加载区块的时候，最中心的区块会变成强加载区块",
 
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
