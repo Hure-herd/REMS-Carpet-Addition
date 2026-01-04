@@ -39,7 +39,7 @@ import rems.carpet.REMSSettings;
 
 
 @Mixin(TntEntity.class)
-public abstract class TntEntityMixin extends Entity implements TntEntityInterface
+    public abstract class TntEntityMixin extends Entity implements TntEntityInterface
 {
     @Shadow public abstract int getFuse();
 
@@ -57,8 +57,9 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
             at = @At("RETURN"))
     private void modifyTNTAngle(World world, double x, double y, double z, LivingEntity entity, CallbackInfo ci)
     {
-        if (CarpetSettings.hardcodeTNTangle != -1.0D)
+        if (CarpetSettings.hardcodeTNTangle != -1.0D){
             setVelocity(-Math.sin(CarpetSettings.hardcodeTNTangle) * 0.02, 0.2, -Math.cos(CarpetSettings.hardcodeTNTangle) * 0.02);
+        }
     }
 
     @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V", at = @At("RETURN"))
@@ -85,14 +86,16 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
     private void initTNTLogger(World world_1, double double_1, double double_2, double double_3,
                                LivingEntity livingEntity_1, CallbackInfo ci)
     {
-        if(CarpetSettings.tntPrimerMomentumRemoved)
+        if(CarpetSettings.tntPrimerMomentumRemoved){
             this.setVelocity(new Vec3d(0.0, 0.20000000298023224D, 0.0));
+        }
     }
 
     @Inject(method = "explode", at = @At(value = "HEAD"))
     private void onExplode(CallbackInfo ci) {
-        if (LoggerRegistry.__tnt && logHelper != null)
+        if (LoggerRegistry.__tnt && logHelper != null){
             logHelper.onExploded(getX(), getY(), getZ(), this.getWorld().getTime());
+        }
 
         if (mergedTNT > 1)
             for (int i = mergedTNT; i < mergedTNT - 1; i++){

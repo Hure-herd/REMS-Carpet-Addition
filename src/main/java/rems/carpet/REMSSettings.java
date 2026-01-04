@@ -140,6 +140,16 @@ public class REMSSettings
     )
     public static boolean SignCommand = false;
 
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean reintroduceLlamaItemDuplicating = false;
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean opInSurvivalCommandBlocks = false;
+
     //#if MC>=12001
     //$$ @Rule(
     //$$         categories = {REMS,FEATURE},

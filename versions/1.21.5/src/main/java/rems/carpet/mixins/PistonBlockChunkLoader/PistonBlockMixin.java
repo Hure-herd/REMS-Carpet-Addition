@@ -48,10 +48,8 @@ public abstract class PistonBlockMixin
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
 
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
-    private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info)
-    {
-        if(REMSSettings.pistonBlockChunkloader && !world.isClient())
-        {
+    private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info) {
+        if(REMSSettings.pistonBlockChunkloader && !world.isClient()) {
             Direction direction = state.get(FacingBlock.FACING);
 
             BlockState pistonBlock = world.getBlockState(pos.up(1));
@@ -61,8 +59,7 @@ public abstract class PistonBlockMixin
             BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
             BlockState pistonBlock2 = world.getBlockState(nbp2);
 
-            if (pistonBlock.isOf(Blocks.REDSTONE_ORE))
-            {
+            if (pistonBlock.isOf(Blocks.REDSTONE_ORE)) {
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
@@ -72,8 +69,7 @@ public abstract class PistonBlockMixin
                 ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
             }
 
-            if (pistonBlock.isOf(Blocks.DIAMOND_ORE))
-            {
+            if (pistonBlock.isOf(Blocks.DIAMOND_ORE)) {
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
@@ -108,8 +104,7 @@ public abstract class PistonBlockMixin
             }
 
             if (pistonBlock1.isOf(Blocks.BEDROCK) && pistonBlock2.isOf(Blocks.REDSTONE_TORCH) &&
-                    world.getRegistryKey() == World.NETHER)
-            {
+                    world.getRegistryKey() == World.NETHER) {
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 

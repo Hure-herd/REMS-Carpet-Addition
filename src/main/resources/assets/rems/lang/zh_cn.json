@@ -103,5 +103,11 @@
   "carpet.rule.soundSuppressionRadius.validate": "数值必须在 1 到 64 之间",
 
   "carpet.rule.durableItemShadow.name": "持久物品分身",
-  "carpet.rule.durableItemShadow.desc": "重启后物品分身不消失"
+  "carpet.rule.durableItemShadow.desc": "重启后物品分身不消失",
+
+  "carpet.rule.reintroduceLlamaItemDuplicating.name": "重新引入羊驼复制",
+  "carpet.rule.reintroduceLlamaItemDuplicating.desc": "重新引入1.14-1.15的羊驼物品复制",
+
+  "carpet.rule.opInSurvivalCommandBlocks.name": "生存模式OP编辑命令方块",
+  "carpet.rule.opInSurvivalCommandBlocks.desc": "允许 OP 在生存模式下编辑命令方块"
 }

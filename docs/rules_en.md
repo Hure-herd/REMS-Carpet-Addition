@@ -2,7 +2,7 @@
 
 ## PistonBlockChunkLoader
 If enabled, when this piston/sticky piston head generates a piston head push/pull event, a load ticket of type "piston_block" is added to the chunk where the piston head block is located at the game tick that created the push/pull event, with a duration of 60gt (3s).
-### In any dimension, a diamond ore can be weakly loaded into a 1x1 Active chunk above a piston.
+### In any dimension, a diamond ore can be weakly loaded into a 1x1 lazy chunk above a piston.
 ### In any dimension, a redstone ore can be weakly loaded into a 1x1 Active chunk above a piston.
 ### If there is bedrock below the netherworld and a redstone torch above the next block, a 1x1 block can be lazy loaded.
 ### When there are 3X3 weak loading chunks, the central chunk will become a Active loading chunk
@@ -279,4 +279,18 @@ The item Shadow do not disappear after restarting.
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet durableItemShadow true`
+* Categories: `REMS` , `feature`
+
+## ReintroduceLlamaItemDuplicating
+Reintroduce item duping with llama.
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet reintroduceLlamaItemDuplicating true`
+* Categories: `REMS` , `feature`
+
+## OpInSurvivalCommandBlocks
+Allows OPs to edit Command Blocks in Survival mode.
+* Default Value: `false`
+* Optional Parameters: `true`, `false`
+* Open Method: `/carpet opInSurvivalCommandBlocks true`
 * Categories: `REMS` , `feature`

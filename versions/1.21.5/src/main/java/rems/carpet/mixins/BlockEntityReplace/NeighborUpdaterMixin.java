@@ -53,14 +53,13 @@ public interface NeighborUpdaterMixin {
 
         if (REMSSettings.blockentityreplacement) {
 
-            MinecraftServer server = world.getServer();
             int[] offsets = {-3, -2, -1, 0, 1, 2, 3};
             int[] yOffsets = {-1, 0};
 
             for (int dy : yOffsets) {
                 for (int d : offsets) {
-                    handleMarkedPos(world, pos.add(d, dy, 0)); // X 方向
-                    handleMarkedPos(world, pos.add(0, dy, d)); // Z 方向
+                    handleMarkedPos(world, pos.add(d, dy, 0));
+                    handleMarkedPos(world, pos.add(0, dy, d));
                 }
             }
         }
@@ -69,13 +68,12 @@ public interface NeighborUpdaterMixin {
     @Unique
     private static void handleMarkedPos(World world, BlockPos blockPos) {
         if (!SuppressionManager.isMarked2(blockPos)) return;
-
         SuppressionManager.mark(blockPos);
-
         if (!world.isClient && world.getServer() != null) {
             if (SuppressionManager.isMarked(SuppressionManager.getMarkedPos()) && SuppressionManager.isRestorable()) {
 
                 BlockPos markedPos = SuppressionManager.getMarkedPos();
+                if (SuppressionManager.getMarkedPos() == null)return;
                 Chunk chunk = world.getChunk(markedPos);
 
                 if (SuppressionManager.getMarkedOldState() != null) {
@@ -86,6 +84,7 @@ public interface NeighborUpdaterMixin {
                 world.addBlockEntity(SuppressionManager.getMarkedCapturedBE());
                 SuppressionManager.forceSetBlockState(chunk, markedPos, SuppressionManager.getMarkedState());
             } else {
+                if (SuppressionManager.getMarkedPos() == null)return;
                 world.removeBlockEntity(SuppressionManager.getMarkedPos());
             }
 

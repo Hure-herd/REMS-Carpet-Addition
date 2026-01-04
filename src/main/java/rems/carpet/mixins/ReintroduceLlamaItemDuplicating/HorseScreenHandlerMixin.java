@@ -2,7 +2,7 @@
  * This file is part of the Carpet REMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2025 A Minecraft Server and contributors
+ * Copyright (C) 2026 A Minecraft Server and contributors
  *
  * Carpet REMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,26 +18,29 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
+package rems.carpet.mixins.ReintroduceLlamaItemDuplicating;
 
-package rems.carpet.mixins;
-
-import net.minecraft.server.world.ServerWorld;
-import rems.carpet.REMSSettings;
+import net.minecraft.entity.passive.AbstractHorseEntity;
+import net.minecraft.entity.passive.LlamaEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.screen.HorseScreenHandler;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rems.carpet.REMSSettings;
 
-@Mixin(ServerWorld.class)
-public abstract class keepWorldTickUpdate {
+@Mixin(HorseScreenHandler.class)
+public class HorseScreenHandlerMixin {
 
-    @Shadow public abstract void resetIdleTimeout();
+    @Shadow @Final private AbstractHorseEntity entity;
 
-    @Inject(method = "tick", at = @At("HEAD"))
-    private void tick(CallbackInfo ci) {
-        if (REMSSettings.keepWorldTickUpdate) {
-            this.resetIdleTimeout();
-        }
+    @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
+    private void forceKeepInventoryOpen(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+        if(!(entity instanceof LlamaEntity))return;
+        if(!REMSSettings.reintroduceLlamaItemDuplicating)return;
+        cir.setReturnValue(true);
     }
 }

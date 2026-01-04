@@ -257,3 +257,17 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet durableItemShadow true`
 * 分类: `REMS` , `feature`
+* 
+## 重新引入羊驼复制(ReintroduceLlamaItemDuplicating)
+重新引入1.14-1.15的羊驼物品复制
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet reintroduceLlamaItemDuplicating true`
+* 分类: `REMS` , `feature`
+
+## 生存模式OP编辑命令方块(OpInSurvivalCommandBlocks)
+允许 OP 在生存模式下编辑命令方块
+* 默认值: `false`
+* 可选参数: `true`, `false`
+* 开启方法: `/carpet opInSurvivalCommandBlocks true`
+* 分类: `REMS` , `feature`

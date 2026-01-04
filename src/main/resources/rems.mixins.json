@@ -39,7 +39,10 @@
     "soundsuppressionintroduce.GameEventMixin",
     "DurableItemShadow.AutoScanShadowMixin",
     "DurableItemShadow.PersistentShadowMixin",
-    "DurableItemShadow.lithiumHopperHelperMixin"
+    "DurableItemShadow.lithiumHopperHelperMixin",
+    "ReintroduceLlamaItemDuplicating.HorseScreenHandlerMixin",
+    "OpInSurvivalCommandBlocks.CommandBlockBlockMixin",
+    "OpInSurvivalCommandBlocks.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
   ],

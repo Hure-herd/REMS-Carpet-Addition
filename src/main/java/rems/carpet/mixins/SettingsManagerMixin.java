@@ -39,8 +39,7 @@ import static carpet.utils.Translations.tr;
 @Mixin(SettingsManager.class)
 public abstract class SettingsManagerMixin {
     @Shadow(remap = false)
-    @Final
-    private String fancyName;
+    @Final private String fancyName;
 
     @Inject(
             method = "listAllSettings",
