@@ -11,11 +11,3 @@
 # 文档
 
 - 见文档网页：https://hure-herd.github.io/docs
-
-# 引用
-- gnembon [fabric-carpet](https://github.com/gnembon/fabric-carpet)
-- Copetan [lunaar-carpet-addons](https://github.com/Lunaar-SMP/lunaar-carpet-addons)
-- 1024-byteeeee [Carpet-AMS-Addition](https://github.com/Minecraft-AMS/Carpet-AMS-Addition)
-- totorewa [totos-carpet-tweaks](https://github.com/totorewa/totos-carpet-tweaks)
-- Crystal_0404 [CrystalCarpetAddition](https://github.com/Crystal0404/CrystalCarpetAddition)
-- TISUnion [Carpet-TIS-Addition](https://github.com/TISUnion/Carpet-TIS-Addition)
