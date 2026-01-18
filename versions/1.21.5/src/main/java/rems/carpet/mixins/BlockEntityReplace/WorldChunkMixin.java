@@ -71,7 +71,6 @@ public abstract class WorldChunkMixin {
         if (savedBe == null) return;
         if (savedBe instanceof ComparatorBlockEntity) return;
         if (!newState.hasBlockEntity()) {
-            removeBlockEntity(pos);
             if (!newState.isAir()) return;
             SuppressionManager.setRestorable(true);
             SuppressionManager.posmark(pos);
