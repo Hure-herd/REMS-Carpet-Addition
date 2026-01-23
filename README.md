@@ -10,4 +10,4 @@
 
 # 文档
 
-- 见文档网页：https://hure-herd.github.io/remscarpet.github.io/
+- 见文档网页：[超级链接](https://www.hureherd.top/remscarpet.github.io/)
