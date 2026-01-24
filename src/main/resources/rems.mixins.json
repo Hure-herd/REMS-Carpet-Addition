@@ -42,7 +42,10 @@
     "DurableItemShadow.lithiumHopperHelperMixin",
     "ReintroduceLlamaItemDuplicating.HorseScreenHandlerMixin",
     "OpInSurvivalCommandBlocks.CommandBlockBlockMixin",
-    "OpInSurvivalCommandBlocks.ServerPlayNetworkHandlerMixin"
+    "OpInSurvivalCommandBlocks.ServerPlayNetworkHandlerMixin",
+    "sharedVillagerDiscounts.VillagerGossipsAccessor",
+    "sharedVillagerDiscounts.VillagerGossips_ReputationInvoker",
+    "sharedVillagerDiscounts.VillagerGossipsMixin"
   ],
   "client": [
   ],
