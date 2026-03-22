@@ -20,15 +20,21 @@
 
 package rems.carpet.utils;
 
+import carpet.utils.Messenger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.sun.java.accessibility.util.Translator;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ComponentTranslate {
@@ -45,6 +51,30 @@ public class ComponentTranslate {
             return Collections.emptyMap();
         }
         Gson gson = new GsonBuilder().setLenient().create();
-        return gson.fromJson(jsonData, new TypeToken<Map<String, String>>() {}.getType());
+
+        Map<String, String> map = gson.fromJson(jsonData, new TypeToken<Map<String, String>>() {}.getType());
+
+        if (map != null) {
+            localDictionary = map;
+        }
+
+        return map;
+    }
+
+    private static Map<String, String> localDictionary = new HashMap<>();
+
+    public static MutableText tr(String path, Object... args) {
+        String fullKey = "rems." + path;
+        String text = localDictionary.getOrDefault(fullKey, fullKey);
+
+        if (args != null && args.length > 0 && !text.equals(fullKey)) {
+            text = String.format(text, args);
+        }
+
+        return  Text.literal(text);
+    }
+
+    public static MutableText error(String path, Object... args) {
+        return tr(path, args).formatted(Formatting.RED);
     }
 }

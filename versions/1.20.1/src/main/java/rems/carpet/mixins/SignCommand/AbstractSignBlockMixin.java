@@ -20,6 +20,7 @@
 
 package rems.carpet.mixins.SignCommand;
 
+import carpet.utils.Messenger;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -44,17 +45,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.ComponentTranslate;
 
 import java.util.*;
 
 @Mixin(AbstractSignBlock.class)
 public class AbstractSignBlockMixin {
-    @Unique
-    private static final Set<String> ALLOWED_COMMANDS = new HashSet<>(Arrays.asList(
-            "say",
-            "player",
-            "tick"
-    ));
 
     @Inject(
             method = "onUse",
@@ -63,6 +59,11 @@ public class AbstractSignBlockMixin {
     )
     private void onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> ci) {
         if (REMSSettings.SignCommand) {
+
+            if (player.isSneaking() || world.isClient()) {
+                return;
+            }
+
             if (world.getBlockEntity(pos) instanceof SignBlockEntity signBlockEntity) {
                 boolean filtered = player.shouldFilterText();
 
@@ -79,7 +80,7 @@ public class AbstractSignBlockMixin {
 
                 String actualCommand = fullCommand.substring(1);
                 if (!isCommandAllowed(actualCommand)) {
-                    player.sendMessage(Text.literal("§c该指令未被允许通过告示牌执行"), false);
+                    player.sendMessage(ComponentTranslate.error("sign_command.not_allowed"), false);
                     ci.setReturnValue(ActionResult.success(true));
                     return;
                 }
@@ -129,7 +130,7 @@ public class AbstractSignBlockMixin {
             baseCommand = baseCommand.substring(colonIndex + 1);
         }
 
-        return ALLOWED_COMMANDS.contains(baseCommand);
+        return REMSSettings.ALLOWED_COMMANDS.contains(baseCommand);
     }
 
     @Unique
@@ -155,10 +156,10 @@ public class AbstractSignBlockMixin {
                 if (results.getExceptions().isEmpty()) {
                     dispatcher.execute(results);
                 } else {
-                    player.sendMessage(Text.literal("§c指令语法错误"), false);
+                    player.sendMessage(ComponentTranslate.error("sign.command.syntax_error"), false);
                 }
             } catch (CommandSyntaxException e) {
-                player.sendMessage(Text.literal("§c执行失败: " + e.getMessage()), false);
+                player.sendMessage(ComponentTranslate.error("sign_command.failed", e.getMessage()), false);
             }
         });
     }

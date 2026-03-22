@@ -2,7 +2,7 @@
  * This file is part of the Carpet REMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2025 A Minecraft Server and contributors
+ * Copyright (C) 2026 A Minecraft Server and contributors
  *
  * Carpet REMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -18,10 +18,17 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.command.soundsuppressionintroduce;
+package rems.carpet.mixins.DisableAi;
 
-import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.command.CommandRegistryAccess;
-import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.entity.ai.goal.GoalSelector;
+import net.minecraft.entity.ai.goal.PrioritizedGoal;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
 
-public class UpdateDepressionCommands {}
+import java.util.Set;
+
+@Mixin(GoalSelector.class)
+public interface GoalSelectorAccessor {
+    @Accessor("goals")
+    Set<PrioritizedGoal> getGoals();
+}

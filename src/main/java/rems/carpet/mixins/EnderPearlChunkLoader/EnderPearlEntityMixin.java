@@ -25,184 +25,190 @@ import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.*;
-import net.minecraft.text.Text;
+import net.minecraft.server.world.ServerChunkManager;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.WorldChunk;
-import net.minecraft.world.dimension.DimensionType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSServer;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
+import rems.carpet.utils.NoSensationPearlLoad.ClearPearTrail;
 
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 @Mixin(EnderPearlEntity.class)
 public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
-
-    @Shadow public abstract void tick();
-
-    private boolean sync = true;
-    private Vec3d realPos = null;
-    private Vec3d realVelocity = null;
-    private int tick = 1;
 
     protected EnderPearlEntityMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    private static final ChunkTicketType<ChunkPos> ENDER_PEARL_TICKET =
-            ChunkTicketType.create("ender_pearl", Comparator.comparingLong(ChunkPos::toLong), 2);
 
-    private static final ChunkTicketType<ChunkPos> ENDER_PEARL_TICKETS =
-            ChunkTicketType.create("ender_pearl", Comparator.comparingLong(ChunkPos::toLong), 10);
 
-    private static boolean isEntityTickingChunk(WorldChunk chunk) {
-        //#if MC<12001
-        return (chunk != null && chunk.getLevelType() == ChunkHolder.LevelType.ENTITY_TICKING);
+    @Inject(method = "tick",at = @At(value = "TAIL"))
+    private void loadingChunksfix(
+            CallbackInfo ci,
+            @Local(ordinal = 0) Entity entity
+    ){
+        World world = this.getEntityWorld();
+        if(!REMSSettings.fixedpearlloading) return;
+//        if(entity instanceof ServerPlayerEntity serverPlayerEntity){
+//            if (!serverPlayerEntity.getServerWorld().entityList.has(this)) {
+//                serverPlayerEntity.getServerWorld().entityList.add(this);
+//            }
+//        }
+        if(!(world instanceof ServerWorld))return;
+        Vec3d realPos = this.getPos().add(Vec3d.ZERO);
+        Vec3d realVelocity = this.getVelocity().add(Vec3d.ZERO);
+        Vec3d nextPos = realPos.add(realVelocity);
+        Vec3d nextVelocity = realVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
+        Vec3d nextnextPos = nextPos.add(nextVelocity);
+        Vec3d nextnextVelocity = nextVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
+        Vec3d nextnextnextPos = nextnextPos.add(nextnextVelocity);
+        ChunkPos nextChunkPos = new ChunkPos(new BlockPos((int)nextPos.x, (int)nextPos.y, (int)nextPos.z));
+        ChunkPos nextnextChunkPos = new ChunkPos(new BlockPos((int)nextnextPos.x, (int)nextnextPos.y, (int)nextnextPos.z));
+        ServerChunkManager serverChunkManager = ((ServerWorld) world).getChunkManager();
+        if(realVelocity.x > 200 ||realVelocity.z > 200)return;
+        //#if MC<12105
+        serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextChunkPos, 2, nextChunkPos);
+        serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextnextChunkPos, 2, nextnextChunkPos);
         //#else
-        //$$ return (chunk != null && chunk.getLevelType() == ChunkLevelType.ENTITY_TICKING);
+        //$$ serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextChunkPos, 2);
+        //$$ serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextnextChunkPos, 2);
         //#endif
     }
+    //#if MC>12101
+    //$$ @Inject(method = "tick",at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;isAlive()Z"),cancellable = true)
+    //$$ private void noloadingchunk(
+    //$$         CallbackInfo ci
+    //$$ ){
+    //$$     if(REMSSettings.pearlnotloadingchunk){
+    //$$         ci.cancel();
+    //$$     }
+    //$$ }
+    //#endif
 
-    private static int getHighestMotionBlockingY(NbtCompound nbtCompound) {
-        int highestY = Integer.MIN_VALUE;
-        if (REMSSettings.pearlTickets && nbtCompound != null) {
-            for (long element : nbtCompound.getCompound("Heightmaps").getLongArray("MOTION_BLOCKING")) {
-                for (int i = 0; i < 7; i++) {
-                    //#if MC<12101
-                    int y = (int)(element & 0b111111111) - 1;
-                    //#else
-                    //$$ int y = (int)(element & 0b111111111);
-                    //#endif
-                    if (y > highestY) highestY = y;
-                    element = element >> 9;
-                }
-            }
-        }
-        return highestY;
+    @Shadow protected abstract void onCollision(HitResult hitResult);
+    @Unique private String cacheKey = null;
+    @Unique private boolean isReplaying = false;
+    @Unique private boolean isRecording = false;
+    @Unique private int replayTick = 0;
+    @Unique private boolean initialized = false;
+    @Unique private List<Vec3d> currentRecordingPath = null;
+    @Unique private List<Vec3d> currentRecordingVelocities = null;
+
+    @Unique
+    private String generateKey(EnderPearlEntity pearl) {
+        Vec3d pos = pearl.getPos();
+        Vec3d vel = pearl.getVelocity();
+        return String.format(Locale.US, "%.3f,%.3f,%.3f|%.3f,%.3f,%.3f",
+                pos.x, pos.y, pos.z, vel.x, vel.y, vel.z);
     }
 
-    @Inject(method = "tick", at = @At(value = "HEAD"))
-    private void skippyChunkLoading(CallbackInfo ci) {
-        World world = this.getEntityWorld();
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void onTickHead(CallbackInfo ci) {
+        if(!REMSSettings.noSensationPearlLoad)return;
+        EnderPearlEntity pearl = (EnderPearlEntity) (Object) this;
 
-        if (REMSSettings.pearlTickets && world instanceof ServerWorld) {
-            Vec3d currPos = this.getPos().add(Vec3d.ZERO);
-            Vec3d currVelocity = this.getVelocity().add(Vec3d.ZERO);
+        if (!this.initialized) {
+            this.initialized = true;
+            Vec3d velocity = pearl.getVelocity();
 
-            if (this.sync) {
-                this.realPos = currPos;
-                this.realVelocity = currVelocity;
-            }
-            //#if MC<12101
-            Vec3d nextPos = this.realPos.add(this.realVelocity);
-            Vec3d nextVelocity = this.realVelocity.multiply(0.99F).subtract(0, this.getGravity(), 0);
-            //#else
-            //$$ Vec3d nextVelocity = this.realVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
-            //$$ Vec3d nextPos = this.realPos.add(nextVelocity);
-            //#endif
-            ChunkPos currChunkPos = new ChunkPos(new BlockPos((int)currPos.x, (int)currPos.y, (int)currPos.z));
-            ChunkPos nextChunkPos = new ChunkPos(new BlockPos((int)nextPos.x, (int)nextPos.y, (int)nextPos.z));
-            ServerChunkManager serverChunkManager = ((ServerWorld) world).getChunkManager();
+            if (Math.abs(velocity.x) > 300.0D || Math.abs(velocity.z) > 300.0D) {
+                this.cacheKey = this.generateKey(pearl);
 
-            if (!this.sync || !isEntityTickingChunk(serverChunkManager.getWorldChunk(nextChunkPos.x, nextChunkPos.z))) {
-                NbtCompound nbtCompound1;
-                NbtCompound nbtCompound2;
-                try {
-                    //#if MC<12101
-                    nbtCompound1 = serverChunkManager.threadedAnvilChunkStorage.getNbt(currChunkPos).get().orElse(null);
-                    nbtCompound2 = serverChunkManager.threadedAnvilChunkStorage.getNbt(nextChunkPos).get().orElse(null);
-                    //#else
-                    //$$ nbtCompound1 = serverChunkManager.chunkLoadingManager.getNbt(currChunkPos).get().orElse(null);
-                    //$$ nbtCompound2 = serverChunkManager.chunkLoadingManager.getNbt(nextChunkPos).get().orElse(null);
-                    //#endif
-                } catch (InterruptedException | ExecutionException e) {
-                    throw new RuntimeException("NbtCompound exception");
-                }
-
-                int highestMotionBlockingY = Integer.max(getHighestMotionBlockingY(nbtCompound1), getHighestMotionBlockingY(nbtCompound2));
-                DimensionType worldDimension = world.getDimension();
-                highestMotionBlockingY += worldDimension.minY();
-                PlayerEntity owner = (PlayerEntity) this.getOwner();
-                if(this.tick == 1){
-                    serverChunkManager.addTicket(ENDER_PEARL_TICKETS, nextChunkPos, 2, currChunkPos);
-                    serverChunkManager.addTicket(ENDER_PEARL_TICKETS, currChunkPos, 2, currChunkPos);
-                    this.tick =2;
-                }
-
-                if (this.realPos.y > highestMotionBlockingY
-                        && nextPos.y > highestMotionBlockingY
-                        && nextPos.y + nextVelocity.y > highestMotionBlockingY) {
-                    serverChunkManager.addTicket(ENDER_PEARL_TICKETS, currChunkPos, 2, currChunkPos);
-                    this.setVelocity(Vec3d.ZERO);
-                    this.setPosition(currPos);
-                    this.sync = false;
-                    if(REMSSettings.pearlPosVelocity){
-                        owner.sendMessage(Text.of("EnderPearlY" + realPos), false);
-                        owner.sendMessage(Text.of("EnderPearlV" + realVelocity), false);}
+                if (ClearPearTrail.PATH_CACHE.containsKey(this.cacheKey) && ClearPearTrail.HIT_CACHE.containsKey(this.cacheKey)) {
+                    this.isReplaying = true;
                 } else {
-                    serverChunkManager.addTicket(ENDER_PEARL_TICKET, nextChunkPos, 2, nextChunkPos);
-                    this.setVelocity(this.realVelocity);
-                    this.setPosition(this.realPos);
-                    this.sync = true;
-                    this.tick =1;
+                    this.isRecording = true;
+                    this.currentRecordingPath = new ArrayList<>();
+                    this.currentRecordingVelocities = new ArrayList<>();
+
+                    this.currentRecordingPath.add(pearl.getPos());
+                    this.currentRecordingVelocities.add(velocity);
                 }
-                this.realPos = nextPos;
-                this.realVelocity = nextVelocity;
+            }
+        }
+
+        if (this.isReplaying) {
+            List<Vec3d> cachedPath = ClearPearTrail.PATH_CACHE.get(this.cacheKey);
+            List<Vec3d> cachedVels = ClearPearTrail.VELOCITY_CACHE.get(this.cacheKey);
+
+            if (this.replayTick < cachedPath.size()) {
+                Vec3d currentPos = pearl.getPos();
+                Vec3d nextPos = cachedPath.get(this.replayTick);
+
+                HitResult hitCheck = pearl.getWorld().raycast(new RaycastContext(
+                        currentPos, nextPos,
+                        RaycastContext.ShapeType.COLLIDER,
+                        RaycastContext.FluidHandling.NONE,
+                        pearl
+                ));
+
+                if (hitCheck.getType() != HitResult.Type.MISS) {
+                    ClearPearTrail.PATH_CACHE.remove(this.cacheKey);
+                    ClearPearTrail.VELOCITY_CACHE.remove(this.cacheKey);
+                    ClearPearTrail.HIT_CACHE.remove(this.cacheKey);
+
+                    this.onCollision(hitCheck);
+                    pearl.discard();
+                    ci.cancel();
+                    return;
+                }
+
+                pearl.setPosition(nextPos);
+                pearl.setVelocity(cachedVels.get(this.replayTick));
+                pearl.velocityModified = true;
+                this.replayTick++;
+                ci.cancel();
+            } else {
+                HitResult cachedHit = ClearPearTrail.HIT_CACHE.get(this.cacheKey);
+                if (cachedHit != null) {
+                    this.onCollision(cachedHit);
+                }
+                pearl.discard();
+                ci.cancel();
             }
         }
     }
 
-    //#if MC>=12102
-    //$$ @Redirect(method = "tick",
-    //$$        at= @At(value = "INVOKE",
-    //$$        target = "Lnet/minecraft/server/network/ServerPlayerEntity;handleThrownEnderPearl(Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;)J"))
-    //$$ private long load(ServerPlayerEntity instance, EnderPearlEntity enderPearl){
-    //$$     if(REMSSettings.pearlTickets){
-    //$$         int pearlBlockX = (int) Math.floor(enderPearl.getX());
-    //$$         int pearlBlockZ = (int) Math.floor(enderPearl.getZ());
-    //$$          double pearlX = enderPearl.getX();
-    //$$          double pearlZ = enderPearl.getZ();
-    //$$          double blockMinX = pearlBlockX;
-    //$$          double blockMaxX = blockMinX + 1;
-    //$$          double blockMinZ = pearlBlockZ;
-    //$$          double blockMaxZ = blockMinZ + 1;
-    //$$          if(pearlX >= blockMinX && pearlX < blockMaxX && pearlZ >= blockMinZ && pearlZ < blockMaxZ) {
-    //$$            return instance.handleThrownEnderPearl(enderPearl);
-    //$$        }
-    //$$        else{
-    //$$            return 0;
-    //$$        }
-    //$$    } else {
-    //$$        return instance.handleThrownEnderPearl(enderPearl);
-    //$$    }
-    //$$ }
-    //#endif
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void onTickTail(CallbackInfo ci) {
+        if(!REMSSettings.noSensationPearlLoad)return;
+        EnderPearlEntity pearl = (EnderPearlEntity) (Object) this;
 
-    //#if MC>=12102
-    //$$ protected Item getDefaultItem() {
-    //$$     return Items.ENDER_PEARL;
-    //$$ }
-    //#endif
+        if (this.isRecording && !pearl.isRemoved() && this.currentRecordingPath != null) {
+            this.currentRecordingPath.add(pearl.getPos());
+            this.currentRecordingVelocities.add(pearl.getVelocity());
+        }
+    }
+
+    @Inject(method = "onCollision", at = @At("HEAD"))
+    private void onCollisionHead(HitResult hitResult, CallbackInfo ci) {
+        if(!REMSSettings.noSensationPearlLoad)return;
+        if (this.isRecording && this.cacheKey != null && this.currentRecordingPath != null) {
+            ClearPearTrail.PATH_CACHE.put(this.cacheKey, this.currentRecordingPath);
+            ClearPearTrail.VELOCITY_CACHE.put(this.cacheKey, this.currentRecordingVelocities);
+            ClearPearTrail.HIT_CACHE.put(this.cacheKey, hitResult);
+            this.isRecording = false;
+        }
+    }
 
     //#if MC<12102
     @Unique
@@ -256,19 +262,6 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
                             && entity instanceof ServerPlayerEntity serverPlayerEntity
             ) {
                 this.chunkTicketExpiryTicks = this.handleThrownEnderPearl();
-                if (
-                    //#if MC<12001
-                        !serverPlayerEntity.getWorld().entityList.has(this)
-                    //#else
-                    //$$   !serverPlayerEntity.getServerWorld().entityList.has(this)
-                    //#endif
-                ) {
-                    //#if MC<12001
-                    serverPlayerEntity.getWorld().entityList.add(this);
-                    //#else
-                    //$$    serverPlayerEntity.getServerWorld().entityList.add(this);
-                    //#endif
-                }
             }
         }
     }
@@ -289,17 +282,20 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         }
     }
 
+    @Unique
     private static int getSectionCoordFloored(double coord) {
         return MathHelper.floor(coord) >> 4;
     }
 
+    @Unique
     private static int getSectionCoord(int coord) {
         return coord >> 4;
     }
 
+    @Unique
     private static long addEnderPearlTicket(ServerWorld ServerWolrd, ChunkPos chunkPos) {
-        ServerWolrd.getChunkManager().addTicket(ENDER_PEARL_TICKETS, chunkPos, 2, chunkPos);
-        return ENDER_PEARL_TICKETS.getExpiryTicks();
+        ServerWolrd.getChunkManager().addTicket(ChunkLoaderState.ENDER_PEARLS, chunkPos, 2, chunkPos);
+        return ChunkLoaderState.ENDER_PEARLS.getExpiryTicks();
     }
     //#endif
 }

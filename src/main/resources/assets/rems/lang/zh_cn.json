@@ -20,8 +20,8 @@
   "carpet.rule.mergeTNTPro.name": "更好的合并TNT",
   "carpet.rule.mergeTNTPro.desc": "合并大量TNT以减小实体及爆炸带来的卡顿",
 
-  "carpet.rule.pearlTickets.name": "末影珍珠加载区块",
-  "carpet.rule.pearlTickets.desc": "允许末影珍珠实体选择性地加载即将通过的区块。",
+  "carpet.rule.mergeTNTMax.name": "激进的合并TNT",
+  "carpet.rule.mergeTNTMax.desc": "更加激进的TNT合并，卡顿相较于Pro更低",
 
   "carpet.rule.projectileRaycastLength.name": "投掷物Raycast长度",
   "carpet.rule.projectileRaycastLength.desc": "更改Raycast的距离。如果设置为0，将检查所有到达目的地的块，Vanilla!",
@@ -60,7 +60,11 @@
   "carpet.rule.SignCommand.name": "告示牌命令",
   "carpet.rule.SignCommand.desc" : "玩家右键单击标牌，执行标牌上的命令",
   "carpet.rule.SignCommand.extra.0" : "需要以/开头",
-  "carpet.rule.SignCommand.extra.1" : "只允许palyer say tick命令",
+  "rems.sign_command.syntax_error": "告示牌指令语法错误",
+  "rems.sign_command.failed": "执行失败",
+  "rems.sign_command.not_allowed": "该指令未被允许通过告示牌执行",
+  "carpet.rule.signAllowedCommands.name": "告示牌允许指令列表",
+  "carpet.rule.signAllowedCommands.desc" : "设置在告示牌上允许使用的指令的列表，使用逗号分隔，例如: say,tick,player",
 
   "carpet.rule.enderpearlloadchunk.name": "珍珠加载区块",
   "carpet.rule.enderpearlloadchunk.desc" : "珍珠可以加载区块就像1.21.2一样。当加载超过40gt后自动删除",
@@ -109,5 +113,25 @@
   "carpet.rule.reintroduceLlamaItemDuplicating.desc": "重新引入1.14-1.15的羊驼物品复制",
 
   "carpet.rule.opInSurvivalCommandBlocks.name": "生存模式OP编辑命令方块",
-  "carpet.rule.opInSurvivalCommandBlocks.desc": "允许 OP 在生存模式下编辑命令方块"
+  "carpet.rule.opInSurvivalCommandBlocks.desc": "允许 OP 在生存模式下编辑命令方块",
+
+  "carpet.rule.commandClearPearTrail.name": "清除已保存珍珠轨迹命令开关",
+  "carpet.rule.commandClearPearTrail.desc": "启用 /clearPearlTrail 命令以清除已保存的 PearlTrail",
+
+  "carpet.rule.stridergodie.name": "炽足兽去死",
+  "carpet.rule.stridergodie.desc": "让炽足兽在地狱170高以上无法生成",
+
+  "carpet.rule.introduceHighVersionThrowableEntityMovement.name": "引入高版本投掷物运动",
+  "carpet.rule.introduceHighVersionThrowableEntityMovement.desc": "引入1.21.2+版本的投掷物运动逻辑。",
+
+  "carpet.rule.noSensationPearlLoad.name": "无感珍珠加载",
+  "carpet.rule.noSensationPearlLoad.desc": "在大于300速度且第一次时会少量调用raycast，计算后保存，下一次调用时卡顿降低。",
+
+  "carpet.rule.disableAIEntitities.name": "禁用AI的实体类型",
+  "carpet.rule.disableAIEntitities.desc": "设置移除任意AI的实体列表，使用逗号分隔，例如: zombie,piglin",
+
+  "carpet.rule.disableAiGoals.name": "禁用AI的类别",
+  "carpet.rule.disableAiGoals.desc": "选择要删除的 AI 功能 如: move, attack, look",
+  "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
+  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all"
 }

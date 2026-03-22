@@ -20,6 +20,7 @@
 
 package rems.carpet.mixins.SignCommand;
 
+import carpet.utils.Messenger;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -32,10 +33,12 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.ComponentTranslate;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -43,14 +46,9 @@ import java.util.Set;
 
 @Mixin(SignBlockEntity.class)
 public abstract class SignBlockEntityMixin {
+
     @Shadow
     protected abstract Text[] getTexts(boolean filtered);
-
-    private static final Set<String> ALLOWED_COMMANDS = new HashSet<>(Arrays.asList(
-            "say",
-            "player",
-            "tick"
-    ));
 
     @Inject(
             method = "onActivate",
@@ -59,19 +57,22 @@ public abstract class SignBlockEntityMixin {
     )
     private void runCommandOnActivated(ServerPlayerEntity player, CallbackInfoReturnable<Boolean> ci) {
         if (REMSSettings.SignCommand) {
+
+            if (player.isSneaking()) {
+                return;
+            }
+
             Text[] texts = this.getTexts(player.shouldFilterText());
 
-            // 第一步：处理多行文本
             String fullCommand = processSignText(texts);
 
-            // 第二步：验证命令格式
             if (fullCommand.isEmpty() || !fullCommand.startsWith("/")) {
                 return;
             }
 
             String actualCommand = fullCommand.substring(1);
             if (!isCommandAllowed(actualCommand)) {
-                player.sendMessage(Text.literal("§c该指令未被允许通过告示牌执行"), false);
+                player.sendMessage(ComponentTranslate.error("sign_command.not_allowed"), false);
                 ci.setReturnValue(true);
                 return;
             }
@@ -83,6 +84,7 @@ public abstract class SignBlockEntityMixin {
         }
     }
 
+    @Unique
     private String processSignText(Text[] texts) {
         StringBuilder commandBuilder = new StringBuilder();
 
@@ -103,10 +105,11 @@ public abstract class SignBlockEntityMixin {
         }
 
         return commandBuilder.toString()
-                .replaceAll("\\s+", " ") // 合并连续空格
+                .replaceAll("\\s+", " ")
                 .trim();
     }
 
+    @Unique
     private boolean isCommandAllowed(String rawCommand) {
         String[] parts = rawCommand.split(" ", 2);
         String baseCommand = parts[0].toLowerCase();
@@ -116,9 +119,10 @@ public abstract class SignBlockEntityMixin {
             baseCommand = baseCommand.substring(colonIndex + 1);
         }
 
-        return ALLOWED_COMMANDS.contains(baseCommand);
+        return REMSSettings.ALLOWED_COMMANDS.contains(baseCommand);
     }
 
+    @Unique
     private void executeValidatedCommand(ServerPlayerEntity player, String command) {
         ServerWorld world = player.getWorld();
         ServerCommandSource commandSource = new ServerCommandSource(
@@ -141,10 +145,10 @@ public abstract class SignBlockEntityMixin {
                 if (results.getExceptions().isEmpty()) {
                     dispatcher.execute(results);
                 } else {
-                    player.sendMessage(Text.literal("§c指令语法错误"), false);
+                    player.sendMessage(ComponentTranslate.error("sign.command.syntax_error"), false);
                 }
             } catch (CommandSyntaxException e) {
-                player.sendMessage(Text.literal("§c执行失败: " + e.getMessage()), false);
+                player.sendMessage(ComponentTranslate.error("sign_command.failed", e.getMessage()), false);
             }
         });
     }

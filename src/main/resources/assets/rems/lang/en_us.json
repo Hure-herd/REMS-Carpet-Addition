@@ -20,8 +20,8 @@
   "carpet.rule.mergeTNTPro.name": "MergeTNTPro",
   "carpet.rule.mergeTNTPro.desc": "Combined with large amounts of TNT to reduce lag caused by entities and explosions",
 
-  "carpet.rule.pearlTickets.name": "PearlTickets",
-  "carpet.rule.pearlTickets.desc": "Allows Ender Pearl entity to selectively load chunks",
+  "carpet.rule.mergeTNTMax.name": "MergeTNTMax",
+  "carpet.rule.mergeTNTMax.desc": "A more aggressive TNT merge results in less stuttering compared to the Pro version.",
 
   "carpet.rule.chestMinecartChunkLoader.name": "ChestMinecartChunkLoader",
   "carpet.rule.chestMinecartChunkLoader.desc" : "ChestMinecart can load nearby chunks for 2 seconds,when ChestMinecart customName is Load",
@@ -60,7 +60,11 @@
   "carpet.rule.SignCommand.name": "SignCommand",
   "carpet.rule.SignCommand.desc" : "The player right-clicks the sign to execute the command on the sign",
   "carpet.rule.SignCommand.extra.0" : "Texts must start with '/'.",
-  "carpet.rule.SignCommand.extra.1" : "only can use palyer,say,tick command",
+  "rems.sign_command.syntax_error": "Sign command syntax error",
+  "rems.sign_command.failed": "Execution failed",
+  "rems.sign_command.not_allowed": "This command is not allowed to be executed via signs",
+  "carpet.rule.signAllowedCommands.name": "signAllowedCommands",
+  "carpet.rule.signAllowedCommands.desc" : "Set a list of allowed commands on the sign, separated by commas, for example: say, tick, player",
 
   "carpet.rule.enderpearlloadchunk.name": "Enderpearlloadchunk",
   "carpet.rule.enderpearlloadchunk.desc" : "Enderpearl can load chunk like 1.21.2,when load more than Pealtime gt,enderpeal will discard",
@@ -108,5 +112,26 @@
   "carpet.rule.reintroduceLlamaItemDuplicating.desc": "Reintroduce item duping with llama.",
 
   "carpet.rule.opInSurvivalCommandBlocks.name": "OpInSurvivalCommandBlocks",
-  "carpet.rule.opInSurvivalCommandBlocks.desc": "Allows OPs to edit Command Blocks in Survival mode."
+  "carpet.rule.opInSurvivalCommandBlocks.desc": "Allows OPs to edit Command Blocks in Survival mode.",
+
+  "carpet.rule.stridergodie.name": "Stridergodie",
+  "carpet.rule.stridergodie.desc": "Strider cannot be generated in Hell difficulty above level 170.",
+
+  "carpet.rule.introduceHighVersionThrowableEntityMovement.name": "IntroduceHighVersionThrowableEntityMovement",
+  "carpet.rule.introduceHighVersionThrowableEntityMovement.desc": "Introducing projectile motion logic from version 1.21.2+.",
+
+  "carpet.rule.commandClearPearTrail.name": "CommandClearPearTrail",
+  "carpet.rule.commandClearPearTrail.desc": "Enable the /clearPearlTrail command to clear saved PearlTrail files.",
+
+  "carpet.rule.noSensationPearlLoad.name": "NoSensationPearlLoad",
+  "carpet.rule.noSensationPearlLoad.desc": "When the speed is greater than 300 and it is the first time, a small number of raycast calls will be made. The calculations are saved and the stuttering is reduced on the next call.",
+
+  "carpet.rule.disableAIEntitities.name": "DisableAIEntitities",
+  "carpet.rule.disableAIEntitities.desc": "Set a list of entities to remove from any AI, separated by commas, for example: zombie,piglin",
+
+  "carpet.rule.disableAiGoals.name": "DisableAiGoals",
+  "carpet.rule.disableAiGoals.desc": "Select the AI function you want to delete, such as: move, attack, look.",
+  "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
+  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all"
+
 }

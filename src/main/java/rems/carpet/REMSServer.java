@@ -25,13 +25,15 @@ import carpet.CarpetServer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
+import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
 import rems.carpet.utils.ComponentTranslate;
 import net.fabricmc.api.ModInitializer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import rems.carpet.command.soundsuppressionintroduce.UpdateDepressionCommands;
+import rems.carpet.command.Commands;
+import rems.carpet.utils.DisableAi.AiGoalRegistrar;
 import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
 
 import java.util.Map;
@@ -47,8 +49,6 @@ public class REMSServer implements CarpetExtension, ModInitializer
     private static final REMSServer INSTANCE = new REMSServer();
 
     private static MinecraftServer minecraftServer;
-
-    public static Boolean shouldKeepPearl;
 
     public static MinecraftServer getServer() {
         if (INSTANCE.minecraftServer == null) {
@@ -70,14 +70,13 @@ public class REMSServer implements CarpetExtension, ModInitializer
     @Override
     public void onInitialize() {
         REMSServer.loadExtension();
-        shouldKeepPearl = Boolean.getBoolean("pearl.keep");
-        //#if MC>=12001
-        //$$ CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
-        //$$         UpdateDepressionCommands.register(dispatcher, context));
-        //#endif
+        CommandRegistrationCallback.EVENT.register((dispatcher, context, environment) ->
+                Commands.register(dispatcher, context));
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             ShadowCacheManager.clearCache();
         });
+        ChunkLoaderState.init();
+        AiGoalRegistrar.initialize();
     }
 
     @Override

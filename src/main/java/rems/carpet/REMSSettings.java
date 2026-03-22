@@ -27,8 +27,14 @@ import carpet.api.settings.CarpetRule;
 import carpet.api.settings.Rule;
 import carpet.api.settings.Validator;
 import carpet.api.settings.Validators;
+import net.minecraft.entity.EntityType;
+import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
+import rems.carpet.utils.DisableAi.AiGoalRegistrar;
+
+import java.util.*;
 
 
 public class REMSSettings
@@ -62,17 +68,15 @@ public class REMSSettings
     )
     public static boolean pistonBlockChunkloader =  false;
 
-    //#if MC<12102
-    @Rule(
-            categories = {REMS, SURVIVAL}
-    )
-    public static boolean pearlTickets =  false;
-    //#endif
-
     @Rule(
             categories = {REMS, SURVIVAL}
     )
     public static boolean pearlPosVelocity = false;
+
+    @Rule(
+            categories = {REMS, SURVIVAL}
+    )
+    public static boolean stridergodie = false;
 
     @Rule(
             categories = {REMS, FEATURE}
@@ -88,6 +92,11 @@ public class REMSSettings
             categories = {REMS, FEATURE, SURVIVAL,TNT}
     )
     public static boolean mergeTNTPro = false;
+
+    @Rule(
+            categories = {REMS, FEATURE, SURVIVAL,TNT}
+    )
+    public static boolean mergeTNTMax = false;
 
     @Rule(
             categories = {REMS, FEATURE}
@@ -188,6 +197,12 @@ public class REMSSettings
     )
     public static boolean durableItemShadow = false;
 
+    @Rule(
+             options = {"ops", "true", "false"},
+             categories = {REMS, CREATIVE,COMMAND}
+    )
+    public static String commandClearPearTrail = "ops";
+
     //#if MC>=12001
     //$$ @Rule(
     //$$         options = {"ops", "true", "false"},
@@ -224,12 +239,17 @@ public class REMSSettings
     //$$ public static boolean pearlnotloadingchunk = false;
     //#endif
 
-    //#if MC>=12102
-    //$$ @Rule(
-    //$$ categories = {REMS, BUGFIX}
-    //$$ )
-    //$$ public static boolean fixedpearlloading = false;
+    //#if MC<12102
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean introduceHighVersionThrowableEntityMovement = false;
     //#endif
+
+    @Rule(
+            categories = {REMS, BUGFIX}
+    )
+    public static boolean fixedpearlloading = false;
 
     //#if MC>=12006
     //$$ @Rule(
@@ -237,5 +257,113 @@ public class REMSSettings
     //$$ )
     //$$ public static boolean blockentityreplacement = false;
     //#endif
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean noSensationPearlLoad = false;
+
+    @Rule(
+            categories = {REMS, FEATURE},
+            validators = CommandListValidator.class,
+            options = {"false", "say", "player,tick", "say,player,tick"},
+            strict = false
+    )
+    public static String signAllowedCommands = "false";
+
+    public static final Set<String> ALLOWED_COMMANDS = new HashSet<>();
+
+    public static class CommandListValidator extends Validator<String> {
+
+        @Override
+        public String validate(ServerCommandSource source, CarpetRule<String> currentRule, String newValue, String string) {
+            String normalizedValue = newValue.toLowerCase().trim();
+            ALLOWED_COMMANDS.clear();
+            if (normalizedValue.equals("false") || normalizedValue.isEmpty()) {
+                return "false";
+            }
+            String[] parts = normalizedValue.split(",");
+            for (String part : parts) {
+                String cmd = part.trim();
+                if (!cmd.isEmpty()) {
+                    ALLOWED_COMMANDS.add(cmd);
+                }
+            }
+            return normalizedValue;
+        }
+    }
+
+    public static final Set<Class<?>> DISABLED_GOAL_CLASSES = new HashSet<>();
+    public static final Map<String, List<Class<?>>> GOAL_MAPPING = new HashMap<>();
+
+    @Rule(
+            categories = {REMS, FEATURE},
+            validators = EntityListValidator.class,
+            options = {"false", "zombie", "creeper", "zombie,skeleton"},
+            strict = false
+    )
+    public static String disableAIEntitities = "false";
+
+    @Rule(
+            categories = {REMS, FEATURE},
+            validators = GoalListValidator.class,
+            options = {"false", "move", "attack", "move,attack,shoot", "all"},
+            strict = false
+    )
+    public static String disableAiGoals = "false";
+
+    public static final Set<EntityType<?>> NO_AI_TYPES = new HashSet<>();
+
+    public static class EntityListValidator extends Validator<String> {
+
+        @Override
+        public String validate(ServerCommandSource source, CarpetRule<String> currentRule, String newValue, String string) {
+            String normalizedValue = newValue.toLowerCase().trim();
+            NO_AI_TYPES.clear();
+            if (normalizedValue.equals("false") || normalizedValue.isEmpty()) {
+                return "false";
+            }
+            String[] parts = normalizedValue.split(",");
+            for (String part : parts) {
+                String entityName = part.trim();
+                Identifier id;
+                if (entityName.contains(":")) {
+                    String[] split = entityName.split(":");
+                    id = Identifier.of(split[0], split[1]);
+                } else {
+                    id = Identifier.of("minecraft", entityName);
+                }
+                if (Registries.ENTITY_TYPE.containsId(id)) {
+                    EntityType<?> type = Registries.ENTITY_TYPE.get(id);
+                    NO_AI_TYPES.add(type);
+                }
+            }
+            return normalizedValue;
+        }
+    }
+
+    public static class GoalListValidator extends Validator<String> {
+        @Override
+        public String validate(ServerCommandSource source, CarpetRule<String> currentRule, String newValue, String string) {
+            String normalized = newValue.toLowerCase().trim();
+            if (normalized.equals("false") || normalized.isEmpty()) {
+                DISABLED_GOAL_CLASSES.clear();
+                return "false";
+            }
+            Set<Class<?>> tempSet = new HashSet<>();
+            String[] parts = normalized.split(",");
+            for (String part : parts) {
+                String key = part.trim();
+                if (GOAL_MAPPING.containsKey(key)) {
+                    tempSet.addAll(GOAL_MAPPING.get(key));
+                } else {
+                    return null;
+                }
+            }
+            DISABLED_GOAL_CLASSES.clear();
+            DISABLED_GOAL_CLASSES.addAll(tempSet);
+            return normalized;
+        }
+    }
 }
 

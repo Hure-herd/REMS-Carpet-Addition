@@ -20,6 +20,8 @@
 
 package rems.carpet.mixins.EndStoneFram;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.logging.LogUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -76,14 +78,14 @@ public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
         }
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "getOrCreateExitPortalPos",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/entity/EndGatewayBlockEntity;createPortal(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/gen/feature/EndGatewayFeatureConfig;)V"
             ))
     private void onCreatePortal(
-            ServerWorld world, BlockPos pos, EndGatewayFeatureConfig config
+            ServerWorld world, BlockPos pos, EndGatewayFeatureConfig config, Operation<Void> original
     ) {
         if (REMSSettings.endstonefram) {
             BlockEntity blockEntity = world.getBlockEntity(pos);

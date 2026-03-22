@@ -14,3 +14,8 @@ accessible method net/minecraft/world/chunk/WorldChunk updateTicker (Lnet/minecr
 accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
 accessible field net/minecraft/server/world/ServerWorld entityList Lnet/minecraft/world/EntityList;
 accessible method net/minecraft/server/world/ChunkTicketType register (Ljava/lang/String;JI)Lnet/minecraft/server/world/ChunkTicketType;
+
+accessible class net/minecraft/entity/mob/SlimeEntity$MoveGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$FaceTowardTargetGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$SwimmingGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal

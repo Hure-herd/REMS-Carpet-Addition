@@ -18,14 +18,19 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.command.soundsuppressionintroduce;
+package rems.carpet.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
+import rems.carpet.command.ClearPearTrail.ClearPearTrailCommand;
+import rems.carpet.command.soundsuppressionintroduce.SetNoiseSuppressorCommand;
 
-public class UpdateDepressionCommands {
+public class Commands {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess context) {
-        SetNoiseSuppressorCommand.register(dispatcher, context);
+        //#if MC>12001
+        //$$ SetNoiseSuppressorCommand.register(dispatcher, context);
+        //#endif
+        ClearPearTrailCommand.register(dispatcher);
     }
 }

@@ -18,27 +18,29 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.EnderPearlChunkLoader;
+package rems.carpet.mixins.Introduce212ThrownEntity;
 
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.EndGatewayBlockEntity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.entity.projectile.thrown.ThrownEntity;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.compat.DummyClass;
 
-@Mixin(ProjectileUtil.class)
-public class ProjectileUtilMixin {
-
-    @Redirect(method = "getCollision(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/entity/Entity;Ljava/util/function/Predicate;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/World;)Lnet/minecraft/util/hit/HitResult;",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/util/math/Vec3d;add(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;"))
-    private static Vec3d changeRaycastLength(Vec3d vec3d, Vec3d vec){
-        if(REMSSettings.projectileRaycastLength > 0 && vec.length() > REMSSettings.projectileRaycastLength){
-            vec = vec.normalize();
-            vec = vec.multiply(REMSSettings.projectileRaycastLength);
-            return vec3d.add(vec);
-        }
-        return vec3d.add(vec);
-    }
-}
+@Mixin(DummyClass.class)
+public abstract class ThrownEntityMixin{}

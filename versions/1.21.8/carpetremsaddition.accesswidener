@@ -14,3 +14,8 @@ accessible method net/minecraft/block/SculkSensorBlock updateNeighbors (Lnet/min
 accessible method net/minecraft/world/chunk/WorldChunk updateTicker (Lnet/minecraft/block/entity/BlockEntity;)V
 accessible field net/minecraft/block/entity/BlockEntityType blocks Ljava/util/Set;
 accessible field net/minecraft/server/world/ServerWorld entityList Lnet/minecraft/world/EntityList;
+
+accessible class net/minecraft/entity/mob/SlimeEntity$MoveGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$FaceTowardTargetGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$SwimmingGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal

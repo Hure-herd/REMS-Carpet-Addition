@@ -18,9 +18,11 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.MergeTNTPro;
+package rems.carpet.mixins.MergeTNTMax;
 
 import carpet.CarpetSettings;
+import carpet.logging.LoggerRegistry;
+import carpet.logging.logHelpers.TNTLogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -33,26 +35,22 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import carpet.logging.LoggerRegistry;
-import carpet.logging.logHelpers.TNTLogHelper;
 import rems.carpet.REMSSettings;
 import rems.carpet.interfaces.TntEntityInterface;
 
 
 @Mixin(TntEntity.class)
-    public abstract class TntEntityMixin extends Entity implements TntEntityInterface
-{
+public abstract class TntEntityMixin extends Entity implements TntEntityInterface {
     @Shadow public abstract int getFuse();
-
-    @Unique private TNTLogHelper logHelper;
-    @Unique private boolean mergeBool = false;
-    @Unique private int mergedTNTPro = 1;
+    @Unique
+    private TNTLogHelper logHelper;
+    @Unique
+    private int mergedTNTMax = 1;
 
     public TntEntityMixin(EntityType<?> entityType_1, World world_1)
     {
         super(entityType_1, world_1);
     }
-
 
     @Inject(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/LivingEntity;)V",
             at = @At("RETURN"))
@@ -95,58 +93,44 @@ import rems.carpet.interfaces.TntEntityInterface;
     @Inject(method = "explode", at = @At(value = "HEAD"))
     private void onExplode(CallbackInfo ci) {
         if (LoggerRegistry.__tnt && logHelper != null){
-            logHelper.onExploded(getX(), getY(), getZ(), this.getWorld().getTime());
+            logHelper.onExploded(getX(), getY(), getZ(), this.getEntityWorld().getTime());
         }
 
-        if (mergedTNTPro > 1)
-            for (int i = 0; i < mergedTNTPro - 1; i++){
-                this.getWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
+        if (mergedTNTMax > 1)
+            for (int i = 0; i < mergedTNTMax - 1; i++){
+                this.getEntityWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
                         this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
             }
+        System.out.println("TNT Exploding! Merged count: " + mergedTNTMax);
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/entity/TntEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V",
-            //#if MC<1206
-            ordinal = 2))
-            //#else
-            //$$ ordinal = 1))
-            //#endif
+
+    @Inject(method = "tick", at = @At(value = "HEAD"))
     private void tryMergeTnT(CallbackInfo ci)
     {
-        if(REMSSettings.mergeTNTPro){
-            Vec3d velocity = getVelocity();
-            if(!getEntityWorld().isClient() && mergeBool && velocity.x == 0 && velocity.y == 0 && velocity.z == 0){
-                mergeBool = false;
-                for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
-                    if(entity instanceof TntEntity && !entity.isRemoved()){
-                        TntEntity entityTNTPrimed = (TntEntity)entity;
-                        Vec3d tntVelocity = entityTNTPrimed.getVelocity();
-                        if(tntVelocity.x == 0 && tntVelocity.y == 0 && tntVelocity.z == 0
-                                && this.getX() == entityTNTPrimed.getX() && this.getZ() == entityTNTPrimed.getZ() && this.getY() == entityTNTPrimed.getY()
-                                && getFuse() == entityTNTPrimed.getFuse() +1){
-                            mergedTNTPro += ((TntEntityInterface) entityTNTPrimed).getMergedTNTPro();
-                            entityTNTPrimed.remove(Entity.RemovalReason.DISCARDED);
-                        }
+        if(REMSSettings.mergeTNTMax){
+            if (this.isRemoved() || getEntityWorld().isClient()) return;
+
+            Vec3d velocity = this.getVelocity();
+
+            for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
+                if(entity instanceof TntEntity && !entity.isRemoved()){
+                    TntEntity entityTNTPrimed = (TntEntity)entity;
+                    Vec3d tntVelocity = entityTNTPrimed.getVelocity();
+                    if(this.squaredDistanceTo(entityTNTPrimed) < 0.0001
+                            && velocity.squaredDistanceTo(tntVelocity) < 0.0001
+                            && this.getFuse() == entityTNTPrimed.getFuse()){
+
+                        mergedTNTMax += ((TntEntityInterface) entityTNTPrimed).getMergedTNTMax();
+                        entityTNTPrimed.remove(RemovalReason.DISCARDED);
                     }
                 }
             }
         }
     }
 
-    @Inject(method = "tick", at = @At(value = "INVOKE",
-            target = "Lnet/minecraft/entity/TntEntity;setFuse(I)V",
-            ordinal = 0))
-    private void setMergeable(CallbackInfo ci)
-    {
-        Vec3d velocity = getVelocity();
-        if(!getEntityWorld().isClient() && (velocity.y != 0 || velocity.x != 0 || velocity.z != 0)){
-            mergeBool = true;
-        }
-    }
-
     @Override
-    public int getMergedTNTPro() {
-        return mergedTNTPro;
+    public int getMergedTNTMax() {
+        return mergedTNTMax;
     }
 }

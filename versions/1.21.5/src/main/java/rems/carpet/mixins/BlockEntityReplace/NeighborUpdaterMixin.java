@@ -20,6 +20,7 @@
 
 package rems.carpet.mixins.BlockEntityReplace;
 
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Unique;
@@ -38,6 +39,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import rems.carpet.REMSSettings;
 
+import java.util.Objects;
+
 @Mixin(NeighborUpdater.class)
 public interface NeighborUpdaterMixin {
     @Inject(
@@ -52,7 +55,7 @@ public interface NeighborUpdaterMixin {
             World world, BlockState state, BlockPos pos, Block sourceBlock, WireOrientation orientation, boolean notify, CallbackInfo ci, Throwable throwable) {
 
         if (REMSSettings.blockentityreplacement) {
-
+            
             int[] offsets = {-3, -2, -1, 0, 1, 2, 3};
             int[] yOffsets = {-1, 0};
 
@@ -67,6 +70,13 @@ public interface NeighborUpdaterMixin {
 
     @Unique
     private static void handleMarkedPos(World world, BlockPos blockPos) {
+        BlockEntity Be = world.getBlockEntity(blockPos);
+        if(Be != null && SuppressionManager.isMarked2(blockPos) && !(Be == SuppressionManager.getMarkedCapturedBE())){
+            SuppressionManager.clear();
+            SuppressionManager.clear2();
+            SuppressionManager.clears();
+            SuppressionManager.setRestorable(false);
+        }
         if (!SuppressionManager.isMarked2(blockPos)) return;
         SuppressionManager.mark(blockPos);
         if (!world.isClient && world.getServer() != null) {

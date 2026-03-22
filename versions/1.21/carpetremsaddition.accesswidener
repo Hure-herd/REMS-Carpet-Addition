@@ -10,3 +10,8 @@ accessible method net/minecraft/block/entity/EndGatewayBlockEntity findTeleportL
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity findPortalPosition (Lnet/minecraft/world/chunk/WorldChunk;)Lnet/minecraft/util/math/BlockPos;
 accessible method net/minecraft/block/entity/EndGatewayBlockEntity findExitPortalPos (Lnet/minecraft/world/BlockView;Lnet/minecraft/util/math/BlockPos;IZ)Lnet/minecraft/util/math/BlockPos;
 accessible class net/minecraft/block/entity/CalibratedSculkSensorBlockEntity$Callback
+
+accessible class net/minecraft/entity/mob/SlimeEntity$MoveGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$FaceTowardTargetGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$SwimmingGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal
