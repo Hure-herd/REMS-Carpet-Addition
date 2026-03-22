@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "remscarpetadditions",
+  "id": "${id}",
   "version": "${version}",
 
-  "name": "RMES-Carpet-Addition",
+  "name": "${name}",
   "description": "This is an extension for the Carpet mod, which includes some features that I found useful and some features that I want but don't have.",
   "authors": [
     "Hureherd"
   ],
   "contact": {
-    "sources": "https://github.com/Hure-herd/REMS-Carpet-extra"
+    "sources": "https://github.com/Hure-herd/REMS-Carpet-Addition"
   },
 
   "license": "LGPL-3.0",

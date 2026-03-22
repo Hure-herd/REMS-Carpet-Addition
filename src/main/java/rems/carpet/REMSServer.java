@@ -40,7 +40,7 @@ import java.util.Map;
 
 public class REMSServer implements CarpetExtension, ModInitializer
 {
-    public static String MOD_ID = "remscarpetadditions";
+    public static String MOD_ID = "remscarpetaddition";
 
     public static final String MOD_NAME = "Carpet REMS Additions";
 

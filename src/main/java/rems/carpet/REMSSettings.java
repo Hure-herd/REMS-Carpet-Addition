@@ -251,7 +251,7 @@ public class REMSSettings
     )
     public static boolean fixedpearlloading = false;
 
-    //#if MC>=12006
+    //#if MC>=12004
     //$$ @Rule(
     //$$ categories = {REMS,EXPERIMENTAL}
     //$$ )
