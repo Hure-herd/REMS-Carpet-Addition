@@ -101,7 +101,6 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
                 this.getEntityWorld().createExplosion(this, this.getX(), this.getBodyY(0.0625),
                         this.getZ(), 4.0F, World.ExplosionSourceType.TNT);
             }
-        System.out.println("TNT Exploding! Merged count: " + mergedTNTMax);
     }
 
 
