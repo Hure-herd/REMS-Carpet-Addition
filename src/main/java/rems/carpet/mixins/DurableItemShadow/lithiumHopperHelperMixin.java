@@ -20,9 +20,65 @@
 
 package rems.carpet.mixins.DurableItemShadow;
 
-
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
-import rems.carpet.utils.compat.DummyClass;
+import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rems.carpet.REMSSettings;
 
-@Mixin(DummyClass.class)
-public class lithiumHopperHelperMixin{}
+@Pseudo
+@Mixin(targets = "me.jellysquid.mods.lithium.common.hopper.HopperHelper", remap = false)
+public class lithiumHopperHelperMixin {
+
+    @Inject(method = "areNbtEqual", at = @At("RETURN"), cancellable = true)
+    private static void allowRefillingShadow(ItemStack stack, ItemStack otherStack, CallbackInfoReturnable<Boolean> cir){
+
+        if(!REMSSettings.durableItemShadow)return;
+        if(cir.getReturnValue() || stack.isEmpty() || otherStack.isEmpty())return;
+        if(!stack.isOf(otherStack.getItem()))return;
+
+        NbtCompound dataA = stack.getNbt();
+        NbtCompound dataB = otherStack.getNbt();
+        boolean hasShadowA = dataA != null && dataA.contains("ShadowID");
+        boolean hasShadowB = dataB != null && dataB.contains("ShadowID");
+
+        if (!hasShadowA && !hasShadowB)return;
+
+        if(isActuallyTheSameItem(stack, otherStack)){
+            cir.setReturnValue(true);
+        }
+    }
+
+    @Unique
+    private static boolean isActuallyTheSameItem(ItemStack a, ItemStack b){
+        try{
+            ItemStack copyA = a.copy();
+            ItemStack copyB = b.copy();
+
+            removeShadowId(copyA);
+            removeShadowId(copyB);
+
+            return ItemStack.canCombine(copyA, copyB);
+        }catch(Exception e){
+            return false;
+        }
+    }
+
+    @Unique
+    private static void removeShadowId(ItemStack stack){
+        NbtCompound component = stack.getNbt();
+        if(component != null && component.contains("ShadowID")){
+            NbtCompound nbt = component.copy();
+            nbt.remove("ShadowID");
+            if(nbt.isEmpty()){
+                stack.setNbt(null);
+            }else{
+                stack.setNbt(nbt);
+            }
+        }
+    }
+}

@@ -24,11 +24,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LargeEntitySpawnHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.entity.mob.RavagerEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -36,12 +34,10 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import net.minecraft.entity.ai.brain.MemoryModuleType;
 import rems.carpet.REMSSettings;
 
 import java.util.List;
@@ -50,10 +46,7 @@ import java.util.List;
 public abstract class VillagerEntityMixin extends PassiveEntity {
 
     @Unique
-    private boolean previousChunkLoaded =false;
-
-    @Shadow
-    public abstract Brain<VillagerEntity> getBrain();
+    private boolean previousChunkLoaded = false;
 
     protected VillagerEntityMixin(EntityType<? extends PassiveEntity> entityType, World world) {
         super(entityType, world);
@@ -73,33 +66,28 @@ public abstract class VillagerEntityMixin extends PassiveEntity {
         int chunkZ = (int) this.getZ() >> 4;
         boolean currentChunkLoaded = this.getWorld().isChunkLoaded(chunkX, chunkZ);
         if (currentChunkLoaded && !this.previousChunkLoaded) {
-            Box golemBox = this.getBoundingBox().expand(16.0);
-            List<IronGolemEntity> nearbyGolems = serverWorld.getEntitiesByClass(IronGolemEntity.class, golemBox, g -> true);
+            Box checkBox = this.getBoundingBox().expand(3.0);
+            List<VillagerEntity> nearbyVillagers = serverWorld.getEntitiesByClass(VillagerEntity.class, checkBox, v -> true);
 
-            if (nearbyGolems.isEmpty()) {
-                Box checkBox = this.getBoundingBox().expand(3.0);
-                List<VillagerEntity> nearbyVillagers = serverWorld.getEntitiesByClass(VillagerEntity.class, checkBox, v -> true);
-
-                if (nearbyVillagers.size() >= 3) {
-                    Box raidBox = new Box(
-                            this.getX() - 12, this.getY() - 4, this.getZ() - 12,
-                            this.getX() + 12, this.getY() + 4, this.getZ() + 12
-                    );
-                    List<LivingEntity> raiders = serverWorld.getEntitiesByClass(LivingEntity.class, raidBox, entity -> {
-                        return entity instanceof PillagerEntity || entity instanceof RavagerEntity || entity instanceof EvokerEntity;
-                    });
-                    VillagerEntity firstVillager = nearbyVillagers.get(0);
-                    if (!raiders.isEmpty()) {
-                        if (firstVillager.getUuid().equals(this.getUuid())) {
-                            LargeEntitySpawnHelper.trySpawnAt(
-                                    EntityType.IRON_GOLEM,
-                                    SpawnReason.MOB_SUMMONED,
-                                    serverWorld,
-                                    this.getBlockPos(),
-                                    10, 8, 6,
-                                    LargeEntitySpawnHelper.Requirements.IRON_GOLEM
-                            );
-                        }
+            if (nearbyVillagers.size() >= 3) {
+                Box raidBox = new Box(
+                        this.getX() - 12, this.getY() - 4, this.getZ() - 12,
+                        this.getX() + 12, this.getY() + 4, this.getZ() + 12
+                );
+                List<LivingEntity> raiders = serverWorld.getEntitiesByClass(LivingEntity.class, raidBox, entity -> {
+                    return entity instanceof PillagerEntity || entity instanceof RavagerEntity || entity instanceof EvokerEntity;
+                });
+                VillagerEntity firstVillager = nearbyVillagers.get(0);
+                if (!raiders.isEmpty()) {
+                    if (firstVillager.getUuid().equals(this.getUuid())) {
+                        LargeEntitySpawnHelper.trySpawnAt(
+                            EntityType.IRON_GOLEM,
+                            SpawnReason.MOB_SUMMONED,
+                            serverWorld,
+                            this.getBlockPos(),
+                         10, 8, 6,
+                         LargeEntitySpawnHelper.Requirements.IRON_GOLEM
+                        );
                     }
                 }
             }

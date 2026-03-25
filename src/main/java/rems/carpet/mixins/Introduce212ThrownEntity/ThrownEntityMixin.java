@@ -73,9 +73,9 @@ public abstract class ThrownEntityMixin extends ProjectileEntity {
                 int maxZ = MathHelper.floor(box.maxZ);
 
                 for (BlockPos blockPos : BlockPos.iterate(minX, minY, minZ, maxX, maxY, maxZ)) {
-                    BlockState blockState = this.world.getBlockState(blockPos);
+                    BlockState blockState = this.getWorld().getBlockState(blockPos);
                     if (blockState.isOf(Blocks.BUBBLE_COLUMN)) {
-                        blockState.onEntityCollision(this.world, blockPos, this);
+                        blockState.onEntityCollision(this.getWorld(), blockPos, this);
                     }
                 }
             }
@@ -92,7 +92,7 @@ public abstract class ThrownEntityMixin extends ProjectileEntity {
             if (this.isTouchingWater()) {
                 Vec3d pos = this.getPos();
                 for (int i = 0; i < 4; ++i) {
-                    this.world.addParticle(ParticleTypes.BUBBLE,
+                    this.getWorld().addParticle(ParticleTypes.BUBBLE,
                             pos.x - velocity.x * 0.25D, pos.y - velocity.y * 0.25D, pos.z - velocity.z * 0.25D,
                             velocity.x, velocity.y, velocity.z);
                 }
@@ -128,15 +128,15 @@ public abstract class ThrownEntityMixin extends ProjectileEntity {
                 boolean inPortal = false;
                 if (hitResult.getType() == HitResult.Type.BLOCK) {
                     BlockPos blockPos = ((BlockHitResult)hitResult).getBlockPos();
-                    BlockState blockState = this.world.getBlockState(blockPos);
+                    BlockState blockState = this.getWorld().getBlockState(blockPos);
 
                     if (blockState.isOf(Blocks.NETHER_PORTAL)) {
                         this.setInNetherPortal(blockPos);
                         inPortal = true;
                     } else if (blockState.isOf(Blocks.END_GATEWAY)) {
-                        BlockEntity blockEntity = this.world.getBlockEntity(blockPos);
+                        BlockEntity blockEntity = this.getWorld().getBlockEntity(blockPos);
                         if (blockEntity instanceof EndGatewayBlockEntity && EndGatewayBlockEntity.canTeleport(this)) {
-                            EndGatewayBlockEntity.tryTeleportingEntity(this.world, blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
+                            EndGatewayBlockEntity.tryTeleportingEntity(this.getWorld(), blockPos, blockState, this, (EndGatewayBlockEntity)blockEntity);
                         }
                         inPortal = true;
                     }

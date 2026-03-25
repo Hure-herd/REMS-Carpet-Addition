@@ -2,7 +2,7 @@
  * This file is part of the Carpet REMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2026 A Minecraft Server and contributors
+ * Copyright (C) 2025 A Minecraft Server and contributors
  *
  * Carpet REMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,9 +20,20 @@
 
 package rems.carpet.mixins.soundsuppressionintroduce;
 
-import rems.carpet.utils.compat.DummyClass;
+import net.minecraft.block.entity.CalibratedSculkSensorBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import rems.carpet.REMSSettings;
 
-@Mixin(DummyClass.class)
-public class CalibratedSculkSensorBlockEntityMixin {
+@Mixin(CalibratedSculkSensorBlockEntity.Callback.class)
+public abstract class CalibratedSculkSensorBlockEntityMixin{
+
+    @ModifyConstant(
+            method = "getRange",
+            constant = @Constant(intValue = 16)
+    )
+    private int getRange(int constant) {
+        return REMSSettings.soundSuppressionRadius;
+    }
 }

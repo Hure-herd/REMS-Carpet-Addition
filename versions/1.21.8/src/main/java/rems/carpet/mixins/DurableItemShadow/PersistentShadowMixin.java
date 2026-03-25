@@ -20,79 +20,51 @@
 
 package rems.carpet.mixins.DurableItemShadow;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import net.minecraft.component.ComponentChanges;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Uuids;
-import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
 import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
 
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
 
 @Mixin(ItemStack.class)
 public class PersistentShadowMixin {
 
-    @Shadow @Final @Mutable public static MapCodec<ItemStack> MAP_CODEC;
-    @Shadow @Final @Mutable public static Codec<ItemStack> CODEC;
-    @Shadow @Final @Mutable public static Codec<ItemStack> VALIDATED_CODEC;
-    @Shadow @Final @Mutable public static Codec<ItemStack> UNCOUNTED_CODEC;
-    @Shadow @Final @Mutable public static Codec<ItemStack> VALIDATED_UNCOUNTED_CODEC;
+    @Inject(method = "fromNbt", at = @At("RETURN"), cancellable = true)
+    private static void restoreShadowLink(RegistryWrapper.WrapperLookup registries, NbtElement nbt, CallbackInfoReturnable<Optional<ItemStack>> cir){
 
-    @Inject(method = "<clinit>", at = @At("TAIL"))
-    private static void hijackCodecs(CallbackInfo ci){
-        MAP_CODEC = MAP_CODEC.xmap(PersistentShadowMixin::rems$handleSingleton, Function.identity());
-        CODEC = Codec.lazyInitialized(MAP_CODEC::codec);
-        VALIDATED_CODEC = CODEC.validate(ItemStack::validate);
-        UNCOUNTED_CODEC = Codec.lazyInitialized(() -> MAP_CODEC.codec()); // 简化处理，逻辑一致即可
-        VALIDATED_UNCOUNTED_CODEC = UNCOUNTED_CODEC.validate(ItemStack::validate);
-    }
+        Optional<ItemStack> optionalStack = cir.getReturnValue();
+        if(optionalStack.isEmpty())return;
+        ItemStack newStack = optionalStack.get();
 
-    @Unique
-    private static ItemStack rems$handleSingleton(ItemStack stack){
+        NbtComponent customData = newStack.get(DataComponentTypes.CUSTOM_DATA);
+        if(customData == null || !customData.contains("ShadowID"))return;
 
-        if(stack.isEmpty())return stack;
-        NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
-        if(customData == null)return stack;
-        UUID shadowId = null;
         try{
-            NbtCompound nbt = customData.copyNbt();
-            if(nbt.contains("ShadowID")){
-                try{
-                    shadowId = nbt.get("ShadowID", Uuids.INT_STREAM_CODEC).orElse(null);
-                }catch(Exception ignored){}
-                if (shadowId == null) {
-                    shadowId = nbt.getString("ShadowID")
-                            .map(UUID::fromString)
-                            .orElse(null);
+            NbtCompound dataNbt = customData.copyNbt();
+            UUID shadowId = dataNbt.get("ShadowID", Uuids.INT_STREAM_CODEC).orElse(null);
+            if (ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)) {
+                ItemStack existingStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
+                if(newStack.getCount() > existingStack.getCount()){
+                    existingStack.setCount(newStack.getCount());
                 }
+                cir.setReturnValue(Optional.of(existingStack));
+            }else{
+                ShadowCacheManager.SHADOW_CACHE.put(shadowId, newStack);
             }
         }catch(Exception e){
-            return stack;
-        }
-        if(shadowId == null)return stack;
-
-        if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)){
-            ItemStack masterStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
-            if (stack.getCount() > masterStack.getCount()) {
-                masterStack.setCount(stack.getCount());
-            }
-            return masterStack;
-        }else{
-            ShadowCacheManager.SHADOW_CACHE.put(shadowId, stack);
-            return stack;
+            e.printStackTrace();
         }
     }
 

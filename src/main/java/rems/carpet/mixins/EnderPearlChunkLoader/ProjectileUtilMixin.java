@@ -44,13 +44,13 @@ import java.util.function.Predicate;
 @Mixin(ProjectileUtil.class)
 public class ProjectileUtilMixin {
     //#if MC<12001
-    @WrapOperation(method = "getCollision",
-            at = @At(value = "INVOKE",
-                    target = "Lnet/minecraft/util/math/Vec3d;add(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;"))
-    //#elseif MC<12004
-    //$$ @WrapOperation(method = "getCollision(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/entity/Entity;Ljava/util/function/Predicate;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/World;)Lnet/minecraft/util/hit/HitResult;",
+    //$$ @WrapOperation(method = "getCollision",
     //$$         at = @At(value = "INVOKE",
     //$$                 target = "Lnet/minecraft/util/math/Vec3d;add(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;"))
+    //#elseif MC<12004
+    @WrapOperation(method = "getCollision(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/entity/Entity;Ljava/util/function/Predicate;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/World;)Lnet/minecraft/util/hit/HitResult;",
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/util/math/Vec3d;add(Lnet/minecraft/util/math/Vec3d;)Lnet/minecraft/util/math/Vec3d;"))
     //#elseif MC<12006
     //$$ @WrapOperation(method = "getCollision(Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/entity/Entity;Ljava/util/function/Predicate;Lnet/minecraft/util/math/Vec3d;Lnet/minecraft/world/World;FLnet/minecraft/world/RaycastContext$ShapeType;)Lnet/minecraft/util/hit/HitResult;",
     //$$         at = @At(value = "INVOKE",

@@ -133,5 +133,11 @@
   "carpet.rule.disableAiGoals.name": "禁用AI的类别",
   "carpet.rule.disableAiGoals.desc": "选择要删除的 AI 功能 如: move, attack, look",
   "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
-  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all"
+  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+
+  "carpet.rule.flushFakePlayerNetworkQueue.name": "清理假玩家网络队列",
+  "carpet.rule.flushFakePlayerNetworkQueue.desc": "每分钟清空假玩家底层EmbeddedChannel中积压的出站数据包以释放堆内存。",
+
+  "carpet.rule.dispenserSpearCharge.name": "发射器发射矛",
+  "carpet.rule.dispenserSpearCharge.desc": "发射器使用长矛攻击面前的实体。"
 }

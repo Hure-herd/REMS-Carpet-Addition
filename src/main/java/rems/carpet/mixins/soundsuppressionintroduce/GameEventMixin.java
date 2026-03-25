@@ -2,7 +2,7 @@
  * This file is part of the Carpet REMS Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2026 A Minecraft Server and contributors
+ * Copyright (C) 2025 A Minecraft Server and contributors
  *
  * Carpet REMS Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -20,9 +20,23 @@
 
 package rems.carpet.mixins.soundsuppressionintroduce;
 
-import rems.carpet.utils.compat.DummyClass;
+import net.minecraft.world.event.GameEvent;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rems.carpet.REMSSettings;
 
-@Mixin(DummyClass.class)
-public class GameEventMixin {
+@Mixin(GameEvent.class)
+public abstract class GameEventMixin {
+
+    @Inject(method = "getRange", at = @At("HEAD"), cancellable = true)
+    private void modifyRadius(CallbackInfoReturnable<Integer> cir) {
+
+        GameEvent self = (GameEvent) (Object) this;
+
+        if (self == GameEvent.BLOCK_CLOSE) {
+            cir.setReturnValue(REMSSettings.soundSuppressionRadius);
+        }
+    }
 }

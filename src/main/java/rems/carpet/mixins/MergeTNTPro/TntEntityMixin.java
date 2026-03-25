@@ -108,9 +108,9 @@ import rems.carpet.interfaces.TntEntityInterface;
     @Inject(method = "tick", at = @At(value = "INVOKE",
             target = "Lnet/minecraft/entity/TntEntity;setVelocity(Lnet/minecraft/util/math/Vec3d;)V",
             //#if MC<1206
-            ordinal = 2))
+            //$$ ordinal = 2))
             //#else
-            //$$ ordinal = 1))
+            ordinal = 1))
             //#endif
     private void tryMergeTnT(CallbackInfo ci)
     {

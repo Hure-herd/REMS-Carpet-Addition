@@ -22,6 +22,9 @@ repositories {
 	maven {
 		url = 'https://www.cursemaven.com'
 	}
+	maven {
+		url = "https://repo.codemc.io/repository/relativitymc/"
+	}
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
@@ -33,7 +36,11 @@ dependencies {
 
 	// loom
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+	if(mcVersion <260100) {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+	}else {
+	mappings "org.relativitymc:modern-yarn:${project.yarn_mappings}:v2"
+	}
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// mods
@@ -75,17 +82,18 @@ loom {
     }
 
 	accessWidenerPath = file("carpetremsaddition.accesswidener")
+
+	if (mcVersion >= 260100) {
+		useIntermediateMappings = true
+		intermediaryUrl = 'https://repo.codemc.io/repository/relativitymc/org/relativitymc/intermediary/%1$s/intermediary-%1$s-v2.jar'
+	}
 }
 
 JavaVersion JAVA_VERSION
-if (mcVersion >= 12005) {
-	JAVA_VERSION = JavaVersion.VERSION_21
-} else if (mcVersion >= 11800) {
-	JAVA_VERSION = JavaVersion.VERSION_17
-} else if (mcVersion >= 11700) {
-	JAVA_VERSION = JavaVersion.VERSION_16
+if (mcVersion >= 260100) {
+	JAVA_VERSION = JavaVersion.VERSION_25
 } else {
-	JAVA_VERSION = JavaVersion.VERSION_1_8
+	JAVA_VERSION = JavaVersion.VERSION_17
 }
 JavaVersion MIXIN_COMPATIBILITY_LEVEL = JAVA_VERSION
 

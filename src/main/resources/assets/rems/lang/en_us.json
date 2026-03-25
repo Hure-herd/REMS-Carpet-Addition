@@ -132,6 +132,12 @@
   "carpet.rule.disableAiGoals.name": "DisableAiGoals",
   "carpet.rule.disableAiGoals.desc": "Select the AI function you want to delete, such as: move, attack, look.",
   "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
-  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all"
+  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+
+  "carpet.rule.flushFakePlayerNetworkQueue.name": "FlushFakePlayerNetworkQueue",
+  "carpet.rule.flushFakePlayerNetworkQueue.desc": "Every minute, the backlog of outbound packets in the underlying EmbeddedChannel of the fake player is cleared to free up heap memory.",
+
+  "carpet.rule.dispenserSpearCharge.name": "DispenserSpearCharge",
+  "carpet.rule.dispenserSpearCharge.desc": "Dispensers use spears to attack entities in front of them."
 
 }

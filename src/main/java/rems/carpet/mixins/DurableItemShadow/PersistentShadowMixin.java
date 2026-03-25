@@ -20,23 +20,23 @@
 
 package rems.carpet.mixins.DurableItemShadow;
 
-import org.spongepowered.asm.mixin.Unique;
-import rems.carpet.REMSSettings;
-import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import rems.carpet.REMSSettings;
+import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
 
 import java.util.UUID;
 
 @Mixin(ItemStack.class)
-public class PersistentShadowMixin{
+public class PersistentShadowMixin {
 
     @Inject(method = "fromNbt", at = @At("RETURN"), cancellable = true)
-    private static void restoreShadowLink(NbtCompound nbt, CallbackInfoReturnable<ItemStack> cir){
+    private static void restoreShadowLink(NbtCompound nbt, CallbackInfoReturnable<ItemStack> cir) {
 
         ItemStack optionalStack = cir.getReturnValue();
         if (optionalStack.isEmpty()) return;
@@ -48,34 +48,34 @@ public class PersistentShadowMixin{
         try{
             NbtCompound dataNbt = customData.copy();
             UUID shadowId = dataNbt.getUuid("ShadowID");
-            if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)) {
+            if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)){
                 ItemStack existingStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
-                if(newStack.getCount() > existingStack.getCount()) {
+                if(newStack.getCount() > existingStack.getCount()){
                     existingStack.setCount(newStack.getCount());
                 }
                 cir.setReturnValue(existingStack);
             }else{
                 ShadowCacheManager.SHADOW_CACHE.put(shadowId, newStack);
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Inject(method = "areNbtEqual", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "canCombine", at = @At("RETURN"), cancellable = true)
     private static void allowRefillingShadow(ItemStack stack, ItemStack otherStack, CallbackInfoReturnable<Boolean> cir){
 
         if(!REMSSettings.durableItemShadow)return;
-        if(cir.getReturnValue() || stack.isEmpty() || otherStack.isEmpty()) return;
+        if(cir.getReturnValue() || stack.isEmpty() || otherStack.isEmpty())return;
         if(!stack.isOf(otherStack.getItem()))return;
 
         NbtCompound dataA = stack.getNbt();
         NbtCompound dataB = otherStack.getNbt();
         boolean hasShadowA = dataA != null && dataA.contains("ShadowID");
         boolean hasShadowB = dataB != null && dataB.contains("ShadowID");
-        if(!hasShadowA && !hasShadowB)return;
+        if (!hasShadowA && !hasShadowB)return;
 
-        if(isActuallyTheSameItem(stack, otherStack)){
+        if (isActuallyTheSameItem(stack, otherStack)){
             cir.setReturnValue(true);
         }
     }
@@ -85,12 +85,11 @@ public class PersistentShadowMixin{
         try{
             ItemStack copyA = a.copy();
             ItemStack copyB = b.copy();
-
             removeShadowId(copyA);
             removeShadowId(copyB);
 
             return ItemStack.canCombine(copyA, copyB);
-        }catch (Exception e) {
+        }catch(Exception e){
             return false;
         }
     }
@@ -98,10 +97,10 @@ public class PersistentShadowMixin{
     @Unique
     private static void removeShadowId(ItemStack stack){
         NbtCompound component = stack.getNbt();
-        if(component != null && component.contains("ShadowID")) {
+        if(component != null && component.contains("ShadowID")){
             NbtCompound nbt = component.copy();
             nbt.remove("ShadowID");
-            if(nbt.isEmpty()) {
+            if(nbt.isEmpty()){
                 stack.setNbt(null);
             }else{
                 stack.setNbt(nbt);

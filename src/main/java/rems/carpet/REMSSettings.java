@@ -41,6 +41,11 @@ public class REMSSettings
 {
 
     @Rule(
+            categories = {REMS, BUGFIX}
+    )
+    public static boolean flushFakePlayerNetworkQueue = false;
+
+    @Rule(
             categories = {REMS,EXPERIMENTAL,OPTIMIZATION},
             options = {"0","200"},
             strict = false,
@@ -159,23 +164,21 @@ public class REMSSettings
     )
     public static boolean opInSurvivalCommandBlocks = false;
 
-    //#if MC>=12001
-    //$$ @Rule(
-    //$$         categories = {REMS,FEATURE},
-    //$$         options = {"8","16","32"},
-    //$$         strict = false,
-    //$$         validators = soundSuppressionMaxRadiusValue.class
-    //$$ )
-    //$$  public static int soundSuppressionRadius = 16;
+    @Rule(
+            categories = {REMS,FEATURE},
+            options = {"8","16","32"},
+            strict = false,
+            validators = soundSuppressionMaxRadiusValue.class
+    )
+     public static int soundSuppressionRadius = 16;
 
-    //$$ private static class soundSuppressionMaxRadiusValue extends Validator<Integer> {
-    //$$    @Override public Integer validate(ServerCommandSource source, CarpetRule<Integer> currentRule, Integer newValue, String string) {
-    //$$        return newValue > 0 && newValue <= 64 ? newValue : null;
-    //$$    }
-    //$$    @Override
-    //$$    public String description() { return Language.getInstance().get("carpet.rule.soundSuppressionRadius.validate");}
-    //$$ }
-    //#endif
+    private static class soundSuppressionMaxRadiusValue extends Validator<Integer> {
+       @Override public Integer validate(ServerCommandSource source, CarpetRule<Integer> currentRule, Integer newValue, String string) {
+           return newValue > 0 && newValue <= 64 ? newValue : null;
+       }
+       @Override
+       public String description() { return Language.getInstance().get("carpet.rule.soundSuppressionRadius.validate");}
+    }
 
     //#if MC<12102
     @Rule(
@@ -203,13 +206,11 @@ public class REMSSettings
     )
     public static String commandClearPearTrail = "ops";
 
-    //#if MC>=12001
-    //$$ @Rule(
-    //$$         options = {"ops", "true", "false"},
-    //$$         categories = {REMS, CREATIVE,COMMAND}
-    //$$ )
-    //$$ public static String commandsetnoisesuppressor = "false";
-    //#endif
+    @Rule(
+            options = {"ops", "true", "false"},
+            categories = {REMS, CREATIVE,COMMAND}
+    )
+    public static String commandsetnoisesuppressor = "false";
 
     //#if MC>=12006
     //$$ @Rule(
@@ -333,10 +334,17 @@ public class REMSSettings
                 } else {
                     id = Identifier.of("minecraft", entityName);
                 }
+                //#if MC<12102
                 if (Registries.ENTITY_TYPE.containsId(id)) {
                     EntityType<?> type = Registries.ENTITY_TYPE.get(id);
                     NO_AI_TYPES.add(type);
                 }
+                //#else
+                //$$ if (Registries.ENTITY_TYPE.containsId(id)) {
+                //$$     EntityType<?> type = Registries.ENTITY_TYPE.getEntry(id).get().value();
+                //$$     NO_AI_TYPES.add(type);
+                //$$ }
+                //#endif
             }
             return normalizedValue;
         }
@@ -365,5 +373,12 @@ public class REMSSettings
             return normalized;
         }
     }
+
+    //#if MC>=12110
+    //$$ @Rule(
+    //$$ categories = {REMS,EXPERIMENTAL}
+    //$$ )
+    //$$ public static boolean dispenserSpearCharge = false;
+    //#endif
 }
 
