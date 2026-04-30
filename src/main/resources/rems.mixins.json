@@ -9,6 +9,7 @@
     "BlockEntityReplace.AbstractFurnaceBlockMixin",
     "BlockEntityReplace.BlockEntityAccessor",
     "BlockEntityReplace.BlockEntityMixin",
+    "BlockEntityReplace.SculkSensorBlockMixin",
     "BlockEntityReplace.HopperBlockEntityMixin",
     "BlockEntityReplace.LecternBlockMixin",
     "BlockEntityReplace.NeighborUpdaterMixin",
