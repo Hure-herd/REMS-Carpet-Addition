@@ -63,10 +63,10 @@
     "TeleportToPoiWithoutPortals.PortalForcerLithiumMixin",
     "TeleportToPoiWithoutPortals.PortalForcerVanillaMixin",
     "TeleportToPoiWithoutPortals.NetherPortalBlockMixin",
-    "TeleportToPoiWithoutPortals.ServerWorldMixin",
+    "logging.PoiDisplayLogger.ServerWorldMixin",
     "TripwirePlatformDeletion.EndPlatformFeatureMixin",
-    "LoadedChunksLogger.MinecraftServerMixin",
-    "LoadedChunksLogger.ChunkLoadingAccessor",
+    "logging.LoadedChunksLogger.MinecraftServerMixin",
+    "logging.LoadedChunksLogger.ChunkLoadingAccessor",
     "HUDControllerMixin"
   ],
   "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",

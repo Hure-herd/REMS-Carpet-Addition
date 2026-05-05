@@ -24,20 +24,20 @@ import carpet.logging.HUDLogger;
 import carpet.logging.Logger;
 import carpet.logging.LoggerRegistry;
 import rems.carpet.logging.logger.LoadedChunksLogger;
-import rems.carpet.logging.logger.PortalPoisLogger;
+import rems.carpet.logging.logger.PoisLogger;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class REMSLoggerRegistry {
 
-    public static boolean __displaypoi;
+    public static boolean __poi;
     public static boolean __loadedChunks;
 
     private static final List<Runnable> onRegisteredCallbacks = new ArrayList<>();
 
     public static void registerLoggers() {
-        register(PortalPoisLogger.getInstance());
+        register(PoisLogger.getInstance());
         register(LoadedChunksLogger.getInstance());
         onRegisteredCallbacks.forEach(Runnable::run);
     }

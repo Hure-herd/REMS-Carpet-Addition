@@ -24,16 +24,16 @@ import carpet.logging.Logger;
 import rems.carpet.logging.REMSLoggerRegistry;
 import rems.carpet.logging.REMSLogger;
 
-public class PortalPoisLogger implements REMSLogger {
+public class PoisLogger implements REMSLogger {
 
-    private static final PortalPoisLogger INSTANCE = new PortalPoisLogger();
+    private static final PoisLogger INSTANCE = new PoisLogger();
 
-    private PortalPoisLogger(){}
+    private PoisLogger(){}
 
-    public static PortalPoisLogger getInstance(){return INSTANCE;}
+    public static PoisLogger getInstance(){return INSTANCE;}
 
     @Override
     public Logger createCarpetLogger() {
-        return REMSLoggerRegistry.standardLogger("displaypoi", null, null);
+        return REMSLoggerRegistry.standardLogger("poi", "portal", new String[]{"village", "portal", "bee_home", "full"});
     }
 }

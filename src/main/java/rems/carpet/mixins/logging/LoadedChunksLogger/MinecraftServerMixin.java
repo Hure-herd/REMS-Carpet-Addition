@@ -18,28 +18,21 @@
  * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.LoadedChunksLogger;
+package rems.carpet.mixins.logging.LoadedChunksLogger;
 
-import it.unimi.dsi.fastutil.longs.Long2ObjectLinkedOpenHashMap;
-import net.minecraft.server.world.ChunkHolder;
-//#if MC<12100
-import net.minecraft.server.world.ThreadedAnvilChunkStorage;
-//#else
-//$$ import net.minecraft.server.world.ServerChunkLoadingManager;
-//#endif
-import net.minecraft.util.math.ChunkPos;
+import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rems.carpet.logging.logger.LoadedChunksLogger;
+import java.util.function.BooleanSupplier;
 
-//#if MC<12100
-@Mixin(ThreadedAnvilChunkStorage.class)
-//#else
-//$$ @Mixin(ServerChunkLoadingManager.class)
-//#endif
-public interface ChunkLoadingAccessor {
-    @Accessor("chunkHolders")
-    Long2ObjectLinkedOpenHashMap<ChunkHolder> getChunkHolders();
-    @Invoker("shouldTick")
-    boolean invokeShouldTick(ChunkPos pos);
+@Mixin(MinecraftServer.class)
+public class MinecraftServerMixin {
+
+    @Inject(method = "tick", at = @At("TAIL"))
+    private void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
+        LoadedChunksLogger.getInstance().tickLog((MinecraftServer) (Object) this);
+    }
 }

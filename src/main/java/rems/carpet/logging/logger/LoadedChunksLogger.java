@@ -31,7 +31,7 @@ import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 import rems.carpet.logging.REMSHUDLogger;
 import rems.carpet.logging.REMSLoggerRegistry;
-import rems.carpet.mixins.LoadedChunksLogger.ChunkLoadingAccessor;
+import rems.carpet.mixins.logging.LoadedChunksLogger.ChunkLoadingAccessor;
 import rems.carpet.utils.ComponentTranslate;
 
 public class LoadedChunksLogger implements REMSHUDLogger {
