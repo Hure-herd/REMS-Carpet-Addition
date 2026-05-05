@@ -34,6 +34,5 @@ public class MinecraftServerMixin {
     @Inject(method = "tick", at = @At("TAIL"))
     private void onServerTick(BooleanSupplier shouldKeepTicking, CallbackInfo ci) {
         LoadedChunksLogger.getInstance().tickLog((MinecraftServer) (Object) this);
-        System.out.println("run！");
     }
 }
