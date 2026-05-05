@@ -1,20 +1,19 @@
 # Support Version
 
-Currently, the main supported version is **1.19.4**. The main version under development may be gradually upgraded in the near future, and there is no plan for backward compatibility.
+Currently, the main supported version is **1.20.1**.
 
 | Version | Support |
 |:-------:|:----:|
+| 26.1.2  |  ✔   |
+| 26.1.1  |  ✔   |
+|  26.1   |  ✔   |
 | 1.21.11 |  ✔   |
 | 1.21.10 |  ✔   |
 | 1.21.8  |  ✔   |
 | 1.21.7  |  ✔   |
 | 1.21.6  |  ✔   |
-| 1.21.5  |  ✔   |
 | 1.21.4  |  ✔   |
-| 1.21.2  |  ✔   |
 | 1.21.1  |  ✔   |
 |  1.21   |  ✔   |
-| 1.20.6  |  ✔   |
 | 1.20.1  |  ✔   |
 |  1.20   |  ✔   |
-| 1.19.4  |  ✔   |

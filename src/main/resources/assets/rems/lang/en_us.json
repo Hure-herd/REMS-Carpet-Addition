@@ -138,6 +138,11 @@
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "Every minute, the backlog of outbound packets in the underlying EmbeddedChannel of the fake player is cleared to free up heap memory.",
 
   "carpet.rule.dispenserSpearCharge.name": "DispenserSpearCharge",
-  "carpet.rule.dispenserSpearCharge.desc": "Dispensers use spears to attack entities in front of them."
+  "carpet.rule.dispenserSpearCharge.desc": "Dispensers can use spears to attack entities in front of them.",
+
+  "carpet.rule.allowTripwirePlatformDeletion.name": "AllowTripwirePlatformDeletion",
+  "carpet.rule.allowTripwirePlatformDeletion.desc": "Players can use the tripwire's abnormal state to interrupt the spawn of the End Obsidian spawn platform, thereby deleting the platform.",
+
+  "rems.loadedChunks.title":"Loaded Chunks"
 
 }

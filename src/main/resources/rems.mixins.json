@@ -59,8 +59,17 @@
     "soundsuppressionintroduce.CalibratedSculkSensorBlockEntityMixin",
     "soundsuppressionintroduce.GameEventMixin",
     "Stridergodie.StriderEntityMixin",
-    "WanderingTraderNoDiscard.WanderingTraderEntityMixin"
+    "WanderingTraderNoDiscard.WanderingTraderEntityMixin",
+    "TeleportToPoiWithoutPortals.PortalForcerLithiumMixin",
+    "TeleportToPoiWithoutPortals.PortalForcerVanillaMixin",
+    "TeleportToPoiWithoutPortals.NetherPortalBlockMixin",
+    "TeleportToPoiWithoutPortals.ServerWorldMixin",
+    "TripwirePlatformDeletion.EndPlatformFeatureMixin",
+    "LoadedChunksLogger.MinecraftServerMixin",
+    "LoadedChunksLogger.ChunkLoadingAccessor",
+    "HUDControllerMixin"
   ],
+  "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",
   "client": [
   ],
   "injectors": {

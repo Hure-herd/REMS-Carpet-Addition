@@ -63,7 +63,7 @@ public class ComponentTranslate {
 
     private static Map<String, String> localDictionary = new HashMap<>();
 
-    public static MutableText tr(String path, Object... args) {
+    public static MutableText translation(String path, Object... args) {
         String fullKey = "rems." + path;
         String text = localDictionary.getOrDefault(fullKey, fullKey);
 
@@ -75,6 +75,10 @@ public class ComponentTranslate {
     }
 
     public static MutableText error(String path, Object... args) {
-        return tr(path, args).formatted(Formatting.RED);
+        return translation(path, args).formatted(Formatting.RED);
+    }
+
+    public static MutableText tr(String path, Object... args) {
+        return translation(path, args);
     }
 }

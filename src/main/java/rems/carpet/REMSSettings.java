@@ -144,10 +144,10 @@ public class REMSSettings
     )
     public static boolean reloadrefreshirongolem = false;
 
-    // @Rule(
-    //         categories = {REMS, EXPERIMENTAL}
-    // )
-    // public static boolean teleportToPoiWithoutPortals = false;
+    @Rule(
+             categories = {REMS, EXPERIMENTAL}
+    )
+    public static boolean teleportToPoiWithoutPortals = false;
 
     @Rule(
             categories = {REMS, SURVIVAL}
@@ -265,7 +265,7 @@ public class REMSSettings
     public static boolean noSensationPearlLoad = false;
 
     @Rule(
-            categories = {REMS, FEATURE},
+            categories = {REMS, SURVIVAL},
             validators = CommandListValidator.class,
             options = {"false", "say", "player,tick", "say,player,tick"},
             strict = false
@@ -379,6 +379,13 @@ public class REMSSettings
     //$$ categories = {REMS,EXPERIMENTAL}
     //$$ )
     //$$ public static boolean dispenserSpearCharge = false;
+    //#endif
+
+    //#if MC>=12006
+    //$$ @Rule(
+    //$$        categories = {REMS, FEATURE}
+    //$$ )
+    //$$ public static boolean allowTripwirePlatformDeletion = false;
     //#endif
 }
 

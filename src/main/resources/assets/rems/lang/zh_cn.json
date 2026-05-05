@@ -33,9 +33,6 @@
   "carpet.rule.chestMinecartChunkLoader.name": "箱子矿车加载区块",
   "carpet.rule.chestMinecartChunkLoader.desc" : "箱子矿车可以强加载1x1的区块持续2s,当箱子矿车的名字是Load时生效",
 
-  "carpet.rule.teleportToPoiWithoutPortals.name": "重新引入POI传送",
-  "carpet.rule.teleportToPoiWithoutPortals.desc": "重新添加传送至没有传送门方块的传送门POI的规则",
-
   "carpet.rule.keepWorldTickUpdate.name": "保持实体更新",
   "carpet.rule.keepWorldTickUpdate.desc": "在服务器当前维度没有玩家的300tick后，Minecraft会停止实体相关的更新，这条规则会绕过这个限制。",
 
@@ -84,7 +81,6 @@
 
   "carpet.rule.commandsetnoisesuppressor.name": "放置声音抑制器命令开关",
   "carpet.rule.commandsetnoisesuppressor.desc": "启用/setnoisesuppressor命令来放置声音抑制器",
-
 
   "carpet.rule.reloadrefreshirongolem.name": "重载式刷铁机",
   "carpet.rule.reloadrefreshirongolem.desc": "你可以像1.14一样在末地建造重载式刷铁机，这个规则可以让他工作",
@@ -138,6 +134,14 @@
   "carpet.rule.flushFakePlayerNetworkQueue.name": "清理假玩家网络队列",
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "每分钟清空假玩家底层EmbeddedChannel中积压的出站数据包以释放堆内存。",
 
-  "carpet.rule.dispenserSpearCharge.name": "发射器发射矛",
-  "carpet.rule.dispenserSpearCharge.desc": "发射器使用长矛攻击面前的实体。"
-}
+  "carpet.rule.dispenserSpearCharge.name": "发射器可以发射矛",
+  "carpet.rule.dispenserSpearCharge.desc": "发射器可以使用长矛攻击面前的实体。",
+
+  "carpet.rule.teleportToPoiWithoutPortals.name": "重新引入POI传送",
+  "carpet.rule.teleportToPoiWithoutPortals.desc": "重新添加传送至没有传送门方块的传送门POI的规则",
+
+  "carpet.rule.allowTripwirePlatformDeletion.name": "引入绊线删除平台",
+  "carpet.rule.allowTripwirePlatformDeletion.desc": "允许玩家利用绊线的异常状态来中断末地黑曜石出生平台的生成，从而删除平台。",
+
+  "rems.loadedChunks.title":"加载区块"
+} 

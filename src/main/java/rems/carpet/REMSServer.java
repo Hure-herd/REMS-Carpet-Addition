@@ -25,6 +25,7 @@ import carpet.CarpetServer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.MinecraftServer;
+import rems.carpet.logging.REMSLoggerRegistry;
 import rems.carpet.utils.ChunkLoader.ChunkLoaderState;
 import rems.carpet.utils.ComponentTranslate;
 import net.fabricmc.api.ModInitializer;
@@ -90,6 +91,12 @@ public class REMSServer implements CarpetExtension, ModInitializer
     @Override
     public Map<String, String> canHasTranslations(String lang) {
         return ComponentTranslate.getTranslationFromResourcePath(lang);
+    }
+
+    @Override
+    public void registerLoggers()
+    {
+        REMSLoggerRegistry.registerLoggers();
     }
 
     @Override

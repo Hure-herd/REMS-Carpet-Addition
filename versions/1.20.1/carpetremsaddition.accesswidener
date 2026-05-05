@@ -18,3 +18,6 @@ accessible class net/minecraft/entity/mob/SlimeEntity$MoveGoal
 accessible class net/minecraft/entity/mob/SlimeEntity$FaceTowardTargetGoal
 accessible class net/minecraft/entity/mob/SlimeEntity$SwimmingGoal
 accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal
+
+accessible method net/minecraft/entity/decoration/DisplayEntity$BlockDisplayEntity setBlockState (Lnet/minecraft/block/BlockState;)V
+accessible method net/minecraft/entity/decoration/DisplayEntity setTransformation (Lnet/minecraft/util/math/AffineTransformation;)V
