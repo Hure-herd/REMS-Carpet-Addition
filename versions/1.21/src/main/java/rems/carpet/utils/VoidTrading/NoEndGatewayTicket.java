@@ -21,7 +21,6 @@
 package rems.carpet.utils.VoidTrading;
 
 import net.minecraft.util.math.BlockPos;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 

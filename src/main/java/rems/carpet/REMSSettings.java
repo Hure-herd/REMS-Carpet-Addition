@@ -32,8 +32,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Language;
-import rems.carpet.utils.DisableAi.AiGoalRegistrar;
-
 import java.util.*;
 
 

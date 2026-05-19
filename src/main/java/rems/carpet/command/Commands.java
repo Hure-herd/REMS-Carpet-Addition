@@ -25,7 +25,6 @@ import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.ServerCommandSource;
 import rems.carpet.command.ClearPearTrail.ClearPearTrailCommand;
 import rems.carpet.command.soundsuppressionintroduce.SetNoiseSuppressorCommand;
-import rems.carpet.command.VoidTrading.NoEndGatewayTicketCommand;
 
 public class Commands {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess context) {

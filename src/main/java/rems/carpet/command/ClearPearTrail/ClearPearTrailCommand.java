@@ -23,7 +23,6 @@ package rems.carpet.command.ClearPearTrail;
 import carpet.utils.CommandHelper;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import rems.carpet.REMSSettings;

@@ -38,8 +38,8 @@ public class EndGatewayBlockMixin {
             method = "createTeleportTarget",
             at = @At(
                     value = "FIELD",
-                    target = "Lnet/minecraft/world/TeleportTarget;ADD_PORTAL_CHUNK_TICKET:Lnet/minecraft/world/TeleportTarget$PostDimensionTransition;"
-            )
+                    target = "Lnet/minecraft/world/TeleportTarget;ADD_PORTAL_CHUNK_TICKET:Lnet/minecraft/world/TeleportTarget$PostDimensionTransition;",
+                    opcode = Opcodes.GETSTATIC)
     )
     private TeleportTarget.PostDimensionTransition NoEndGatewayTicket(TeleportTarget.PostDimensionTransition original, ServerWorld world, Entity entity, BlockPos pos) {
         if (REMSSettings.voidTrading && NoEndGatewayTicket.isMarked(pos)) {

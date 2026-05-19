@@ -21,9 +21,7 @@
 package rems.carpet.command.VoidTrading;
 
 import carpet.utils.CommandHelper;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
