@@ -143,6 +143,17 @@
   "carpet.rule.allowTripwirePlatformDeletion.name": "AllowTripwirePlatformDeletion",
   "carpet.rule.allowTripwirePlatformDeletion.desc": "Players can use the tripwire's abnormal state to interrupt the spawn of the End Obsidian spawn platform, thereby deleting the platform.",
 
-  "rems.loadedChunks.title":"Loaded Chunks"
+  "rems.loadedChunks.title":"Loaded Chunks",
 
+  "carpet.rule.voidTrading.name": "VoidTrading",
+  "carpet.rule.voidTrading.desc": "Restore Void Trading,Enable the /noEndGatewayTicket command to cancel the loading of a gate at a specific location.",
+
+  "carpet.rule.commandnoEndGatewayTicket.name": "CommandnoNoEndGatewayTicket",
+  "carpet.rule.commandnoEndGatewayTicket.desc": "Enable the /noEndGatewayTicket command to cancel the loading of a gate at a specific location.",
+  "rems.commandnoEndGatewayTicket.add": "Added:",
+  "rems.commandnoEndGatewayTicket.remove": "Removed:",
+  "rems.commandnoEndGatewayTicket.all": "All removed!",
+  "rems.commandnoEndGatewayTicket.remove.error": "These coordinates have not yet been marked!",
+  "rems.commandnoEndGatewayTicket.list.error": "There are currently no coordinates that need to be cancelled!",
+  "rems.commandnoEndGatewayTicket.list": "The currently marked coordinates are:"
 }

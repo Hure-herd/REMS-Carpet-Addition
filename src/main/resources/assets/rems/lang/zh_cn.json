@@ -143,5 +143,17 @@
   "carpet.rule.allowTripwirePlatformDeletion.name": "引入绊线删除平台",
   "carpet.rule.allowTripwirePlatformDeletion.desc": "允许玩家利用绊线的异常状态来中断末地黑曜石出生平台的生成，从而删除平台。",
 
-  "rems.loadedChunks.title":"加载区块"
+  "rems.loadedChunks.title":"加载区块",
+
+  "carpet.rule.voidTrading.name": "虚空交易",
+  "carpet.rule.voidTrading.desc": "恢复虚空交易，使用 /noEndGatewayTicket 命令取消某位置的折跃门的加载",
+
+  "carpet.rule.commandnoEndGatewayTicket.name": "取消折跃门加载命令开关",
+  "carpet.rule.commandnoEndGatewayTicket.desc": "启用 /noEndGatewayTicket 命令来取消某位置的折跃门的加载",
+  "rems.commandnoEndGatewayTicket.add": "已添加:",
+  "rems.commandnoEndGatewayTicket.remove": "已去除:",
+  "rems.commandnoEndGatewayTicket.all": "已去除全部",
+  "rems.commandnoEndGatewayTicket.remove.error": "该坐标尚未被标记!",
+  "rems.commandnoEndGatewayTicket.list.error": "目前没有需要取消的坐标!",
+  "rems.commandnoEndGatewayTicket.list": "当前标记的坐标有:"
 } 

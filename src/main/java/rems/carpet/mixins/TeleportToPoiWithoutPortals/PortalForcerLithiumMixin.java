@@ -19,7 +19,7 @@
  */
 
 package rems.carpet.mixins.TeleportToPoiWithoutPortals;
-//#if MC<12101
+//#if MC<12006
 import me.jellysquid.mods.lithium.common.util.POIRegistryEntries;
 import me.jellysquid.mods.lithium.common.world.interests.PointOfInterestStorageExtended;
 //#else

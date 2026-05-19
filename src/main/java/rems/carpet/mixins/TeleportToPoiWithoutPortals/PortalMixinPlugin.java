@@ -35,12 +35,6 @@ public class PortalMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
         this.isLithiumLoaded = FabricLoader.getInstance().isModLoaded("lithium");
-
-        if (this.isLithiumLoaded) {
-            System.out.println("[REMS Addition] 检测到 Lithium，准备加载高性能传送门兼容 Mixin...");
-        } else {
-            System.out.println("[REMS Addition] 未检测到 Lithium，将使用原版传送门 Mixin...");
-        }
     }
 
     @Override

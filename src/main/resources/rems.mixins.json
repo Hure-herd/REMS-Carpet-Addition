@@ -67,7 +67,9 @@
     "TripwirePlatformDeletion.EndPlatformFeatureMixin",
     "logging.LoadedChunksLogger.MinecraftServerMixin",
     "logging.LoadedChunksLogger.ChunkLoadingAccessor",
-    "HUDControllerMixin"
+    "HUDControllerMixin",
+    "VoidTrading.MerchantScreenHandlerMixin",
+    "VoidTrading.EndGatewayBlockMixin"
   ],
   "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",
   "client": [

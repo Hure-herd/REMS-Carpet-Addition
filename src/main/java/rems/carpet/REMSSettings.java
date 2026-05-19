@@ -387,5 +387,18 @@ public class REMSSettings
     //$$ )
     //$$ public static boolean allowTripwirePlatformDeletion = false;
     //#endif
+
+    //#if MC>=12006
+    //$$ @Rule(
+    //$$         categories = {REMS, SURVIVAL}
+    //$$ )
+    //$$ public static boolean voidTrading = false;
+
+    //$$ @Rule(
+    //$$         options = {"ops", "true", "false"},
+    //$$         categories = {REMS, CREATIVE,COMMAND}
+    //$$ )
+    //$$ public static String commandnoEndGatewayTicket = "ops";
+    //#endif
 }
 
