@@ -155,5 +155,14 @@
   "rems.commandnoEndGatewayTicket.all": "已去除全部",
   "rems.commandnoEndGatewayTicket.remove.error": "该坐标尚未被标记!",
   "rems.commandnoEndGatewayTicket.list.error": "目前没有需要取消的坐标!",
-  "rems.commandnoEndGatewayTicket.list": "当前标记的坐标有:"
+  "rems.commandnoEndGatewayTicket.list": "当前标记的坐标有:",
+
+  "rems.CommandBlockWhitelist.1": "已将",
+  "rems.CommandBlockWhitelist.2": "命令方块白名单",
+  "rems.CommandBlockWhitelist.3": "玩家",
+  "rems.CommandBlockWhitelist.4": "你没有权限打开命令方块!",
+  "rems.CommandBlockWhitelist.add.1": "添加到命令方块白名单",
+  "rems.CommandBlockWhitelist.add.2":"已经在白名单中了",
+  "rems.CommandBlockWhitelist.remove.1": "从白名单中移除",
+  "rems.CommandBlockWhitelist.remove.2":"白名单中找不到"
 } 

@@ -24,7 +24,7 @@ import carpet.logging.Logger;
 import carpet.logging.LoggerRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.decoration.DisplayEntity;
 import net.minecraft.network.packet.s2c.play.EntitiesDestroyS2CPacket;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -43,7 +43,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import java.util.*;
 import java.util.function.BooleanSupplier;
 
@@ -84,7 +83,11 @@ public class ServerWorldMixin {
                             player.getBlockPos(),
                             40,
                             PointOfInterestStorage.OccupationStatus.ANY
+                    //#if MC<260200
                     ).forEach(poi -> targetMarkers.put(poi.getPos(), Blocks.PURPLE_STAINED_GLASS.getDefaultState()));
+                    //#else
+                    //$$ ).forEach(poi -> targetMarkers.put(poi.getPos(), Blocks.STAINED_GLASSES.purple().getDefaultState()));
+                    //#endif
                 }
 
                 if (isFull || "village".equals(option)) {
@@ -94,7 +97,11 @@ public class ServerWorldMixin {
                             64,
                             PointOfInterestStorage.OccupationStatus.IS_OCCUPIED
                     ).forEach(poi -> {
+                        //#if MC<260200
                         targetMarkers.put(poi.getPos(), Blocks.RED_STAINED_GLASS.getDefaultState());
+                        //#else
+                        //$$ targetMarkers.put(poi.getPos(), Blocks.STAINED_GLASSES.red().getDefaultState());
+                        //#endif
                     });
                 }
 
@@ -104,7 +111,11 @@ public class ServerWorldMixin {
                             player.getBlockPos(),
                             40,
                             PointOfInterestStorage.OccupationStatus.ANY
+                    //#if MC<260200
                     ).forEach(poi -> targetMarkers.put(poi.getPos(), Blocks.YELLOW_STAINED_GLASS.getDefaultState()));
+                    //#else
+                    //$$ ).forEach(poi -> targetMarkers.put(poi.getPos(), Blocks.STAINED_GLASSES.yellow().getDefaultState()));
+                    //#endif
                 }
                 List<Integer> entitiesToRemove = new ArrayList<>();
                 activeMarkers.entrySet().removeIf(entry -> {
@@ -124,7 +135,11 @@ public class ServerWorldMixin {
                     BlockState renderState = entry.getValue();
 
                     if (!activeMarkers.containsKey(pos)) {
+                        //#if MC<260200
                         DisplayEntity.BlockDisplayEntity fakeDisplay = new DisplayEntity.BlockDisplayEntity(EntityType.BLOCK_DISPLAY, world);
+                        //#else
+                        //$$ DisplayEntity.BlockDisplayEntity fakeDisplay = new DisplayEntity.BlockDisplayEntity(EntityTypes.BLOCK_DISPLAY, world);
+                        //#endif
                         fakeDisplay.setPos(pos.getX(), pos.getY(), pos.getZ());
                         fakeDisplay.setBlockState(renderState);
                         fakeDisplay.setGlowing(true);

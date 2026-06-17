@@ -1,7 +1,7 @@
 {
   "required": true,
   "package": "rems.carpet.mixins",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "{{COMPATIBILITY_LEVEL}}",
   "mixins": [
     "keepWorldTickUpdate",
     "SettingsManagerMixin",
@@ -36,7 +36,6 @@
     "FlushFakePlayerNetworkQueue.ClientConnectionMixin",
     "Introduce212ThrownEntity.ThrownEntityMixin",
     "ItemShadowing.ScreenHandlerMixin",
-    "MergeTNTMax.EntityTrackerEntryMixin",
     "MergeTNTMax.TntEntityMixin",
     "MergeTNTPro.TntEntityMixin",
     "OpInSurvivalCommandBlocks.CommandBlockBlockMixin",
@@ -69,7 +68,8 @@
     "logging.LoadedChunksLogger.ChunkLoadingAccessor",
     "HUDControllerMixin",
     "VoidTrading.MerchantScreenHandlerMixin",
-    "VoidTrading.EndGatewayBlockMixin"
+    "VoidTrading.EndGatewayBlockMixin",
+    "CommandBlockWhitelist.CommandBlockBlockMixin"
   ],
   "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",
   "client": [

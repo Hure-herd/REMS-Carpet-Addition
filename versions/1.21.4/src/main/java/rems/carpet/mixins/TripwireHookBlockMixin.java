@@ -31,7 +31,11 @@ import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 @Mixin(TripwireHookBlock.class)
 public abstract class TripwireHookBlockMixin {
     @ModifyExpressionValue(
+            //#if MC<260200
             method = "update",
+            //#else
+            //$$ method = "update*",
+            //#endif
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 3

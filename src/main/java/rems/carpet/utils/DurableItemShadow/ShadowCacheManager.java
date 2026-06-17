@@ -32,6 +32,5 @@ public class ShadowCacheManager {
 
     public static void clearCache() {
         SHADOW_CACHE.clear();
-        System.out.println("[ShadowMod] Cache Cleared.");
     }
 }

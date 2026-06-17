@@ -24,7 +24,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.mojang.logging.LogUtils;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.*;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.EndGatewayBlockEntity;
 import net.minecraft.block.entity.EndPortalBlockEntity;
@@ -44,7 +44,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
 
@@ -53,7 +52,11 @@ import rems.carpet.REMSSettings;
 public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
 
     public EndGatewayBlockEntityMixin(BlockPos blockPos, BlockState blockState) {
+        //#if MC<260200
         super(BlockEntityType.END_GATEWAY, blockPos, blockState);
+        //#else
+        //$$ super(BlockEntityTypes.END_GATEWAY, blockPos, blockState);
+        //#endif
     }
 
     @Shadow

@@ -29,7 +29,7 @@ import rems.carpet.REMSSettings;
 @Mixin(TripwireHookBlock.class)
 public abstract class TripwireHookBlockMixin {
     @ModifyExpressionValue(
-            method = "update",
+            method = "update*",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockState;is(Ljava/lang/Object;)Z", ordinal = 3

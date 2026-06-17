@@ -20,7 +20,7 @@
 
 package rems.carpet.mixins.Reloadrefreshirongolem;
 
-import net.minecraft.entity.EntityType;
+import net.minecraft.entity.*;
 import net.minecraft.entity.LargeEntitySpawnHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
@@ -86,7 +86,11 @@ public abstract class VillagerEntityMixin extends PassiveEntity {
                     VillagerEntity firstVillager = nearbyVillagers.get(0);
                     if (!raiders.isEmpty()) {
                         if (firstVillager.getUuid().equals(this.getUuid())) {
+                            //#if MC<260200
                             LargeEntitySpawnHelper.trySpawnAt(EntityType.IRON_GOLEM,
+                            //#else
+                            //$$ LargeEntitySpawnHelper.trySpawnAt(EntityTypes.IRON_GOLEM,
+                            //#endif
                                     SpawnReason.MOB_SUMMONED,
                                     serverWorld, this.getBlockPos(),
                                     10, 8, 6,

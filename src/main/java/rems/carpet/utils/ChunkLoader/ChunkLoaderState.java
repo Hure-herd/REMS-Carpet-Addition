@@ -20,12 +20,15 @@
 
 package rems.carpet.utils.ChunkLoader;
 
+import it.unimi.dsi.fastutil.longs.Long2LongMap;
+import it.unimi.dsi.fastutil.longs.Long2LongOpenHashMap;
 import net.minecraft.server.world.ChunkTicketType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.registry.RegistryKey;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -58,22 +61,17 @@ public class ChunkLoaderState {
     //$$ public static final ChunkTicketType PISTON_BLOCK_TICKET = ChunkTicketType.register("piston_block",60,15);
     //#endif
 
-    private static final Map<RegistryKey<World>, Set<ChunkPos>> LAZY_CHUNKS_BY_DIM = new ConcurrentHashMap<>();
+    private static final Map<RegistryKey<World>, Long2LongMap> LAZY_CHUNKS_BY_DIM = new HashMap<>();
 
     public static void addLazyChunk(ServerWorld world, ChunkPos pos) {
-        LAZY_CHUNKS_BY_DIM
-                .computeIfAbsent(world.getRegistryKey(), k -> ConcurrentHashMap.newKeySet())
-                .add(pos);
+        long expireTick = world.getTime() + 20L;
+        LAZY_CHUNKS_BY_DIM.computeIfAbsent(world.getRegistryKey(), k -> new Long2LongOpenHashMap()).put(pos.toLong(), expireTick);
     }
 
-    public static boolean isLazyChunk(ServerWorld world, ChunkPos pos) {
-        Set<ChunkPos> chunks = LAZY_CHUNKS_BY_DIM.get(world.getRegistryKey());
-        return chunks != null && chunks.contains(pos);
-    }
-
-    public static void removeLazyChunk(ServerWorld world, ChunkPos pos) {
-        LAZY_CHUNKS_BY_DIM
-                .computeIfAbsent(world.getRegistryKey(), k -> ConcurrentHashMap.newKeySet())
-                .remove(pos);
+    public static boolean isLazyChunk(ServerWorld world, long chunkPosLong) {
+        Long2LongMap map = LAZY_CHUNKS_BY_DIM.get(world.getRegistryKey());
+        if (map == null) return false;
+        long expireTick = map.getOrDefault(chunkPosLong, -1L);
+        return expireTick != -1L && world.getTime() <= expireTick;
     }
 }

@@ -54,6 +54,9 @@ dependencies {
 
 	// Dependencies
 	include(implementation("com.esotericsoftware.yamlbeans:yamlbeans:${project.yamlbeans_version}"))
+
+	compileOnly 'org.projectlombok:lombok:1.18.46'
+	annotationProcessor 'org.projectlombok:lombok:1.18.46'
 }
 
 loom {
@@ -86,8 +89,10 @@ loom {
 }
 
 JavaVersion JAVA_VERSION
-if (mcVersion >= 260100) {
+if (mcVersion >= 260000) {
 	JAVA_VERSION = JavaVersion.VERSION_25
+} else if(mcVersion >= 12005) {
+	JAVA_VERSION = JavaVersion.VERSION_21
 } else {
 	JAVA_VERSION = JavaVersion.VERSION_17
 }
@@ -122,9 +127,9 @@ processResources {
 		expand valueMap
 	}
 
-	filesMatching("rms.mixins.json") {
+	filesMatching("rems.mixins.json") {
 		filter {
-			text -> text.replace("/*JAVA_VERSION*/", "JAVA_${MIXIN_COMPATIBILITY_LEVEL.ordinal() + 1}")
+			text -> text.replace("{{COMPATIBILITY_LEVEL}}", "JAVA_${MIXIN_COMPATIBILITY_LEVEL.ordinal() + 1}")
 		}
 	}
 }
@@ -136,6 +141,11 @@ java {
 	withSourcesJar()
 	sourceCompatibility = JAVA_VERSION
 	targetCompatibility = JAVA_VERSION
+	toolchain.languageVersion = JavaLanguageVersion.of(JAVA_VERSION.majorVersion)
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.release.set(JAVA_VERSION.majorVersion.toInteger())
 }
 
 jar {

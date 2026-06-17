@@ -155,5 +155,14 @@
   "rems.commandnoEndGatewayTicket.all": "All removed!",
   "rems.commandnoEndGatewayTicket.remove.error": "These coordinates have not yet been marked!",
   "rems.commandnoEndGatewayTicket.list.error": "There are currently no coordinates that need to be cancelled!",
-  "rems.commandnoEndGatewayTicket.list": "The currently marked coordinates are:"
+  "rems.commandnoEndGatewayTicket.list": "The currently marked coordinates are:",
+
+  "rems.CommandBlockWhitelist.1": "",
+  "rems.CommandBlockWhitelist.2": "command block whitelist",
+  "rems.CommandBlockWhitelist.3": "Player",
+  "rems.CommandBlockWhitelist.4": "You do not have permission to open the command block!",
+  "rems.CommandBlockWhitelist.add.1": "has been added to the command block whitelist.",
+  "rems.CommandBlockWhitelist.add.2":"is already on the whitelist.",
+  "rems.CommandBlockWhitelist.remove.1": "has been removed from the whitelist.",
+  "rems.CommandBlockWhitelist.remove.2":"Not found in the whitelist."
 }

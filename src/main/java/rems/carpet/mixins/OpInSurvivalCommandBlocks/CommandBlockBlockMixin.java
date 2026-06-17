@@ -20,6 +20,8 @@
 
 package rems.carpet.mixins.OpInSurvivalCommandBlocks;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.block.CommandBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,14 +32,14 @@ import rems.carpet.REMSSettings;
 @Mixin(CommandBlock.class)
 public class CommandBlockBlockMixin {
 
-    @Redirect(
+    @WrapOperation(
             method = "onUse",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/player/PlayerEntity;isCreativeLevelTwoOp()Z"
             )
     )
-    private boolean allowSurvivalOpToOpen(PlayerEntity instance) {
+    private boolean allowSurvivalOpToOpen(PlayerEntity instance, Operation<Boolean> original) {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{

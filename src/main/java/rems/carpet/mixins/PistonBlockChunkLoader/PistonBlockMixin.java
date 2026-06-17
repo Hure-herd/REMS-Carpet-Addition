@@ -40,9 +40,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Mixin(PistonBlock.class)
-public abstract class PistonBlockMixin
-{
-    private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+public abstract class PistonBlockMixin  {
 
     @Inject(method = "onSyncedBlockEvent", at = @At("HEAD"))
     private void load(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable info) {
@@ -56,83 +54,94 @@ public abstract class PistonBlockMixin
             BlockPos nbp2 = pos.offset(direction.getOpposite()).up();
             BlockState pistonBlock2 = world.getBlockState(nbp2);
 
-            if (pistonBlock.isOf(Blocks.REDSTONE_ORE)) {
+            //#if MC<26000
+            if (pistonBlock1.isOf(Blocks.REDSTONE_ORE)) {
+            //#else
+            //$$ if (pistonBlock1.is(Blocks.DIAMOND_ORE)) {
+            //#endif
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                //#if MC<12108
                 ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2, cp);
-
-                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
+                //#else
+                //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2);
+                //#endif
             }
-
-            if (pistonBlock.isOf(Blocks.DIAMOND_ORE)) {
+            //#if MC<26000
+            if (pistonBlock1.isOf(Blocks.DIAMOND_ORE)) {
+            //#else
+            //$$ if (pistonBlock1.is(Blocks.DIAMOND_ORE)) {
+            //#endif
+                ServerWorld serverWorld = (ServerWorld) world;
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
-
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                //#if MC<12108
                 ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1, cp);
-
-                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
-
-                int[] xOffsets = {-1, 0, 1};
-                int[] zOffsets = {-1, 0, 1};
+                //#else
+                //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1);
+                //#endif
+                ChunkLoaderState.addLazyChunk(serverWorld, cp);
                 boolean allLazy = true;
-
-                for (int dx : xOffsets) {
-                    for (int dz : zOffsets) {
-                        ChunkPos target = new ChunkPos(cp.x + dx, cp.z + dz);
-                        if (!ChunkLoaderState.isLazyChunk(((ServerWorld) world), target)) {
+                int cpX = cp.x;
+                int cpZ = cp.z;
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        long targetPos = ChunkPos.toLong(cpX + dx, cpZ + dz);
+                        if (!ChunkLoaderState.isLazyChunk(serverWorld, targetPos)) {
                             allLazy = false;
                             break;
                         }
                     }
                     if (!allLazy) break;
                 }
-
                 if (allLazy) {
+                    //#if MC<12108
                     ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2, cp);
+                    //#else
+                    //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2);
+                    //#endif
                 }
-                scheduler.schedule(() -> {
-                    world.getServer().execute(() -> {
-                        ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
-                    });
-                }, 1000, TimeUnit.MILLISECONDS);
             }
-
+            //#if MC<26000
             if (pistonBlock1.isOf(Blocks.BEDROCK) && pistonBlock2.isOf(Blocks.REDSTONE_TORCH) &&
                     world.getRegistryKey() == World.NETHER) {
+            //#else
+            //$$ if (pistonBlock1.is(Blocks.BEDROCK) && pistonBlock2.is(Blocks.REDSTONE_TORCH) &&
+            //$$         world.getRegistryKey() == World.NETHER) {
+            //#endif
+                ServerWorld serverWorld = (ServerWorld) world;
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
-
                 ChunkPos cp = new ChunkPos(x >> 4, z >> 4);
+                //#if MC<12108
                 ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1, cp);
-
-                ChunkLoaderState.addLazyChunk(((ServerWorld) world), cp);
-
-                int[] xOffsets = {-1, 0, 1};
-                int[] zOffsets = {-1, 0,1};
+                //#else
+                //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 1);
+                //#endif
+                ChunkLoaderState.addLazyChunk(serverWorld, cp);
                 boolean allLazy = true;
-
-                for (int dx : xOffsets) {
-                    for (int dz : zOffsets) {
-                        ChunkPos target = new ChunkPos(cp.x + dx, cp.z + dz);
-                        if (!ChunkLoaderState.isLazyChunk(((ServerWorld) world), target)) {
+                int cpX = cp.x;
+                int cpZ = cp.z;
+                for (int dx = -1; dx <= 1; dx++) {
+                    for (int dz = -1; dz <= 1; dz++) {
+                        long targetPos = ChunkPos.toLong(cpX + dx, cpZ + dz);
+                        if (!ChunkLoaderState.isLazyChunk(serverWorld, targetPos)) {
                             allLazy = false;
                             break;
                         }
                     }
                     if (!allLazy) break;
                 }
-
                 if (allLazy) {
+                    //#if MC<12108
                     ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2, cp);
+                    //#else
+                    //$$ ((ServerWorld) world).getChunkManager().addTicket(ChunkLoaderState.PISTON_BLOCK_TICKET, cp, 2);
+                    //#endif
                 }
-                scheduler.schedule(() -> {
-                    world.getServer().execute(() -> {
-                        ChunkLoaderState.removeLazyChunk(((ServerWorld) world), cp);
-                    });
-                }, 1000, TimeUnit.MILLISECONDS);
             }
         }
     }

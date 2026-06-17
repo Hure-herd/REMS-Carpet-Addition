@@ -20,6 +20,8 @@
 
 package rems.carpet.mixins.OpInSurvivalCommandBlocks;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,14 +33,14 @@ import rems.carpet.REMSSettings;
 @Mixin(ServerPlayNetworkHandler.class)
 public class ServerPlayNetworkHandlerMixin {
 
-    @Redirect(
+    @WrapOperation(
             method = "onUpdateCommandBlock",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/network/ServerPlayerEntity;isCreativeLevelTwoOp()Z"
             )
     )
-    private boolean allowSurvivalOpToSave(ServerPlayerEntity instance) {
+    private boolean allowSurvivalOpToSave(ServerPlayerEntity instance, Operation<Boolean> original) {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{
@@ -46,14 +48,14 @@ public class ServerPlayNetworkHandlerMixin {
         }
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "onUpdateCommandBlockMinecart",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/server/network/ServerPlayerEntity;isCreativeLevelTwoOp()Z"
             )
     )
-    private boolean allowSurvivalOpToSaveMinecart(ServerPlayerEntity instance) {
+    private boolean allowSurvivalOpToSaveMinecart(ServerPlayerEntity instance, Operation<Boolean> original) {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{
