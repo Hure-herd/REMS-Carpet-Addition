@@ -69,8 +69,8 @@ public class AutoScanShadowMixin {
 
     private void ensureShadowId(ItemStack stack, int slotIndex) {
         NbtComponent currentData = stack.getOrDefault(DataComponentTypes.CUSTOM_DATA, NbtComponent.DEFAULT);
-
-        if(currentData.contains("ShadowID"))return;
+        NbtCompound dataNbt = currentData.copyNbt();
+        if(dataNbt.contains("ShadowID"))return;
 
         NbtCompound mutableNbt = currentData.copyNbt();
         stack.set(DataComponentTypes.CUSTOM_DATA, NbtComponent.of(mutableNbt));

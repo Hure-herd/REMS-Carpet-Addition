@@ -320,6 +320,7 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 
 ## 发射器可以发射矛(DispenserSpearCharge)
 发射器可以使用长矛攻击面前的实体
+#### MC>=1.21.11时存在
 * 默认值: `false`
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet dispenserSpearCharge true`
@@ -331,3 +332,10 @@ SunnySlopes 的[PearlTickets](https://github.com/SunnySlopes/PearlTickets)
 * 可选参数: `true`, `false`
 * 开启方法: `/carpet allowTripwirePlatformDeletion true`
 * 分类: `REMS` , `feature`
+
+## 命令方块白名单(CommandBlockWhitelist)
+通过后台可以开启与关闭命令方块白名单，禁止某些存在拥有op的人乱使用命令方块。
+* 开启方法: `/cbwhitelist open`
+* 关闭方法: `/cbwhitelist close`
+* 添加白名单方法: `/cbwhitelist add XXX`
+* 删除白名单方法: `/cbwhitelist remove XXX`

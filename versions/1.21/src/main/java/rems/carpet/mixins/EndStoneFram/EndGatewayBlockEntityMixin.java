@@ -44,16 +44,22 @@ import org.spongepowered.asm.mixin.Shadow;
 import net.minecraft.server.world.ServerWorld;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
+//#if MC>260102
+//$$ import net.minecraft.block.entity.BlockEntityTypes;
+//#endif
 
 
 @Mixin(EndGatewayBlockEntity.class)
 public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
 
     public EndGatewayBlockEntityMixin(BlockPos blockPos, BlockState blockState) {
+        //#if MC<260200
         super(BlockEntityType.END_GATEWAY, blockPos, blockState);
+        //#else
+        //$$ super(BlockEntityTypes.END_GATEWAY, blockPos, blockState);
+        //#endif
     }
 
     @Shadow
@@ -72,7 +78,11 @@ public class EndGatewayBlockEntityMixin extends EndPortalBlockEntity {
             if(pos.getZ() >751 && pos.getZ() <768 && pos.getX() < 176 && pos.getX() > 159){
                 BlockPos blockPos2 = BlockPos.ofFloored(vec3d.x + (double)0.5F, (double)75.0F, vec3d.z + (double)0.5F);
                 LOGGER.debug("Failed to find a suitable block to teleport to, spawning an island on {}", blockPos2);
+                //#if MC<12104
                 world.getRegistryManager().getOptional(RegistryKeys.CONFIGURED_FEATURE).flatMap((registry) -> registry.getEntry(EndConfiguredFeatures.END_ISLAND)).ifPresent((reference) -> ((ConfiguredFeature)reference.value()).generate(world, world.getChunkManager().getChunkGenerator(), Random.create(blockPos2.asLong()), blockPos2));
+                //#else
+                //$$ world.getRegistryManager().getOptional(RegistryKeys.CONFIGURED_FEATURE).flatMap((registry) -> registry.getOptional(EndConfiguredFeatures.END_ISLAND)).ifPresent((reference) -> ((ConfiguredFeature)reference.value()).generate(world, world.getChunkManager().getChunkGenerator(), Random.create(blockPos2.asLong()), blockPos2));
+                //#endif
                 blockPos = blockPos2;
             }
         }

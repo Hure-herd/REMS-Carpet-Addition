@@ -5,7 +5,7 @@
   "mixins": [
     "keepWorldTickUpdate",
     "SettingsManagerMixin",
-    "TripwireHookBlockMixin",
+    "StringDupeReintroduced.TripwireHookBlockMixin",
     "BlockEntityReplace.AbstractFurnaceBlockMixin",
     "BlockEntityReplace.BlockEntityAccessor",
     "BlockEntityReplace.BlockEntityMixin",

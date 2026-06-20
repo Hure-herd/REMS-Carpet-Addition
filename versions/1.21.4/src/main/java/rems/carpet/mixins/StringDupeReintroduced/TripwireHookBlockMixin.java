@@ -18,33 +18,29 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.CactusWrenchSound;
+package rems.carpet.mixins.StringDupeReintroduced;
 
-import carpet.helpers.BlockRotator;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.world.World;
+import rems.carpet.REMSSettings;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import net.minecraft.block.TripwireHookBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rems.carpet.REMSSettings;
 
-@Mixin(BlockRotator.class)
-public class BlockRotatorMixin {
-    @Inject(
-            method = "flipBlock",
+@SuppressWarnings("SimplifiableConditionalExpression")
+@Mixin(TripwireHookBlock.class)
+public abstract class TripwireHookBlockMixin {
+    @ModifyExpressionValue(
+            //#if MC<260000
+            method = "update",
+            //#else
+            //$$ method = "update*",
+            //#endif
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z"
+                    target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 3
             )
     )
-    private static void flip_block(BlockState state, World world, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<Boolean> cir) {
-        if (REMSSettings.cactusWrenchSound) {
-            player.playSound(SoundEvents.BLOCK_DISPENSER_LAUNCH,1.0F, 1.0F);
-        }
+    private static boolean tripwireHookDupeReintroduced(boolean original) {
+        return REMSSettings.stringDupeReintroduced ? true : original;
     }
 }

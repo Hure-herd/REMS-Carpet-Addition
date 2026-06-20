@@ -46,7 +46,11 @@ public class NoEndGatewayTicketCommand {
                                     BlockPos pos = BlockPosArgumentType.getLoadedBlockPos(context, "pos");
                                     NoEndGatewayTicket.add(pos);
                                     player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.add").formatted(Formatting.GRAY)
+                                            //#if MC<260000
                                             .append(Text.literal(" " + pos.toShortString())), false);
+                                            //#else
+                                            //$$ .append(Text.literal(" " + pos.toShortString())));
+                                            //#endif
                                     return 1;
                                 })
                         )
@@ -59,9 +63,17 @@ public class NoEndGatewayTicketCommand {
                                     if (NoEndGatewayTicket.isMarked(pos)) {
                                         NoEndGatewayTicket.remove(pos);
                                         player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.remove").formatted(Formatting.GRAY)
+                                                //#if MC<260000
                                                 .append(Text.literal(" " + pos.toShortString())), false);
+                                                //#else
+                                                //$$ .append(Text.literal(" " + pos.toShortString())));
+                                                //#endif
                                     } else {
+                                        //#if MC<260000
                                         player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.remove.error").formatted(Formatting.GRAY), false);
+                                        //#else
+                                        //$$ player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.remove.error").formatted(Formatting.GRAY));
+                                        //#endif
                                     }
                                     return 1;
                                 })
@@ -70,8 +82,11 @@ public class NoEndGatewayTicketCommand {
                                 .executes(context -> {
                                     ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
                                     NoEndGatewayTicket.clear();
+                                    //#if MC<260000
                                     player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.remove.all").formatted(Formatting.GRAY), false);
-
+                                    //#else
+                                    //$$ player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.remove.all").formatted(Formatting.GRAY));
+                                    //#endif
                                     return 1;
                                 })
                         )
@@ -81,13 +96,19 @@ public class NoEndGatewayTicketCommand {
                             ServerPlayerEntity player = context.getSource().getPlayerOrThrow();
                             Set<BlockPos> positions = NoEndGatewayTicket.getAll();
                             if (positions.isEmpty()) {
+                                //#if MC<260000
                                 player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.list.error").formatted(Formatting.GRAY), false);
+                                //#else
+                                //$$ player.sendMessage(ComponentTranslate.tr("commandnoEndGatewayTicket.list.error").formatted(Formatting.GRAY));
+                                //#endif
                             } else {
                                 player.sendMessage(
                                         ComponentTranslate.tr("commandnoEndGatewayTicket.list")
                                                 .formatted(Formatting.GRAY)
-                                                .append(Text.literal(" (" + positions.size() + "):")),
-                                        false
+                                                .append(Text.literal(" (" + positions.size() + "):"))
+                                        //#if MC<260000
+                                        , false
+                                        //#endif
                                 );
                                 for (BlockPos p : positions) {
                                     context.getSource().sendFeedback(

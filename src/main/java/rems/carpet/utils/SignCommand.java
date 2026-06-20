@@ -33,33 +33,7 @@ import rems.carpet.REMSServer;
 import java.util.Map;
 
 public class SignCommand {
-    public static void executeCommand(ServerPlayerEntity player, String command) {
-        if (player == null || command == null || command.trim().isEmpty()) {
-            throw new IllegalArgumentException("Player or command cannot be null or empty");
-        }
-        if (command.startsWith("/")) {
-            command = command.substring(1);
-        }
-        var server = player.getServer();
-        if (server == null) {
-            throw new IllegalStateException("Player is not on a server");
-        }
-
-        ServerCommandSource source = player.getCommandSource();
-        CommandDispatcher<ServerCommandSource> dispatcher = server.getCommandManager().getDispatcher();
-
-        try {
-            var parseResults = dispatcher.parse(command, source);
-            dispatcher.execute(parseResults);
-        } catch (Exception e) {
-            Text text = Text.literal(getTranslation("carpet.commandWentWrong"))
-                    .setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED))).append(Text.literal(" /" + command + ": " + e.getMessage())
-                            .setStyle(Style.EMPTY.withColor(TextColor.fromFormatting(Formatting.RED)).withUnderline(true)));
-            player.sendMessage(text, false);
-            REMSServer.LOGGER.debug("Failed to execute command: " + command + e.getMessage());
-        }
-    }
-
+    
     public static String getTranslation(String key) {
         Map<String, String> lang = ComponentTranslate.getTranslationFromResourcePath(CarpetSettings.language);
         String translationText = lang.get(key);

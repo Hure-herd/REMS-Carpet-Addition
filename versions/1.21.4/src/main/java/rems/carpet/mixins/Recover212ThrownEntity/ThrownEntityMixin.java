@@ -59,7 +59,11 @@ public class ThrownEntityMixin extends ProjectileEntity {
         if (this.firstUpdate) {
             for (BlockPos blockPos : BlockPos.iterate(this.getBoundingBox())) {
                 BlockState blockState = this.getWorld().getBlockState(blockPos);
+                //#if MC<260000
                 if (blockState.isOf(Blocks.BUBBLE_COLUMN)) {
+                //#else
+                //$$ if (blockState.is(Blocks.BUBBLE_COLUMN)) {
+                //#endif
                     //#if MC<12105
                     blockState.onEntityCollision(this.getWorld(), blockPos, this);
                     //#elseif MC<12109

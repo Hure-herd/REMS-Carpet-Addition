@@ -18,11 +18,10 @@
  * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins;
+package rems.carpet.mixins.StringDupeReintroduced;
 
 import org.spongepowered.asm.mixin.Mixin;
 import rems.carpet.utils.compat.DummyClass;
-import top.byteeeee.annotationtoolbox.annotation.GameVersion;
 
 @Mixin(DummyClass.class)
 public abstract class TripwireHookBlockMixin {}

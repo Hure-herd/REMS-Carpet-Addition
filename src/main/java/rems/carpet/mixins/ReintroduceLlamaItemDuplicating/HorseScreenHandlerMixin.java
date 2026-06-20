@@ -20,10 +20,8 @@
 
 package rems.carpet.mixins.ReintroduceLlamaItemDuplicating;
 
-import net.minecraft.entity.passive.AbstractHorseEntity;
 import net.minecraft.entity.passive.LlamaEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.screen.HorseScreenHandler;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -31,15 +29,34 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
+//#if MC<12111
+import net.minecraft.screen.HorseScreenHandler;
+import net.minecraft.entity.passive.AbstractHorseEntity;
+//#else
+//$$ import net.minecraft.screen.MountScreenHandler;
+//$$ import net.minecraft.entity.LivingEntity;
+//#endif
 
+//#if MC<12111
 @Mixin(HorseScreenHandler.class)
+//#else
+//$$ @Mixin(MountScreenHandler.class)
+//#endif
 public class HorseScreenHandlerMixin {
 
+    //#if MC<12111
     @Shadow @Final private AbstractHorseEntity entity;
+    //#else
+    //$$ @Shadow @Final protected LivingEntity mount;
+    //#endif
 
     @Inject(method = "canUse", at = @At("HEAD"), cancellable = true)
     private void forceKeepInventoryOpen(PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
+        //#if MC<12111
         if(!(entity instanceof LlamaEntity))return;
+        //#else
+        //$$ if(!(mount instanceof LlamaEntity))return;
+        //#endif
         if(!REMSSettings.reintroduceLlamaItemDuplicating)return;
         cir.setReturnValue(true);
     }

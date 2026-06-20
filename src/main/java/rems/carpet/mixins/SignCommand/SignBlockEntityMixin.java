@@ -55,7 +55,11 @@ public abstract class SignBlockEntityMixin {
                     if (text[0].getString().startsWith("/")) {
                         REMSServer.LOGGER.debug("Player is trying to change the text, but the text starts with /");
                         Text message = Text.literal(SignCommand.getTranslation("carpet.runCommandOnSignTips"));
+                        //#if MC<260000
                         player.sendMessage(message, false);
+                        //#else
+                        //$$ player.sendMessage(message);
+                        //#endif
                     }
                 }
             }

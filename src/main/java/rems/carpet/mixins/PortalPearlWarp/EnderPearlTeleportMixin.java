@@ -70,45 +70,44 @@ public abstract class EnderPearlTeleportMixin {
     @Inject(method = "onCollision", at = @At("HEAD"), cancellable = true)
     private void onPearlHit(HitResult hitResult, CallbackInfo ci) {
         if(REMSSettings.PortalPearlWarp){
-        ThrownItemEntity pearl = (ThrownItemEntity) (Object) this;
-        World world = pearl.getWorld();
+            ThrownItemEntity pearl = (ThrownItemEntity) (Object) this;
+            World world = pearl.getWorld();
 
-        if (world.isClient() || pearl.getStack().getItem() != Items.ENDER_PEARL) return;
+            if (world.isClient() || pearl.getStack().getItem() != Items.ENDER_PEARL) return;
 
-        if (hitResult.getType() != HitResult.Type.BLOCK) return;
-        BlockHitResult blockHit = (BlockHitResult) hitResult;
-        BlockPos hitPos = blockHit.getBlockPos();
+            if (hitResult.getType() != HitResult.Type.BLOCK) return;
+            BlockHitResult blockHit = (BlockHitResult) hitResult;
+            BlockPos hitPos = blockHit.getBlockPos();
+            //#if MC<260000
+            if (!world.getBlockState(hitPos).isOf(Blocks.OBSIDIAN)) return;
+            //#else
+            //$$ if (!world.getBlockState(hitPos).is(Blocks.OBSIDIAN)) return;
+            //#endif
 
-        if (!world.getBlockState(hitPos).isOf(Blocks.OBSIDIAN)) return;
+            if (PortalPearlWarpUtil.isInRange(pearl.getX(), pearl.getZ())) {
 
-        if (PortalPearlWarpUtil.isInRange(pearl.getX(), pearl.getZ())) {
+            Entity owner = pearl.getOwner();
+            if (!(owner instanceof ServerPlayerEntity player)) return;
 
-        Entity owner = pearl.getOwner();
-        if (!(owner instanceof ServerPlayerEntity player)) return;
+            ci.cancel();
 
-        ci.cancel();
+            double scale = 1.0;
+            if (world.getRegistryKey() == World.OVERWORLD) {
+                scale = 0.125; // 主世界坐标缩小8倍
+            } else if (world.getRegistryKey() == World.NETHER) {
+                scale = 8.0; // 地狱坐标扩大8倍
+            }
 
-        double scale = 1.0;
-        if (world.getRegistryKey() == World.OVERWORLD) {
-            scale = 0.125; // 主世界坐标缩小8倍
-        } else if (world.getRegistryKey() == World.NETHER) {
-            scale = 8.0; // 地狱坐标扩大8倍
-        }
+            double tx = hitPos.getX() * scale;
+            double ty = hitPos.getY();
+            double tz = hitPos.getZ() * scale;
 
-        double tx = hitPos.getX() * scale;
-        double ty = hitPos.getY();
-        double tz = hitPos.getZ() * scale;
+            pearl.discard();
 
-        pearl.discard();
-
-        player.teleport(tx, ty, tz, PORTAL.shouldAlwaysSpawn());
-        player.setPosition(tx,ty,tz);
-        player.networkHandler.requestTeleport(
-              tx,
-              ty,
-              tz,
-              player.getYaw(),
-              player.getPitch()
+            player.teleport(tx, ty, tz, PORTAL.shouldAlwaysSpawn());
+            player.setPosition(tx,ty,tz);
+            player.networkHandler.requestTeleport(
+                    tx, ty, tz, player.getYaw(), player.getPitch()
             );
         }
     }

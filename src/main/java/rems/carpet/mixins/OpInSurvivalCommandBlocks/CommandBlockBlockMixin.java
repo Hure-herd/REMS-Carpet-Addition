@@ -26,8 +26,11 @@ import net.minecraft.block.CommandBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import rems.carpet.REMSSettings;
+//#if MC>12110
+//$$ import net.minecraft.command.permission.Permission;
+//$$ import net.minecraft.command.permission.PermissionLevel;
+//#endif
 
 @Mixin(CommandBlock.class)
 public class CommandBlockBlockMixin {
@@ -43,7 +46,11 @@ public class CommandBlockBlockMixin {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{
+            //#if MC<12111
             return instance.hasPermissionLevel(2);
+            //#else
+            //$$ return instance.getPermissions().hasPermission(new Permission.Level(PermissionLevel.fromLevel(2)));
+            //#endif
         }
     }
 }

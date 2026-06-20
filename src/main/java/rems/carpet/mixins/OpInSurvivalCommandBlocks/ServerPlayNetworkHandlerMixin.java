@@ -26,9 +26,11 @@ import net.minecraft.server.network.ServerPlayNetworkHandler;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
+//#if MC>12110
+//$$ import net.minecraft.command.permission.Permission;
+//$$ import net.minecraft.command.permission.PermissionLevel;
+//#endif
 
 @Mixin(ServerPlayNetworkHandler.class)
 public class ServerPlayNetworkHandlerMixin {
@@ -44,7 +46,11 @@ public class ServerPlayNetworkHandlerMixin {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{
-        return instance.hasPermissionLevel(2);
+            //#if MC<12111
+            return instance.hasPermissionLevel(2);
+            //#else
+            //$$ return instance.getPermissions().hasPermission(new Permission.Level(PermissionLevel.fromLevel(2)));
+            //#endif
         }
     }
 
@@ -59,7 +65,11 @@ public class ServerPlayNetworkHandlerMixin {
         if(!REMSSettings.opInSurvivalCommandBlocks){
             return instance.isCreativeLevelTwoOp();
         }else{
-        return instance.hasPermissionLevel(2);
+            //#if MC<12111
+            return instance.hasPermissionLevel(2);
+            //#else
+            //$$ return instance.getPermissions().hasPermission(new Permission.Level(PermissionLevel.fromLevel(2)));
+            //#endif
         }
     }
 }

@@ -63,8 +63,7 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
 
     @Inject(method = "tick",at = @At(value = "TAIL"))
     private void loadingChunksfix(
-            CallbackInfo ci,
-            @Local(ordinal = 0) Entity entity
+            CallbackInfo ci
     ){
         World world = this.getEntityWorld();
         if(!REMSSettings.fixedpearlloading) return;
@@ -79,10 +78,13 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         Vec3d nextPos = realPos.add(realVelocity);
         Vec3d nextVelocity = realVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
         Vec3d nextnextPos = nextPos.add(nextVelocity);
-        Vec3d nextnextVelocity = nextVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
-        Vec3d nextnextnextPos = nextnextPos.add(nextnextVelocity);
+        //#if MC<260000
         ChunkPos nextChunkPos = new ChunkPos(new BlockPos((int)nextPos.x, (int)nextPos.y, (int)nextPos.z));
         ChunkPos nextnextChunkPos = new ChunkPos(new BlockPos((int)nextnextPos.x, (int)nextnextPos.y, (int)nextnextPos.z));
+        //#else
+        //$$ ChunkPos nextChunkPos = new ChunkPos((int)nextPos.x, (int)nextPos.z);
+        //$$ ChunkPos nextnextChunkPos = new ChunkPos((int)nextnextPos.x, (int)nextnextPos.z);
+        //#endif
         ServerChunkManager serverChunkManager = ((ServerWorld) world).getChunkManager();
         if(realVelocity.x > 200 ||realVelocity.z > 200)return;
         //#if MC<12105
@@ -174,7 +176,11 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
 
                 pearl.setPosition(nextPos);
                 pearl.setVelocity(cachedVels.get(this.replayTick));
+                //#if MC<260000
                 pearl.velocityModified = true;
+                //#else
+                //$$ pearl.knockedBack = true;
+                //#endif
                 this.replayTick++;
                 ci.cancel();
             } else {

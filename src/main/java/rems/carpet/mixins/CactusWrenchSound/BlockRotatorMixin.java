@@ -45,7 +45,11 @@ public class BlockRotatorMixin {
     )
     private static void flip_block(BlockState state, World world, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<Boolean> cir) {
         if (REMSSettings.cactusWrenchSound) {
+            //#if MC<12111
             player.playSound(SoundEvents.BLOCK_DISPENSER_LAUNCH, SoundCategory.AMBIENT,1.0F, 1.0F);
+            //#else
+            //$$ player.playSound(SoundEvents.BLOCK_DISPENSER_LAUNCH,1.0F, 1.0F);
+            //#endif
         }
     }
 }

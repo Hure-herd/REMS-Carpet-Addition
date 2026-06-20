@@ -346,6 +346,7 @@ Every minute, the backlog of outbound packets in the underlying EmbeddedChannel 
 
 ## DispenserSpearCharge
 Dispensers can use spears to attack entities in front of them.
+#### When MC>=1.21.11 can use it
 * Default Value: `false`
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet dispenserSpearCharge true`
@@ -357,3 +358,10 @@ Players can use the tripwire's abnormal state to interrupt the spawn of the End 
 * Optional Parameters: `true`, `false`
 * Open Method: `/carpet allowTripwirePlatformDeletion true`
 * Categories: `REMS` , `feature`
+
+## CommandBlockWhitelist
+The command block whitelist can be enabled or disabled through the backend, preventing certain people with operation privileges from misusing command blocks.
+* Open Method: `/cbwhitelist open`
+* Close Method: `/cbwhitelist close`
+* How to add to the whitelist: `/cbwhitelist add XXX`
+* How to remove from the whitelist: `/cbwhitelist remove XXX`

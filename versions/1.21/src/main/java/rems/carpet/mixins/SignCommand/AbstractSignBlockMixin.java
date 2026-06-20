@@ -20,7 +20,6 @@
 
 package rems.carpet.mixins.SignCommand;
 
-import carpet.utils.Messenger;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -32,26 +31,22 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.CommandOutput;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec2f;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rems.carpet.REMSServer;
 import rems.carpet.REMSSettings;
 import rems.carpet.utils.ComponentTranslate;
-import rems.carpet.utils.SignCommand;
-
+//#if MC>12110
+//$$ import net.minecraft.command.permission.PermissionPredicate;
+//#endif
 import java.util.*;
 
 @Mixin(AbstractSignBlock.class)
@@ -85,13 +80,28 @@ public class AbstractSignBlockMixin {
 
                 String actualCommand = fullCommand.substring(1);
                 if (!isCommandAllowed(actualCommand)) {
+                    //#if MC<260000
                     player.sendMessage(ComponentTranslate.error("sign_command.not_allowed"), false);
+                    //#else
+                    //$$ player.sendMessage(ComponentTranslate.error("sign_command.not_allowed"));
+                    //#endif
+                    //#if MC<12104
                     ci.setReturnValue(ActionResult.success(true));
+                    //#else
+                    //$$ ci.setReturnValue(ActionResult.SUCCESS);
+                    //#endif
                     return;
                 }
-
+                //#if MC<260000
                 if (player.getMainHandStack().isOf(Items.AIR) && !player.isSneaking()) {
+                //#else
+                //$$ if (player.getMainHandStack().is(Items.AIR) && !player.isSneaking()) {
+                //#endif
+                    //#if MC<12104
                     ci.setReturnValue(ActionResult.success(true));
+                    //#else
+                    //$$ ci.setReturnValue(ActionResult.SUCCESS);
+                    //#endif
                     executeValidatedCommand(player, actualCommand);
                 }
             }
@@ -140,20 +150,32 @@ public class AbstractSignBlockMixin {
 
     @Unique
     private void executeValidatedCommand(PlayerEntity player, String command) {
+        //#if MC<12110
         ServerWorld world = Objects.requireNonNull(player.getServer()).getOverworld();;
+        //#else
+        //$$ ServerWorld world = Objects.requireNonNull(player.getEntityWorld().getServer()).getOverworld();;
+        //#endif
         ServerCommandSource commandSource = new ServerCommandSource(
                 CommandOutput.DUMMY,
                 player.getPos(),
                 player.getRotationClient(),
                 world,
+                //#if MC<12111
                 4,
+                //#else
+                //$$ PermissionPredicate.ALL,
+                //#endif
                 player.getName().getString(),
                 player.getDisplayName(),
                 world.getServer(),
                 player
         );
 
+        //#if MC<12110
         player.getServer().execute(() -> {
+        //#else
+        //$$ player.getEntityWorld().getServer().execute(() -> {
+        //#endif
             try {
                 CommandDispatcher<ServerCommandSource> dispatcher = commandSource.getServer().getCommandManager().getDispatcher();
                 ParseResults<ServerCommandSource> results = dispatcher.parse(command, commandSource);
@@ -161,10 +183,18 @@ public class AbstractSignBlockMixin {
                 if (results.getExceptions().isEmpty()) {
                     dispatcher.execute(results);
                 } else {
+                    //#if MC<260000
                     player.sendMessage(ComponentTranslate.error("sign.command.syntax_error"), false);
+                    //#else
+                    //$$ player.sendMessage(ComponentTranslate.error("sign.command.syntax_error"));
+                    //#endif
                 }
             } catch (CommandSyntaxException e) {
+                //#if MC<260000
                 player.sendMessage(ComponentTranslate.error("sign_command.failed", e.getMessage()), false);
+                //#else
+                //$$ player.sendMessage(ComponentTranslate.error("sign_command.failed", e.getMessage()));
+                //#endif
             }
         });
     }

@@ -43,18 +43,22 @@ public class PersistentShadowMixin {
 
     @Shadow @Final @Mutable public static MapCodec<ItemStack> MAP_CODEC;
     @Shadow @Final @Mutable public static Codec<ItemStack> CODEC;
+    //#if MC<260000
     @Shadow @Final @Mutable public static Codec<ItemStack> VALIDATED_CODEC;
     @Shadow @Final @Mutable public static Codec<ItemStack> UNCOUNTED_CODEC;
     @Shadow @Final @Mutable public static Codec<ItemStack> VALIDATED_UNCOUNTED_CODEC;
+    //#endif
 
     @Inject(method = "<clinit>", at = @At("TAIL"))
     private static void hijackCodecs(CallbackInfo ci){
 
         MAP_CODEC = MAP_CODEC.xmap(PersistentShadowMixin::rems$handleSingleton,Function.identity());
         CODEC = Codec.lazyInitialized(MAP_CODEC::codec);
+        //#if MC<260000
         VALIDATED_CODEC = CODEC.validate(ItemStack::validate);
         UNCOUNTED_CODEC = Codec.lazyInitialized(() -> MAP_CODEC.codec());
         VALIDATED_UNCOUNTED_CODEC = UNCOUNTED_CODEC.validate(ItemStack::validate);
+        //#endif
     }
 
     @Unique
@@ -97,7 +101,11 @@ public class PersistentShadowMixin {
 
         if(!REMSSettings.durableItemShadow)return;
         if(cir.getReturnValue() || stack.isEmpty() || otherStack.isEmpty())return;
+        //#if MC<260000
         if(!stack.isOf(otherStack.getItem()))return;
+        //#else
+        //$$ if(!stack.is(otherStack.getItem()))return;
+        //#endif
 
         NbtComponent dataA = stack.get(DataComponentTypes.CUSTOM_DATA);
         NbtComponent dataB = otherStack.get(DataComponentTypes.CUSTOM_DATA);

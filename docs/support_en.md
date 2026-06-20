@@ -4,6 +4,7 @@ Currently, the main supported version is **1.20.1**.
 
 | Version | Support |
 |:-------:|:----:|
+|  26.2   |  ✔   |
 | 26.1.2  |  ✔   |
 | 26.1.1  |  ✔   |
 |  26.1   |  ✔   |

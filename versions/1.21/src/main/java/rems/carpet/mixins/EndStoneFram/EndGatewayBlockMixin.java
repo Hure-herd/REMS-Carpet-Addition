@@ -37,16 +37,21 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
-
+//#if MC>12107
+//$$ import net.minecraft.entity.EntityCollisionHandler;
+//#endif
 import java.util.List;
 
 @Mixin(EndGatewayBlock.class)
 public abstract class EndGatewayBlockMixin extends Block {
 
+    //#if MC<12108
     public EndGatewayBlockMixin(AbstractBlock.Settings settings) {
         super(settings);
     }
-
+    //#else
+    //$$ public EndGatewayBlockMixin(Settings settings) {super(settings);}
+    //#endif
     @Inject(
             method = "onEntityCollision",
             at = @At(
@@ -55,11 +60,13 @@ public abstract class EndGatewayBlockMixin extends Block {
             cancellable = true
     )
     private void onEntityCollisionCheck(
-            BlockState state,
-            World world,
-            BlockPos pos,
-            Entity entity,
-            CallbackInfo ci
+            //#if MC<12108
+            BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci
+            //#elseif MC<12109
+            //$$ BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, CallbackInfo ci
+            //#else
+            //$$ BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl, CallbackInfo ci
+            //#endif
     ) {
         if(REMSSettings.endstonefram) {
             if (!world.isClient() && entity.canUsePortals(false)) {
