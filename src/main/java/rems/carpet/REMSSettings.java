@@ -28,6 +28,7 @@ import carpet.api.settings.Rule;
 import carpet.api.settings.Validator;
 import carpet.api.settings.Validators;
 import net.minecraft.entity.EntityType;
+import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.Identifier;
@@ -156,6 +157,11 @@ public class REMSSettings
             categories = {REMS, FEATURE}
     )
     public static boolean reintroduceLlamaItemDuplicating = false;
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean reintroduceDolphinPortalItemDupe = false;
 
     @Rule(
             categories = {REMS, FEATURE}
@@ -311,6 +317,16 @@ public class REMSSettings
     )
     public static String disableAiGoals = "false";
 
+    @Rule(
+            categories = {REMS, FEATURE},
+            validators = FragileBlocksValidator.class,
+            options = {"false", "obsidian", "obsidian,vault"},
+            strict = false
+    )
+    public static String fragileBlocks = "false";
+
+    public static final Set<Block> FRAGILE_BLOCKS = new HashSet<>();
+
     public static final Set<EntityType<?>> NO_AI_TYPES = new HashSet<>();
 
     public static class EntityListValidator extends Validator<String> {
@@ -369,6 +385,41 @@ public class REMSSettings
             DISABLED_GOAL_CLASSES.clear();
             DISABLED_GOAL_CLASSES.addAll(tempSet);
             return normalized;
+        }
+    }
+
+    public static class FragileBlocksValidator extends Validator<String> {
+
+        @Override
+        public String validate(ServerCommandSource source, CarpetRule<String> currentRule, String newValue, String string) {
+            String normalizedValue = newValue.toLowerCase().trim();
+            FRAGILE_BLOCKS.clear();
+            if (normalizedValue.equals("false") || normalizedValue.isEmpty()) {
+                return "false";
+            }
+            String[] parts = normalizedValue.split(",");
+            for (String part : parts) {
+                String blockId = part.trim();
+                Identifier id;
+                if (blockId.contains(":")) {
+                    String[] split = blockId.split(":");
+                    id = Identifier.of(split[0], split[1]);
+                } else {
+                    id = Identifier.of("minecraft", blockId);
+                }
+                //#if MC<12102
+                if (Registries.BLOCK.containsId(id)) {
+                    Block block = Registries.BLOCK.get(id);
+                    FRAGILE_BLOCKS.add(block);
+                }
+                //#else
+                //$$ if (Registries.BLOCK.containsId(id)) {
+                //$$     Block block = Registries.BLOCK.getEntry(id).get().value();
+                //$$     FRAGILE_BLOCKS.add(block);
+                //$$ }
+                //#endif
+            }
+            return normalizedValue;
         }
     }
 

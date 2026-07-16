@@ -106,7 +106,6 @@ public class LoadedChunksLogger implements REMSHUDLogger {
 
     @Override
     public Text[] onHudUpdate(String option, PlayerEntity playerEntity) {
-        System.out.println("[Debug] Incoming option from Carpet is: [" + option + "]");
         MutableText messageText = Text.empty();
         String message = "";
         switch (option != null ? option.trim() : "full") {
@@ -131,7 +130,6 @@ public class LoadedChunksLogger implements REMSHUDLogger {
         }
         MutableText header = ComponentTranslate.tr("loadedChunks.title").formatted(Formatting.DARK_GRAY);
         MutableText finalText = Text.empty().append(header).append(messageText);
-        System.out.println("[Debug] Text ready to be sent to HUD: " + finalText.getString());
         return new Text[]{ finalText };
     }
 }

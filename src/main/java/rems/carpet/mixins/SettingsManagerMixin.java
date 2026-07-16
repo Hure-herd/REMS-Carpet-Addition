@@ -20,9 +20,12 @@
 
 package rems.carpet.mixins;
 
+import carpet.api.settings.CarpetRule;
 import carpet.api.settings.SettingsManager;
 import carpet.utils.Messenger;
 import carpet.utils.TranslationKeys;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import rems.carpet.REMSServer;
 import net.minecraft.server.command.ServerCommandSource;
 import org.spongepowered.asm.mixin.Final;
@@ -32,12 +35,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Map;
 import java.util.Objects;
 
 import static carpet.utils.Translations.tr;
 
 @Mixin(SettingsManager.class)
 public abstract class SettingsManagerMixin {
+
     @Shadow(remap = false)
     @Final private String fancyName;
 
@@ -59,5 +64,19 @@ public abstract class SettingsManagerMixin {
             );
             Messenger.m(source, msg);
         }
+    }
+
+    @WrapOperation(
+            method = "parseSettingsClass",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"
+            )
+    )
+    private Object filterMergeTNT(Map<String, CarpetRule<?>> map, Object key, Object value, Operation<Object> original) {
+        if ("mergeTNT".equals(key)) {
+            return null;
+        }
+        return original.call(map, key, value);
     }
 }

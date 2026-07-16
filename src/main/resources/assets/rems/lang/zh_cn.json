@@ -108,6 +108,9 @@
   "carpet.rule.reintroduceLlamaItemDuplicating.name": "重新引入羊驼复制",
   "carpet.rule.reintroduceLlamaItemDuplicating.desc": "重新引入1.14-1.15的羊驼物品复制",
 
+  "carpet.rule.reintroduceDolphinPortalItemDupe.name": "重新引入海豚过门物品复制",
+  "carpet.rule.reintroduceDolphinPortalItemDupe.desc": "重新引入20w45a修复的海豚携带物品穿越传送门时的物品复制",
+
   "carpet.rule.opInSurvivalCommandBlocks.name": "生存模式OP编辑命令方块",
   "carpet.rule.opInSurvivalCommandBlocks.desc": "允许 OP 在生存模式下编辑命令方块",
 
@@ -130,6 +133,9 @@
   "carpet.rule.disableAiGoals.desc": "选择要删除的 AI 功能 如: move, attack, look",
   "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
   "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+
+  "carpet.rule.fragileBlocks.name": "易碎方块",
+  "carpet.rule.fragileBlocks.desc": "设置可以被快速破坏的方块列表，使用逗号分隔，例如: obsidian,vault",
 
   "carpet.rule.flushFakePlayerNetworkQueue.name": "清理假玩家网络队列",
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "每分钟清空假玩家底层EmbeddedChannel中积压的出站数据包以释放堆内存。",

@@ -25,6 +25,10 @@ repositories {
 	maven {
 		url = "https://repo.codemc.io/repository/relativitymc/"
 	}
+	maven {
+		name "bawnortonReleases"
+		url "https://maven.bawnorton.com/releases"
+	}
 }
 
 // https://github.com/FabricMC/fabric-loader/issues/783
@@ -57,7 +61,9 @@ dependencies {
 
 	compileOnly 'org.projectlombok:lombok:1.18.46'
 	annotationProcessor 'org.projectlombok:lombok:1.18.46'
+	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.7-beta.3")))
 }
+
 
 loom {
 	runConfigs.all {

@@ -27,8 +27,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
-import java.util.Objects;
-
 @Mixin(WanderingTraderEntity.class)
 public class WanderingTraderEntityMixin {
     @Inject(
@@ -37,7 +35,7 @@ public class WanderingTraderEntityMixin {
             cancellable = true)
     private void tickDespawnDelay(CallbackInfo ci){
         WanderingTraderEntity self = (WanderingTraderEntity) (Object) this;
-        if(REMSSettings.wanderingTraderNoDisappear && "Load".equals(Objects.requireNonNull(self.getCustomName()).getString())){
+        if(REMSSettings.wanderingTraderNoDisappear && self.getCustomName() != null && "Load".equals(self.getCustomName().getString())){
             ci.cancel();
         }
     }

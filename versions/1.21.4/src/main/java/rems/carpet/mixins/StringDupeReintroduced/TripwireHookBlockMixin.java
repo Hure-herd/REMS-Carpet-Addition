@@ -37,7 +37,11 @@ public abstract class TripwireHookBlockMixin {
             //#endif
             at = @At(
                     value = "INVOKE",
+                    //#if MC<260000
                     target = "Lnet/minecraft/block/BlockState;isOf(Lnet/minecraft/block/Block;)Z", ordinal = 3
+                    //#else
+                    //$$ target = "Lnet/minecraft/block/BlockState;is(Ljava/lang/Object;)Z", ordinal = 3
+                    //#endif
             )
     )
     private static boolean tripwireHookDupeReintroduced(boolean original) {

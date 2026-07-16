@@ -31,8 +31,12 @@ import net.minecraft.particle.ParticleTypes;
 //#if MC>=12105
 //$$ import net.minecraft.entity.EntityCollisionHandler;
 //#endif
+import net.minecraft.util.crash.CrashException;
+import net.minecraft.util.crash.CrashReport;
+import net.minecraft.util.crash.CrashReportSection;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,22 +59,38 @@ public class ThrownEntityMixin extends ProjectileEntity {
     }
 
     @Unique
-    private void tickInitialBubbleColumnCollision() {
-        if (this.firstUpdate) {
-            for (BlockPos blockPos : BlockPos.iterate(this.getBoundingBox())) {
-                BlockState blockState = this.getWorld().getBlockState(blockPos);
-                //#if MC<260000
-                if (blockState.isOf(Blocks.BUBBLE_COLUMN)) {
-                //#else
-                //$$ if (blockState.is(Blocks.BUBBLE_COLUMN)) {
-                //#endif
-                    //#if MC<12105
-                    blockState.onEntityCollision(this.getWorld(), blockPos, this);
-                    //#elseif MC<12109
-                    //$$ blockState.onEntityCollision(this.getWorld(), blockPos, this, EntityCollisionHandler.DUMMY);
-                    //#else
-                    //$$ blockState.onEntityCollision(this.getEntityWorld(), blockPos, this, EntityCollisionHandler.DUMMY, true);
-                    //#endif
+    protected void checkBlockCollision() {
+        Box box = this.getBoundingBox();
+        BlockPos blockPos = BlockPos.ofFloored(box.minX + 1.0E-7, box.minY + 1.0E-7, box.minZ + 1.0E-7);
+        BlockPos blockPos2 = BlockPos.ofFloored(box.maxX - 1.0E-7, box.maxY - 1.0E-7, box.maxZ - 1.0E-7);
+        if (this.getWorld().isRegionLoaded(blockPos, blockPos2)) {
+            BlockPos.Mutable mutable = new BlockPos.Mutable();
+            for (int i = blockPos.getX(); i <= blockPos2.getX(); i++) {
+                for (int j = blockPos.getY(); j <= blockPos2.getY(); j++) {
+                    for (int k = blockPos.getZ(); k <= blockPos2.getZ(); k++) {
+                        if (!this.isAlive()) {
+                            return;
+                        }
+
+                        mutable.set(i, j, k);
+                        BlockState blockState = this.getWorld().getBlockState(mutable);
+
+                        try {
+                            //#if MC<12108
+                            blockState.onEntityCollision(this.getWorld(), mutable, this);
+                            //#elseif MC<12110
+                            //$$ blockState.onEntityCollision(this.getWorld(), mutable, this, collisionHandler);
+                            //#else
+                            //$$ blockState.onEntityCollision(this.getEntityWorld(), mutable, this, collisionHandler, false);
+                            //#endif
+                            this.onBlockCollision(blockState);
+                        } catch (Throwable throwable) {
+                            CrashReport crashReport = CrashReport.create(throwable, "Colliding entity with block");
+                            CrashReportSection crashReportSection = crashReport.addElement("Block being collided with");
+                            CrashReportSection.addBlockInfo(crashReportSection, this.getWorld(), mutable, blockState);
+                            throw new CrashException(crashReport);
+                        }
+                    }
                 }
             }
         }
@@ -83,24 +103,10 @@ public class ThrownEntityMixin extends ProjectileEntity {
 
     @Unique
     private void applyDrag() {
-        Vec3d vec3d = this.getVelocity();
-        Vec3d vec3d2 = this.getPos();
-        float g;
-        if (this.isTouchingWater()) {
-            for (int i = 0; i < 4; i++) {
-                float f = 0.25F;
-                this.getWorld()
-                        .addParticle(
-                                ParticleTypes.BUBBLE, vec3d2.x - vec3d.x * 0.25, vec3d2.y - vec3d.y * 0.25, vec3d2.z - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z
-                        );
-            }
-
-            g = 0.8F;
-        } else {
-            g = 0.99F;
+        double d = this.getFinalGravity();
+        if (d != 0.0) {
+            this.setVelocity(this.getVelocity().add(0.0, -d, 0.0));
         }
-
-        this.setVelocity(vec3d.multiply(g));
     }
 
 
@@ -109,10 +115,10 @@ public class ThrownEntityMixin extends ProjectileEntity {
         if (REMSSettings.pre21ThrowableEntityMovement){
             super.tick();
             HitResult hitResult = ProjectileUtil.getCollision(this, this::canHit);
-            if (hitResult.getType() != HitResult.Type.MISS && this.isAlive()) {
+            if (hitResult.getType() != HitResult.Type.MISS) {
                 this.hitOrDeflect(hitResult);
             }
-            this.tickBlockCollision();
+            checkBlockCollision();
             Vec3d vec3d = this.getVelocity();
             double d = this.getX() + vec3d.x;
             double e = this.getY() + vec3d.y;
@@ -120,9 +126,9 @@ public class ThrownEntityMixin extends ProjectileEntity {
             this.updateRotation();
             float h;
             if (this.isTouchingWater()) {
-                for(int i = 0; i < 4; ++i) {
+                for (int i = 0; i < 4; i++) {
                     float g = 0.25F;
-                    this.getWorld().addParticle(ParticleTypes.BUBBLE, d - vec3d.x * (double)0.25F, e - vec3d.y * (double)0.25F, f - vec3d.z * (double)0.25F, vec3d.x, vec3d.y, vec3d.z);
+                    this.getWorld().addParticle(ParticleTypes.BUBBLE, d - vec3d.x * 0.25, e - vec3d.y * 0.25, f - vec3d.z * 0.25, vec3d.x, vec3d.y, vec3d.z);
                 }
 
                 h = 0.8F;
@@ -130,9 +136,8 @@ public class ThrownEntityMixin extends ProjectileEntity {
                 h = 0.99F;
             }
 
-            this.setVelocity(vec3d.multiply((double)h));
-            Vec3d vec3d2 = this.getVelocity();
-            this.setVelocity(vec3d2.x, vec3d2.y - this.getGravity(), vec3d2.z);
+            this.setVelocity(vec3d.multiply(h));
+            this.applyDrag();
             this.setPosition(d, e, f);
             ci.cancel();
         }

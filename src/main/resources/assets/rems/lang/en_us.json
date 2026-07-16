@@ -111,6 +111,9 @@
   "carpet.rule.reintroduceLlamaItemDuplicating.name": "ReintroduceLlamaItemDuplicating",
   "carpet.rule.reintroduceLlamaItemDuplicating.desc": "Reintroduce item duping with llama.",
 
+  "carpet.rule.reintroduceDolphinPortalItemDupe.name": "ReintroduceDolphinPortalItemDupe",
+  "carpet.rule.reintroduceDolphinPortalItemDupe.desc": "Reintroduce the dolphin portal item duplication bug that was fixed in 20w45a.",
+
   "carpet.rule.opInSurvivalCommandBlocks.name": "OpInSurvivalCommandBlocks",
   "carpet.rule.opInSurvivalCommandBlocks.desc": "Allows OPs to edit Command Blocks in Survival mode.",
 
@@ -133,6 +136,9 @@
   "carpet.rule.disableAiGoals.desc": "Select the AI function you want to delete, such as: move, attack, look.",
   "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
   "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+
+  "carpet.rule.fragileBlocks.name": "FragileBlocks",
+  "carpet.rule.fragileBlocks.desc": "Set a list of blocks that can be broken quickly, separated by commas, e.g.: obsidian,vault",
 
   "carpet.rule.flushFakePlayerNetworkQueue.name": "FlushFakePlayerNetworkQueue",
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "Every minute, the backlog of outbound packets in the underlying EmbeddedChannel of the fake player is cleared to free up heap memory.",
