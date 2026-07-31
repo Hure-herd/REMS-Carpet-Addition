@@ -64,7 +64,7 @@ public class ChunkLoaderState {
     private static final Map<RegistryKey<World>, Long2LongMap> LAZY_CHUNKS_BY_DIM = new HashMap<>();
 
     public static void addLazyChunk(ServerWorld world, ChunkPos pos) {
-        long expireTick = world.getTime() + 20L;
+        long expireTick = world.getTime() + 10L;
         LAZY_CHUNKS_BY_DIM.computeIfAbsent(world.getRegistryKey(), k -> new Long2LongOpenHashMap()).put(pos.toLong(), expireTick);
     }
 

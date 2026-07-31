@@ -18,31 +18,11 @@
  * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.FragileBlocks;
+package rems.carpet.mixins.RevertZombieFeatures;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import rems.carpet.utils.compat.DummyClass;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import rems.carpet.REMSSettings;
 
-@Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
-
-    @Inject(
-            method = "getBlockBreakingSpeed",
-            at = @At("RETURN"),
-            cancellable = true
-    )
-    private void fragileBlocks(BlockState state, CallbackInfoReturnable<Float> cir) {
-        if (!REMSSettings.fragileBlocks.equals("false")) {
-            Block block = state.getBlock();
-            if (REMSSettings.FRAGILE_BLOCKS.contains(block)) {
-                cir.setReturnValue(cir.getReturnValue() * 1000.0F);
-            }
-        }
-    }
+@Mixin(DummyClass.class)
+public class ZombifiedPiglinEntityMixin {
 }

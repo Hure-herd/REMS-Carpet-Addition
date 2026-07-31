@@ -81,7 +81,7 @@ public class ThrownEntityMixin extends ProjectileEntity {
                             //#elseif MC<12110
                             //$$ blockState.onEntityCollision(this.getWorld(), mutable, this, collisionHandler);
                             //#else
-                            //$$ blockState.onEntityCollision(this.getEntityWorld(), mutable, this, collisionHandler, false);
+                            //$$ blockState.onEntityCollision(this.getEntityWorld(), mutable, this, collisionHandler, true);
                             //#endif
                             this.onBlockCollision(blockState);
                         } catch (Throwable throwable) {

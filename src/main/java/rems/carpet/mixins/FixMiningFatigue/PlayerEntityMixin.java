@@ -18,31 +18,36 @@
  * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.FragileBlocks;
+package rems.carpet.mixins.FixMiningFatigue;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import rems.carpet.REMSSettings;
 
 @Mixin(PlayerEntity.class)
 public class PlayerEntityMixin {
 
-    @Inject(
+    @ModifyConstant(
             method = "getBlockBreakingSpeed",
-            at = @At("RETURN"),
-            cancellable = true
+            constant = @Constant(floatValue = 0.0027F)
     )
-    private void fragileBlocks(BlockState state, CallbackInfoReturnable<Float> cir) {
-        if (!REMSSettings.fragileBlocks.equals("false")) {
-            Block block = state.getBlock();
-            if (REMSSettings.FRAGILE_BLOCKS.contains(block)) {
-                cir.setReturnValue(cir.getReturnValue() * 1000.0F);
-            }
+    private float fixMiningFatigueLevel3(float original) {
+        if (REMSSettings.fixMiningFatigue) {
+            return 0.027F;
         }
+        return original;
+    }
+
+    @ModifyConstant(
+            method = "getBlockBreakingSpeed",
+            constant = @Constant(floatValue = 8.1E-4F)
+    )
+    private float fixMiningFatigueLevel4(float original) {
+        if (REMSSettings.fixMiningFatigue) {
+            return 0.0081F;
+        }
+        return original;
     }
 }

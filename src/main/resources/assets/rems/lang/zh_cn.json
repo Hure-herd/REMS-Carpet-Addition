@@ -126,16 +126,22 @@
   "carpet.rule.noSensationPearlLoad.name": "无感珍珠加载",
   "carpet.rule.noSensationPearlLoad.desc": "在大于300速度且第一次时会少量调用raycast，计算后保存，下一次调用时卡顿降低。",
 
+  "carpet.rule.revertZombieFeatures.name": "回退僵尸特性",
+  "carpet.rule.revertZombieFeatures.desc": "回退Mojang的两个僵尸更改：增援始终为普通僵尸（24w33a前行为），猪人不再生成金矛（1.21.11前行为）",
+
   "carpet.rule.disableAIEntitities.name": "禁用AI的实体类型",
   "carpet.rule.disableAIEntitities.desc": "设置移除任意AI的实体列表，使用逗号分隔，例如: zombie,piglin",
 
   "carpet.rule.disableAiGoals.name": "禁用AI的类别",
   "carpet.rule.disableAiGoals.desc": "选择要删除的 AI 功能 如: move, attack, look",
-  "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
-  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+  "carpet.rule.disableAiGoals.extra.0": "move, attack, look, breed, tempt, pickup, work",
+  "carpet.rule.disableAiGoals.extra.1": "all",
 
   "carpet.rule.fragileBlocks.name": "易碎方块",
   "carpet.rule.fragileBlocks.desc": "设置可以被快速破坏的方块列表，使用逗号分隔，例如: obsidian,vault",
+
+  "carpet.rule.fixMiningFatigue.name": "修复挖掘疲劳三级倍率",
+  "carpet.rule.fixMiningFatigue.desc": "修复挖掘疲劳 III/IV 级的挖掘速度倍率：III 0.0027→0.027, IV 0.00081→0.0081",
 
   "carpet.rule.flushFakePlayerNetworkQueue.name": "清理假玩家网络队列",
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "每分钟清空假玩家底层EmbeddedChannel中积压的出站数据包以释放堆内存。",

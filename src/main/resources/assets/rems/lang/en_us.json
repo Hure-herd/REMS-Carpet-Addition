@@ -129,16 +129,22 @@
   "carpet.rule.noSensationPearlLoad.name": "NoSensationPearlLoad",
   "carpet.rule.noSensationPearlLoad.desc": "When the speed is greater than 300 and it is the first time, a small number of raycast calls will be made. The calculations are saved and the stuttering is reduced on the next call.",
 
+  "carpet.rule.revertZombieFeatures.name": "RevertZombieFeatures",
+  "carpet.rule.revertZombieFeatures.desc": "Reverts two Mojang zombie changes: reinforcements always spawn regular zombies (24w33a), pigmen never spawn with golden spears (1.21.11).",
+
   "carpet.rule.disableAIEntitities.name": "DisableAIEntitities",
   "carpet.rule.disableAIEntitities.desc": "Set a list of entities to remove from any AI, separated by commas, for example: zombie,piglin",
 
   "carpet.rule.disableAiGoals.name": "DisableAiGoals",
   "carpet.rule.disableAiGoals.desc": "Select the AI function you want to delete, such as: move, attack, look.",
-  "carpet.rule.disableAiGoals.extra.0": "find_target, avoid_flee, avoid_sun, break_door",
-  "carpet.rule.disableAiGoals.extra.1": "eat_grass, breed, tempt, follow, all",
+  "carpet.rule.disableAiGoals.extra.0": "move, attack, look, breed, tempt, pickup, work",
+  "carpet.rule.disableAiGoals.extra.1": "all",
 
   "carpet.rule.fragileBlocks.name": "FragileBlocks",
   "carpet.rule.fragileBlocks.desc": "Set a list of blocks that can be broken quickly, separated by commas, e.g.: obsidian,vault",
+
+  "carpet.rule.fixMiningFatigue.name": "FixMiningFatigue",
+  "carpet.rule.fixMiningFatigue.desc": "Fixes Mining Fatigue III/IV multipliers: III 0.0027→0.027, IV 0.00081→0.0081.",
 
   "carpet.rule.flushFakePlayerNetworkQueue.name": "FlushFakePlayerNetworkQueue",
   "carpet.rule.flushFakePlayerNetworkQueue.desc": "Every minute, the backlog of outbound packets in the underlying EmbeddedChannel of the fake player is cleared to free up heap memory.",

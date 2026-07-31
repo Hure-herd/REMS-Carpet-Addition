@@ -14,4 +14,137 @@ accessible class net/minecraft/block/entity/CalibratedSculkSensorBlockEntity$Cal
 accessible class net/minecraft/entity/mob/SlimeEntity$MoveGoal
 accessible class net/minecraft/entity/mob/SlimeEntity$FaceTowardTargetGoal
 accessible class net/minecraft/entity/mob/SlimeEntity$SwimmingGoal
-accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal
+accessible class net/minecraft/entity/mob/SlimeEntity$RandomLookGoal# Phantom
+accessible class net/minecraft/entity/mob/PhantomEntity$MovementGoal
+accessible class net/minecraft/entity/mob/PhantomEntity$CircleMovementGoal
+accessible class net/minecraft/entity/mob/PhantomEntity$SwoopMovementGoal
+accessible class net/minecraft/entity/mob/PhantomEntity$StartAttackGoal
+accessible class net/minecraft/entity/mob/PhantomEntity$FindTargetGoal
+# Bee
+accessible class net/minecraft/entity/passive/BeeEntity$BeeWanderAroundGoal
+accessible class net/minecraft/entity/passive/BeeEntity$FindHiveGoal
+accessible class net/minecraft/entity/passive/BeeEntity$MoveToFlowerGoal
+accessible class net/minecraft/entity/passive/BeeEntity$MoveToHiveGoal
+accessible class net/minecraft/entity/passive/BeeEntity$EnterHiveGoal
+accessible class net/minecraft/entity/passive/BeeEntity$PollinateGoal
+accessible class net/minecraft/entity/passive/BeeEntity$GrowCropsGoal
+accessible class net/minecraft/entity/passive/BeeEntity$StingGoal
+accessible class net/minecraft/entity/passive/BeeEntity$BeeRevengeGoal
+accessible class net/minecraft/entity/passive/BeeEntity$NotAngryGoal
+# Dolphin
+accessible class net/minecraft/entity/passive/DolphinEntity$LeadToNearbyTreasureGoal
+accessible class net/minecraft/entity/passive/DolphinEntity$PlayWithItemsGoal
+accessible class net/minecraft/entity/passive/DolphinEntity$SwimWithPlayerGoal
+# Fish
+accessible class net/minecraft/entity/passive/FishEntity$SwimToRandomPlaceGoal
+# Fox
+accessible class net/minecraft/entity/passive/FoxEntity$FoxSwimGoal
+accessible class net/minecraft/entity/passive/FoxEntity$GoToVillageGoal
+accessible class net/minecraft/entity/passive/FoxEntity$MoveToHuntGoal
+accessible class net/minecraft/entity/passive/FoxEntity$StopWanderingGoal
+accessible class net/minecraft/entity/passive/FoxEntity$EscapeWhenNotAggressiveGoal
+accessible class net/minecraft/entity/passive/FoxEntity$AvoidDaylightGoal
+accessible class net/minecraft/entity/passive/FoxEntity$FollowParentGoal
+accessible class net/minecraft/entity/passive/FoxEntity$SitDownAndLookAroundGoal
+accessible class net/minecraft/entity/passive/FoxEntity$LookAtEntityGoal
+accessible class net/minecraft/entity/passive/FoxEntity$AttackGoal
+accessible class net/minecraft/entity/passive/FoxEntity$DefendFriendGoal
+accessible class net/minecraft/entity/passive/FoxEntity$JumpChasingGoal
+accessible class net/minecraft/entity/passive/FoxEntity$MateGoal
+accessible class net/minecraft/entity/passive/FoxEntity$EatBerriesGoal
+accessible class net/minecraft/entity/passive/FoxEntity$PickupItemGoal
+# Ghast
+accessible class net/minecraft/entity/mob/GhastEntity$FlyRandomlyGoal
+accessible class net/minecraft/entity/mob/GhastEntity$ShootFireballGoal
+# Parrot
+accessible class net/minecraft/entity/passive/ParrotEntity$FlyOntoTreeGoal
+# Patrol & Raider
+accessible class net/minecraft/entity/mob/PatrolEntity$PatrolGoal
+accessible class net/minecraft/entity/raid/RaiderEntity$PatrolApproachGoal
+accessible class net/minecraft/entity/raid/RaiderEntity$AttackHomeGoal
+accessible class net/minecraft/entity/raid/RaiderEntity$CelebrateGoal
+# Rabbit
+accessible class net/minecraft/entity/passive/RabbitEntity$EscapeDangerGoal
+accessible class net/minecraft/entity/passive/RabbitEntity$FleeGoal
+accessible class net/minecraft/entity/passive/RabbitEntity$EatCarrotCropGoal
+# Turtle
+accessible class net/minecraft/entity/passive/TurtleEntity$GoHomeGoal
+accessible class net/minecraft/entity/passive/TurtleEntity$WanderInWaterGoal
+accessible class net/minecraft/entity/passive/TurtleEntity$WanderOnLandGoal
+accessible class net/minecraft/entity/passive/TurtleEntity$TravelGoal
+accessible class net/minecraft/entity/passive/TurtleEntity$TurtleEscapeDangerGoal
+accessible class net/minecraft/entity/passive/TurtleEntity$MateGoal
+# Drowned
+accessible class net/minecraft/entity/mob/DrownedEntity$WanderAroundOnSurfaceGoal
+accessible class net/minecraft/entity/mob/DrownedEntity$LeaveWaterGoal
+accessible class net/minecraft/entity/mob/DrownedEntity$DrownedAttackGoal
+accessible class net/minecraft/entity/mob/DrownedEntity$TridentAttackGoal
+accessible class net/minecraft/entity/mob/DrownedEntity$TargetAboveWaterGoal
+# Squid
+accessible class net/minecraft/entity/passive/SquidEntity$SwimGoal
+accessible class net/minecraft/entity/passive/SquidEntity$EscapeAttackerGoal
+# Strider
+accessible class net/minecraft/entity/passive/StriderEntity$GoBackToLavaGoal
+# Ocelot
+accessible class net/minecraft/entity/passive/OcelotEntity$FleeGoal
+accessible class net/minecraft/entity/passive/OcelotEntity$OcelotTemptGoal
+# Cat
+accessible class net/minecraft/entity/passive/CatEntity$CatFleeGoal
+accessible class net/minecraft/entity/passive/CatEntity$TemptGoal
+# Panda
+accessible class net/minecraft/entity/passive/PandaEntity$PandaFleeGoal
+accessible class net/minecraft/entity/passive/PandaEntity$PandaEscapeDangerGoal
+accessible class net/minecraft/entity/passive/PandaEntity$LieOnBackGoal
+accessible class net/minecraft/entity/passive/PandaEntity$PlayGoal
+accessible class net/minecraft/entity/passive/PandaEntity$SneezeGoal
+accessible class net/minecraft/entity/passive/PandaEntity$LookAtEntityGoal
+accessible class net/minecraft/entity/passive/PandaEntity$AttackGoal
+accessible class net/minecraft/entity/passive/PandaEntity$PandaRevengeGoal
+accessible class net/minecraft/entity/passive/PandaEntity$PandaMateGoal
+accessible class net/minecraft/entity/passive/PandaEntity$PickUpFoodGoal
+# PolarBear
+accessible class net/minecraft/entity/passive/PolarBearEntity$AttackGoal
+accessible class net/minecraft/entity/passive/PolarBearEntity$PolarBearRevengeGoal
+accessible class net/minecraft/entity/passive/PolarBearEntity$ProtectBabiesGoal
+# Silverfish
+accessible class net/minecraft/entity/mob/SilverfishEntity$CallForHelpGoal
+accessible class net/minecraft/entity/mob/SilverfishEntity$WanderAndInfestGoal
+# Wolf
+accessible class net/minecraft/entity/passive/WolfEntity$AvoidLlamaGoal
+# Enderman
+accessible class net/minecraft/entity/mob/EndermanEntity$TeleportTowardsPlayerGoal
+accessible class net/minecraft/entity/mob/EndermanEntity$ChasePlayerGoal
+accessible class net/minecraft/entity/mob/EndermanEntity$PickUpBlockGoal
+accessible class net/minecraft/entity/mob/EndermanEntity$PlaceBlockGoal
+# Blaze
+accessible class net/minecraft/entity/mob/BlazeEntity$ShootFireballGoal
+# Evoker
+accessible class net/minecraft/entity/mob/EvokerEntity$ConjureFangsGoal
+accessible class net/minecraft/entity/mob/EvokerEntity$SummonVexGoal
+accessible class net/minecraft/entity/mob/EvokerEntity$WololoGoal
+# Guardian
+accessible class net/minecraft/entity/mob/GuardianEntity$FireBeamGoal
+# Illusioner
+accessible class net/minecraft/entity/mob/IllusionerEntity$GiveInvisibilityGoal
+# Pufferfish
+accessible class net/minecraft/entity/passive/PufferfishEntity$InflateGoal
+# Ravager
+# Shulker
+accessible class net/minecraft/entity/mob/ShulkerEntity$ShootBulletGoal
+accessible class net/minecraft/entity/mob/ShulkerEntity$TargetOtherTeamGoal
+accessible class net/minecraft/entity/mob/ShulkerEntity$TargetPlayerGoal
+accessible class net/minecraft/entity/mob/ShulkerEntity$PeekGoal
+# Spider
+accessible class net/minecraft/entity/mob/SpiderEntity$AttackGoal
+# Vindicator
+# Wither
+accessible class net/minecraft/entity/boss/WitherEntity$DescendAtHalfHealthGoal
+# Zombie
+accessible class net/minecraft/entity/mob/ZombieEntity$DestroyEggGoal
+# Illager
+accessible class net/minecraft/entity/mob/IllagerEntity$LongDoorInteractGoal
+# Llama
+accessible class net/minecraft/entity/passive/LlamaEntity$SpitRevengeGoal
+
+accessible method net/minecraft/entity/decoration/DisplayEntity$BlockDisplayEntity setBlockState (Lnet/minecraft/block/BlockState;)V
+accessible method net/minecraft/entity/decoration/DisplayEntity setTransformation (Lnet/minecraft/util/math/AffineTransformation;)V

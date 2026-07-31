@@ -164,6 +164,11 @@ public class REMSSettings
     public static boolean reintroduceDolphinPortalItemDupe = false;
 
     @Rule(
+            categories = {REMS, BUGFIX}
+    )
+    public static boolean fixMiningFatigue = false;
+
+    @Rule(
             categories = {REMS, FEATURE}
     )
     public static boolean opInSurvivalCommandBlocks = false;
@@ -312,7 +317,7 @@ public class REMSSettings
     @Rule(
             categories = {REMS, FEATURE},
             validators = GoalListValidator.class,
-            options = {"false", "move", "attack", "move,attack,shoot", "all"},
+            options = {"false", "move", "attack", "move,attack,look", "breed,tempt,pickup,work", "all"},
             strict = false
     )
     public static String disableAiGoals = "false";
@@ -324,6 +329,11 @@ public class REMSSettings
             strict = false
     )
     public static String fragileBlocks = "false";
+
+    @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean revertZombieFeatures = false;
 
     public static final Set<Block> FRAGILE_BLOCKS = new HashSet<>();
 

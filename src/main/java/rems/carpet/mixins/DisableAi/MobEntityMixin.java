@@ -34,6 +34,9 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
+import java.util.*;
+
+import net.minecraft.text.Text;
 import java.util.Set;
 
 @Mixin(MobEntity.class)
@@ -59,26 +62,39 @@ private void manageDynamicAi(CallbackInfo ci) {
     Set<PrioritizedGoal> currentGoals = goalAccessor.getGoals();
 
     boolean isTargetEntity = REMSSettings.NO_AI_TYPES.contains(this.getType());
-
     boolean hasDisabledGoals = !REMSSettings.DISABLED_GOAL_CLASSES.isEmpty();
+    boolean nameTagDisabled = false;
 
     if (isTargetEntity && hasDisabledGoals) {
-        goalAccessor.getGoals().removeIf(prioritizedGoal -> {
-            for (Class<?> disabledClass : REMSSettings.DISABLED_GOAL_CLASSES) {
-                if (disabledClass.isInstance(prioritizedGoal.getGoal())) return true;
+        removeDisabled(goalAccessor, targetAccessor, REMSSettings.DISABLED_GOAL_CLASSES);
+    }
+
+    // 命名牌：名字包含 "move""attack" 等 → 单独禁这个实体的AI
+    Text name = this.getCustomName();
+    if (name != null) {
+        String nameStr = name.getString().toLowerCase();
+        for (Map.Entry<String, List<Class<?>>> e : REMSSettings.GOAL_MAPPING.entrySet()) {
+            if (!e.getKey().equals("all") && nameStr.contains(e.getKey())) {
+                removeDisabled(goalAccessor, targetAccessor, e.getValue());
+                nameTagDisabled = true;
             }
-            return false;
-        });
-        targetAccessor.getGoals().removeIf(prioritizedGoal -> {
-            for (Class<?> disabledClass : REMSSettings.DISABLED_GOAL_CLASSES) {
-                if (disabledClass.isInstance(prioritizedGoal.getGoal())) return true;
-            }
-            return false;
-        });
-    } else {
-        if (!isTargetEntity && currentGoals.isEmpty() && !this.isAiDisabled()) {
-            this.initGoals();
         }
     }
+
+    // 恢复：只有既不在全局名单也不在命名牌禁用列表时，才重新初始化空goal
+    if (!isTargetEntity && !nameTagDisabled && currentGoals.isEmpty() && !this.isAiDisabled()) {
+        this.initGoals();
+    }
+}
+
+private static void removeDisabled(GoalSelectorAccessor goals, GoalSelectorAccessor targets, Collection<Class<?>> disabled) {
+    goals.getGoals().removeIf(g -> {
+        for (Class<?> c : disabled) if (c.isInstance(g.getGoal())) return true;
+        return false;
+    });
+    targets.getGoals().removeIf(g -> {
+        for (Class<?> c : disabled) if (c.isInstance(g.getGoal())) return true;
+        return false;
+    });
 }
 }

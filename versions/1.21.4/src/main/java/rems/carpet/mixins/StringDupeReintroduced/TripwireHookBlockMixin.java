@@ -26,7 +26,6 @@ import net.minecraft.block.TripwireHookBlock;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-@SuppressWarnings("SimplifiableConditionalExpression")
 @Mixin(TripwireHookBlock.class)
 public abstract class TripwireHookBlockMixin {
     @ModifyExpressionValue(

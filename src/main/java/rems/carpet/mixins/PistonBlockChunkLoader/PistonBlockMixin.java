@@ -55,10 +55,10 @@ public abstract class PistonBlockMixin  {
             BlockState pistonBlock2 = world.getBlockState(nbp2);
 
             //#if MC<26000
-            if (pistonBlock1.isOf(Blocks.REDSTONE_ORE)) {
-            //#else
-            //$$ if (pistonBlock1.is(Blocks.DIAMOND_ORE)) {
-            //#endif
+            if (pistonBlock.isOf(Blocks.REDSTONE_ORE)) {
+                //#else
+                //$$ if (pistonBlock.is(Blocks.DIAMOND_ORE)) {
+                //#endif
                 int x = pos.getX() + direction.getOffsetX();
                 int z = pos.getZ() + direction.getOffsetZ();
 
@@ -70,9 +70,9 @@ public abstract class PistonBlockMixin  {
                 //#endif
             }
             //#if MC<26000
-            if (pistonBlock1.isOf(Blocks.DIAMOND_ORE)) {
+            if (pistonBlock.isOf(Blocks.DIAMOND_ORE)) {
             //#else
-            //$$ if (pistonBlock1.is(Blocks.DIAMOND_ORE)) {
+            //$$ if (pistonBlock.is(Blocks.DIAMOND_ORE)) {
             //#endif
                 ServerWorld serverWorld = (ServerWorld) world;
                 int x = pos.getX() + direction.getOffsetX();

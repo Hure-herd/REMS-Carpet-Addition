@@ -18,31 +18,30 @@
  * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.FragileBlocks;
+package rems.carpet.mixins.RevertZombieFeatures;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.entity.mob.ZombifiedPiglinEntity;
+import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import rems.carpet.REMSSettings;
 
-@Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
+@Mixin(ZombifiedPiglinEntity.class)
+public class ZombifiedPiglinEntityMixin {
 
-    @Inject(
-            method = "getBlockBreakingSpeed",
-            at = @At("RETURN"),
-            cancellable = true
+    @WrapOperation(
+            method = "initEquipment",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/math/random/Random;nextInt(I)I"
+            )
     )
-    private void fragileBlocks(BlockState state, CallbackInfoReturnable<Float> cir) {
-        if (!REMSSettings.fragileBlocks.equals("false")) {
-            Block block = state.getBlock();
-            if (REMSSettings.FRAGILE_BLOCKS.contains(block)) {
-                cir.setReturnValue(cir.getReturnValue() * 1000.0F);
-            }
+    private int preventPigmenSpawnWithSpears(Random random, int bound, Operation<Integer> original) {
+        if (REMSSettings.revertZombieFeatures) {
+            return 1;
         }
+        return original.call(random, bound);
     }
 }
