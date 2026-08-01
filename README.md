@@ -4,7 +4,7 @@
 [![Github](https://img.shields.io/github/downloads/Hure-herd/REMS-Carpet-Addition/total?color=161616&label=Github%20downloads&logo=github)](https://github.com/Hure-herd/REMS-Carpet-Addition/releases)
 [![Modrinth](https://img.shields.io/modrinth/dt/175yf82Z?label=Modrinth%20Downloads)](https://modrinth.com/mod/rems-carpet-addition)
 [![CurseForge](https://img.shields.io/curseforge/dt/1632837?logo=curseforge&label=CurseForge%20downloads&color=f16436)](https://www.curseforge.com/minecraft/mc-mods/rems-carpet-addition)
-[![MC Versions](https://cf.way2muchnoise.eu/versions/For%20MC_1632837_all.svg)](https://www.curseforge.com/minecraft/mc-mods/rems-carpet-addition)
+
 
 [English](README_EN.md) | **中文**
 
