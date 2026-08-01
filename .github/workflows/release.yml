@@ -165,6 +165,9 @@ jobs:
           modrinth-id: 175yf82Z
           modrinth-token: ${{ secrets.MODRINTH_API_TOKEN }}
 
+          curseforge-id: 1632837
+          curseforge-token: ${{ secrets.CF_API_TOKEN }}
+
           github-tag: ${{ steps.release_info.outputs.tag_name }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -182,6 +185,7 @@ jobs:
 
           github-changelog: ${{ steps.get_release.outputs.body }}
           modrinth-changelog: ${{ steps.changelog.outputs.result }}
+          curseforge-changelog: ${{ steps.changelog.outputs.result }}
 
           retry-attempts: 3
           retry-delay: 10000
