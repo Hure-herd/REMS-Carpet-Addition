@@ -43,7 +43,7 @@ public class LookControlMixin {
         ) || REMSSettings.DISABLED_GOAL_CLASSES.contains(
                 net.minecraft.entity.ai.brain.task.LookAtMobTask.class
         );
-        // 命名牌检查
+
         boolean nameLook = false;
         if (this.entity.getCustomName() != null) {
             nameLook = this.entity.getCustomName().getString().toLowerCase().contains("look");

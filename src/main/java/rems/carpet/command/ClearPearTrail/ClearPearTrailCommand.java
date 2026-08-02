@@ -26,6 +26,7 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import rems.carpet.REMSSettings;
+import rems.carpet.utils.ComponentTranslate;
 import rems.carpet.utils.NoSensationPearlLoad.ClearPearTrail;
 
 public class ClearPearTrailCommand {
@@ -35,6 +36,8 @@ public class ClearPearTrailCommand {
                 .requires(source -> CommandHelper.canUseCommand(source, REMSSettings.commandClearPearTrail))
                 .executes(context -> {
                     ClearPearTrail.clearAll();
+                    context.getSource().sendFeedback(()->
+                            ComponentTranslate.tr("clearPearlTrail.success"), false);
                     return Command.SINGLE_SUCCESS;
                 })
         );

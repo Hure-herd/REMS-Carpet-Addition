@@ -69,7 +69,6 @@ private void manageDynamicAi(CallbackInfo ci) {
         removeDisabled(goalAccessor, targetAccessor, REMSSettings.DISABLED_GOAL_CLASSES);
     }
 
-    // 命名牌：名字包含 "move""attack" 等 → 单独禁这个实体的AI
     Text name = this.getCustomName();
     if (name != null) {
         String nameStr = name.getString().toLowerCase();
@@ -81,7 +80,6 @@ private void manageDynamicAi(CallbackInfo ci) {
         }
     }
 
-    // 恢复：只有既不在全局名单也不在命名牌禁用列表时，才重新初始化空goal
     if (!isTargetEntity && !nameTagDisabled && currentGoals.isEmpty() && !this.isAiDisabled()) {
         this.initGoals();
     }

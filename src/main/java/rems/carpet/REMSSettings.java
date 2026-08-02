@@ -164,9 +164,25 @@ public class REMSSettings
     public static boolean reintroduceDolphinPortalItemDupe = false;
 
     @Rule(
+            categories = {REMS, FEATURE}
+    )
+    public static boolean noAnimalGenerationInNewChunks = false;
+
+    @Rule(
             categories = {REMS, BUGFIX}
     )
     public static boolean fixMiningFatigue = false;
+
+    @Rule(
+            categories = {REMS, FEATURE, SURVIVAL}
+    )
+    public static boolean noCreativePickupWhenFull = false;
+
+    @Rule(
+            options = {"ops", "true", "false"},
+            categories = {REMS, SURVIVAL, COMMAND}
+    )
+    public static String commandpetOwnerTransfer = "false";
 
     @Rule(
             categories = {REMS, FEATURE}

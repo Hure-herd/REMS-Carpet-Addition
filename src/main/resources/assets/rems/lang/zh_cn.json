@@ -111,11 +111,21 @@
   "carpet.rule.reintroduceDolphinPortalItemDupe.name": "重新引入海豚过门物品复制",
   "carpet.rule.reintroduceDolphinPortalItemDupe.desc": "重新引入20w45a修复的海豚携带物品穿越传送门时的物品复制",
 
+  "carpet.rule.commandpetOwnerTransfer.name": "宠物主人可转让",
+  "carpet.rule.commandpetOwnerTransfer.desc": "允许使用 /petTransfer <宠物UUID> <目标玩家> 命令将已驯服宠物转让给其他玩家。",
+  "rems.petTransfer.success": "已将宠物转让给 %s",
+  "rems.petTransfer.invalid_uuid": "无效的 UUID",
+  "rems.petTransfer.not_found": "未找到该宠物，请确保在宠物 50 格范围内且你是主人",
+
+  "carpet.rule.noCreativePickupWhenFull.name": "创造模式背包满时禁止拾取",
+  "carpet.rule.noCreativePickupWhenFull.desc": "创造模式下若背包无空位且无法与已有物品堆叠，则不会拾起物品。",
+
   "carpet.rule.opInSurvivalCommandBlocks.name": "生存模式OP编辑命令方块",
   "carpet.rule.opInSurvivalCommandBlocks.desc": "允许 OP 在生存模式下编辑命令方块",
 
   "carpet.rule.commandClearPearTrail.name": "清除已保存珍珠轨迹命令开关",
   "carpet.rule.commandClearPearTrail.desc": "启用 /clearPearlTrail 命令以清除已保存的 PearlTrail",
+  "rems.clearPearlTrail.success": "轨迹删除成功",
 
   "carpet.rule.stridergodie.name": "炽足兽去死",
   "carpet.rule.stridergodie.desc": "让炽足兽在地狱170高以上无法生成",
@@ -131,14 +141,19 @@
 
   "carpet.rule.disableAIEntitities.name": "禁用AI的实体类型",
   "carpet.rule.disableAIEntitities.desc": "设置移除任意AI的实体列表，使用逗号分隔，例如: zombie,piglin",
+  "carpet.rule.disableAIEntitities.extra.0": "禁用AI的类别类别详细请看DisableAiGoals",
 
   "carpet.rule.disableAiGoals.name": "禁用AI的类别",
   "carpet.rule.disableAiGoals.desc": "选择要删除的 AI 功能 如: move, attack, look",
   "carpet.rule.disableAiGoals.extra.0": "move, attack, look, breed, tempt, pickup, work",
   "carpet.rule.disableAiGoals.extra.1": "all",
+  "carpet.rule.disableAiGoals.extra.2": "使用命名牌命名为上方功能后可以删除单独实体的某个ai",
 
   "carpet.rule.fragileBlocks.name": "易碎方块",
   "carpet.rule.fragileBlocks.desc": "设置可以被快速破坏的方块列表，使用逗号分隔，例如: obsidian,vault",
+
+  "carpet.rule.noAnimalGenerationInNewChunks.name": "新区块不生成动物",
+  "carpet.rule.noAnimalGenerationInNewChunks.desc": "禁止在区块生成时自然生成动物（牛羊猪鸡等）。",
 
   "carpet.rule.fixMiningFatigue.name": "修复挖掘疲劳三级倍率",
   "carpet.rule.fixMiningFatigue.desc": "修复挖掘疲劳 III/IV 级的挖掘速度倍率：III 0.0027→0.027, IV 0.00081→0.0081",

@@ -18,35 +18,26 @@
  * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package rems.carpet.mixins.DisableAi;
+package rems.carpet.mixins.NoAnimalGeneration;
 
-import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.mob.MobEntity;
-import org.spongepowered.asm.mixin.Final;
+import net.minecraft.world.SpawnHelper;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import rems.carpet.REMSSettings;
 
-@Mixin(MoveControl.class)
-public class MoveControlMixin {
+@Mixin(SpawnHelper.class)
+public class SpawnHelperMixin {
 
-    @Final @Shadow protected MobEntity entity;
-
-    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-    private void stopMoving(CallbackInfo ci) {
-        boolean isTarget = REMSSettings.NO_AI_TYPES.contains(this.entity.getType());
-        boolean moveGlobal = REMSSettings.DISABLED_GOAL_CLASSES.contains(
-                net.minecraft.entity.ai.goal.WanderAroundGoal.class
-        ) || REMSSettings.DISABLED_GOAL_CLASSES.contains(
-                net.minecraft.entity.ai.brain.task.StrollTask.class
-        );
-
-        boolean nameMove = this.entity.getCustomName() != null
-                && this.entity.getCustomName().getString().toLowerCase().contains("move");
-        if ((isTarget && moveGlobal) || nameMove) {
+    @Inject(method = "populateEntities", at = @At("HEAD"), cancellable = true)
+    private static void disableAnimalGeneration(
+            net.minecraft.world.ServerWorldAccess world,
+            net.minecraft.registry.entry.RegistryEntry<net.minecraft.world.biome.Biome> biome,
+            net.minecraft.util.math.ChunkPos chunkPos,
+            net.minecraft.util.math.random.Random random,
+            CallbackInfo ci) {
+        if (REMSSettings.noAnimalGenerationInNewChunks) {
             ci.cancel();
         }
     }

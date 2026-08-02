@@ -26,6 +26,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import rems.carpet.command.ClearPearTrail.ClearPearTrailCommand;
 import rems.carpet.command.CommandBlockWhitelist.CommandBlockWhitelist;
 import rems.carpet.command.soundsuppressionintroduce.SetNoiseSuppressorCommand;
+import rems.carpet.command.PetTransfer.PetTransferCommand;
 import rems.carpet.command.VoidTrading.NoEndGatewayTicketCommand;
 
 
@@ -35,6 +36,7 @@ public class Commands {
         //$$ NoEndGatewayTicketCommand.register(dispatcher);
         //#endif
         SetNoiseSuppressorCommand.register(dispatcher, context);
+        PetTransferCommand.register(dispatcher);
         ClearPearTrailCommand.register(dispatcher);
         CommandBlockWhitelist.register(dispatcher);
     }
