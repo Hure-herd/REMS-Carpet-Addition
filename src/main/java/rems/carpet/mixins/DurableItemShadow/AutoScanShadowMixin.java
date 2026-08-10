@@ -21,63 +21,67 @@
 package rems.carpet.mixins.DurableItemShadow;
 
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import org.spongepowered.asm.mixin.Unique;
-import rems.carpet.REMSSettings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import rems.carpet.REMSSettings;
+import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Mixin(ServerPlayerEntity.class)
 public class AutoScanShadowMixin {
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void scanForShadows(CallbackInfo ci){
+    private void scanForShadows(CallbackInfo ci) {
 
-        if(!REMSSettings.durableItemShadow)return;
+        if (!REMSSettings.durableItemShadow) return;
 
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-
-        if(player.age % 100 != 0)return;
+        if (player.age % 20 != 0) return;
 
         PlayerInventory inv = player.getInventory();
-        List<Integer> seenHashes = new ArrayList<>();
+        Map<Integer, ItemStack> firstSeen = new HashMap<>();
+        Map<Integer, UUID> shadowIds = new HashMap<>();
         boolean foundShadow = false;
 
-        for(int i = 0; i < 36; i++) {
+        for (int i = 0; i < 36; i++) {
             ItemStack stack = inv.getStack(i);
-            if(stack.isEmpty())continue;
-            int memoryId = System.identityHashCode(stack);
-            if(seenHashes.contains(memoryId)) {
-                foundShadow = true;
-                ensureShadowId(stack, i);
-            }else{
-                seenHashes.add(memoryId);
+            if (stack.isEmpty()) continue;
+            int hash = System.identityHashCode(stack);
+            if (shadowIds.containsKey(hash)) {
+                foundShadow |= ensureShadowId(stack, shadowIds.get(hash));
+            } else if (firstSeen.containsKey(hash)) {
+                UUID id = UUID.randomUUID();
+                shadowIds.put(hash, id);
+                foundShadow |= ensureShadowId(firstSeen.get(hash), id);
+                foundShadow |= ensureShadowId(stack, id);
+            } else {
+                firstSeen.put(hash, stack);
             }
         }
-        if(foundShadow) {
+
+        if (foundShadow) {
             inv.markDirty();
+            ShadowCacheManager.maybeAutoSave();
         }
     }
 
     @Unique
-    private void ensureShadowId(ItemStack stack, int slotIndex){
+    private boolean ensureShadowId(ItemStack stack, UUID shadowId) {
+        NbtCompound currentData = stack.getNbt();
+        if (currentData != null && currentData.containsUuid("ShadowID")) return false;
 
-        NbtCompound currentData = stack.getOrCreateNbt();
-        if(currentData.contains("ShadowID"))return;
-
-        NbtCompound mutableNbt = currentData.copy();
-        UUID newId = UUID.randomUUID();
-        mutableNbt.putUuid("ShadowID", newId);
+        NbtCompound mutableNbt = currentData != null ? currentData.copy() : new NbtCompound();
+        mutableNbt.putUuid("ShadowID", shadowId);
         stack.setNbt(mutableNbt);
+        return true;
     }
 }

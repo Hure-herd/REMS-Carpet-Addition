@@ -58,6 +58,7 @@ public class PersistentShadowMixin {
     @Unique
     private static ItemStack rems$handleSingleton(ItemStack stack){
 
+        if(!REMSSettings.durableItemShadow)return stack;
         if(stack.isEmpty())return stack;
         NbtComponent customData = stack.get(DataComponentTypes.CUSTOM_DATA);
         if(customData == null)return stack;
@@ -78,17 +79,7 @@ public class PersistentShadowMixin {
             return stack;
         }
         if(shadowId == null)return stack;
-
-        if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)){
-            ItemStack masterStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
-            if (stack.getCount() > masterStack.getCount()) {
-                masterStack.setCount(stack.getCount());
-            }
-            return masterStack;
-        }else{
-            ShadowCacheManager.SHADOW_CACHE.put(shadowId, stack);
-            return stack;
-        }
+        return ShadowCacheManager.resolve(shadowId, stack);
     }
 
     @Inject(method = "areItemsAndComponentsEqual", at = @At("RETURN"), cancellable = true)

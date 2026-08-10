@@ -20,7 +20,6 @@
 
 package rems.carpet.mixins.SignCommand;
 
-import carpet.utils.Messenger;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.ParseResults;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -135,7 +134,7 @@ public class AbstractSignBlockMixin {
 
     @Unique
     private void executeValidatedCommand(PlayerEntity player, String command) {
-        ServerWorld world = Objects.requireNonNull(player.getServer()).getOverworld();;
+        ServerWorld world = Objects.requireNonNull(player.getServer()).getOverworld();
         ServerCommandSource commandSource = new ServerCommandSource(
                 CommandOutput.DUMMY,
                 player.getPos(),

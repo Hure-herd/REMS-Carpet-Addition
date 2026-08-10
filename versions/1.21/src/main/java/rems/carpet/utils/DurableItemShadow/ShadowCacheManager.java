@@ -26,12 +26,15 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtOps;
+import net.minecraft.nbt.NbtSizeTracker;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Uuids;
 import net.minecraft.util.WorldSavePath;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -87,48 +90,47 @@ public class ShadowCacheManager {
 
     public static void save(MinecraftServer srv) {
         try {
-            File file = getSaveFile(srv);
+            Path path = getSavePath(srv);
             if (SHADOW_CACHE.isEmpty()) {
-                Files.deleteIfExists(file.toPath());
+                Files.deleteIfExists(path);
                 return;
             }
             NbtCompound root = new NbtCompound();
             NbtList list = new NbtList();
             for (Map.Entry<UUID, ItemStack> entry : SHADOW_CACHE.entrySet()) {
                 NbtCompound e = new NbtCompound();
-                e.putUuid("id", entry.getKey());
-                NbtCompound stackNbt = new NbtCompound();
-                entry.getValue().writeNbt(stackNbt);
-                e.put("stack", stackNbt);
+                e.put("id", Uuids.INT_STREAM_CODEC.encodeStart(NbtOps.INSTANCE, entry.getKey()).result().orElseThrow());
+                ItemStack.CODEC.encodeStart(NbtOps.INSTANCE, entry.getValue())
+                        .result()
+                        .ifPresent(el -> e.put("stack", el));
                 list.add(e);
             }
             root.put("shadows", list);
-            NbtIo.writeCompressed(root, file);
+            NbtIo.writeCompressed(root, path);
         } catch (IOException ignored) {}
     }
 
     private static void load(MinecraftServer srv) {
         loadedFromDisk = true;
         try {
-            File file = getSaveFile(srv);
-            if (!file.exists()) return;
-            NbtCompound root = NbtIo.readCompressed(file);
-            NbtList list = root.getList("shadows", NbtElement.COMPOUND_TYPE);
+            Path path = getSavePath(srv);
+            if (!Files.exists(path)) return;
+            NbtCompound root = NbtIo.readCompressed(path, NbtSizeTracker.ofUnlimitedBytes());
+            if (!(root.get("shadows") instanceof NbtList list)) return;
             for (NbtElement el : list) {
                 NbtCompound e = (NbtCompound) el;
-                UUID id = e.getUuid("id");
+                UUID id = Uuids.INT_STREAM_CODEC.parse(NbtOps.INSTANCE, e.get("id")).result().orElse(null);
                 if (id == null || !e.contains("stack")) continue;
-                ItemStack stack = ItemStack.fromNbt(e.getCompound("stack"));
-                if (!stack.isEmpty()) {
-                    SHADOW_CACHE.put(id, stack);
-                }
+                ItemStack.CODEC.parse(NbtOps.INSTANCE, e.get("stack"))
+                        .result()
+                        .ifPresent(stack -> SHADOW_CACHE.put(id, stack));
             }
         } catch (Exception e) {
             SHADOW_CACHE.clear();
         }
     }
 
-    private static File getSaveFile(MinecraftServer srv) {
-        return srv.getSavePath(WorldSavePath.ROOT).resolve(FILE_NAME).toFile();
+    private static Path getSavePath(MinecraftServer srv) {
+        return srv.getSavePath(WorldSavePath.ROOT).resolve(FILE_NAME);
     }
 }

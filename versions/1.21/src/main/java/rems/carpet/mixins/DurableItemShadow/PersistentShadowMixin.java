@@ -24,7 +24,9 @@ import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtOps;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.util.Uuids;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,24 +48,20 @@ public class PersistentShadowMixin {
         if (optionalStack.isEmpty()) return;
         ItemStack newStack = optionalStack.get();
 
+        if (!REMSSettings.durableItemShadow) return;
+
         NbtComponent customData = newStack.get(DataComponentTypes.CUSTOM_DATA);
         if (customData == null || !customData.contains("ShadowID"))return;
 
         try{
             NbtCompound dataNbt = customData.copyNbt();
-            UUID shadowId = dataNbt.getUuid("ShadowID");
-            if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)){
-                ItemStack existingStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
-                if (newStack.getCount() > existingStack.getCount()) {
-                    existingStack.setCount(newStack.getCount());
-                }
-                cir.setReturnValue(Optional.of(existingStack));
-            }else{
-                ShadowCacheManager.SHADOW_CACHE.put(shadowId, newStack);
+            UUID shadowId = Uuids.INT_STREAM_CODEC.parse(NbtOps.INSTANCE, dataNbt.get("ShadowID")).result().orElse(null);
+            if (shadowId == null) return;
+            ItemStack resolved = ShadowCacheManager.resolve(shadowId, newStack);
+            if (resolved != newStack) {
+                cir.setReturnValue(Optional.of(resolved));
             }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
+        }catch(Exception ignored) {}
     }
 
     @Inject(method = "areItemsAndComponentsEqual", at = @At("RETURN"), cancellable = true)

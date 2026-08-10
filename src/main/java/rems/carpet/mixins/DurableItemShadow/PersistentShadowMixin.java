@@ -38,9 +38,10 @@ public class PersistentShadowMixin {
     @Inject(method = "fromNbt", at = @At("RETURN"), cancellable = true)
     private static void restoreShadowLink(NbtCompound nbt, CallbackInfoReturnable<ItemStack> cir) {
 
-        ItemStack optionalStack = cir.getReturnValue();
-        if (optionalStack.isEmpty()) return;
-        ItemStack newStack = optionalStack;
+        ItemStack newStack = cir.getReturnValue();
+        if (newStack.isEmpty()) return;
+
+        if (!REMSSettings.durableItemShadow) return;
 
         NbtCompound customData = newStack.getNbt();
         if (customData == null || !customData.contains("ShadowID"))return;
@@ -48,18 +49,11 @@ public class PersistentShadowMixin {
         try{
             NbtCompound dataNbt = customData.copy();
             UUID shadowId = dataNbt.getUuid("ShadowID");
-            if(ShadowCacheManager.SHADOW_CACHE.containsKey(shadowId)){
-                ItemStack existingStack = ShadowCacheManager.SHADOW_CACHE.get(shadowId);
-                if(newStack.getCount() > existingStack.getCount()){
-                    existingStack.setCount(newStack.getCount());
-                }
-                cir.setReturnValue(existingStack);
-            }else{
-                ShadowCacheManager.SHADOW_CACHE.put(shadowId, newStack);
+            ItemStack resolved = ShadowCacheManager.resolve(shadowId, newStack);
+            if (resolved != newStack) {
+                cir.setReturnValue(resolved);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception ignored) {}
     }
 
     @Inject(method = "canCombine", at = @At("RETURN"), cancellable = true)

@@ -32,7 +32,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import rems.carpet.REMSServer;
 import rems.carpet.REMSSettings;
 import rems.carpet.utils.SignCommand;
 
@@ -40,20 +39,17 @@ import java.util.List;
 
 @Mixin(SignBlockEntity.class)
 public abstract class SignBlockEntityMixin {
-    @Inject(method = "tryChangeText", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "tryChangeText", at = @At("HEAD"))
     public void PreventChangeTextWhenEmptyHands(PlayerEntity player, boolean front, List<FilteredMessage> messages, CallbackInfo ci) {
         if (REMSSettings.SignCommand) {
             if (player instanceof ServerPlayerEntity) {
-                REMSServer.LOGGER.debug("Player is trying to change the text, checking sign text");
                 ServerWorld world = (ServerWorld) player.getEntityWorld();
                 BlockPos pos = ((SignBlockEntity) (Object) this).getPos();
                 if (world.getBlockEntity(pos) instanceof SignBlockEntity signBlockEntity) {
                     boolean isFront = signBlockEntity.isPlayerFacingFront(player);
                     SignText texts = signBlockEntity.getText(isFront);
                     Text[] text = texts.getMessages(false);
-                    REMSServer.LOGGER.debug("Sign text: " + text[0].getString());
                     if (text[0].getString().startsWith("/")) {
-                        REMSServer.LOGGER.debug("Player is trying to change the text, but the text starts with /");
                         Text message = Text.literal(SignCommand.getTranslation("carpet.runCommandOnSignTips"));
                         //#if MC<260000
                         player.sendMessage(message, false);
