@@ -19,6 +19,12 @@
   "entrypoints": {
     "main": [
       "rems.carpet.REMSServer"
+    ],
+    "client": [
+      "rems.carpet.utils.MixinAuditInitializer"
+    ],
+    "server": [
+      "rems.carpet.utils.MixinAuditInitializer"
     ]
   },
   "mixins": [
