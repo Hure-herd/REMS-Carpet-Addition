@@ -1,21 +1,21 @@
 /*
- * This file is part of the Carpet REMS Addition project, licensed under the
+ * This file is part of the REMS-Carpet-Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2025 A Minecraft Server and contributors
+ * Copyright (C) 2026 Hureherd and contributors
  *
- * Carpet REMS Addition is free software: you can redistribute it and/or modify
+ * REMS-Carpet-Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * Carpet REMS Addition is distributed in the hope that it will be useful,
+ * REMS-Carpet-Addition is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with Carpet REMS Addition. If not, see <https://www.gnu.org/licenses/>.
+ * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
  */
 
 package rems.carpet.mixins.EnderPearlChunkLoader;
@@ -67,11 +67,6 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
     ){
         World world = this.getEntityWorld();
         if(!REMSSettings.fixedpearlloading) return;
-//        if(entity instanceof ServerPlayerEntity serverPlayerEntity){
-//            if (!serverPlayerEntity.getServerWorld().entityList.has(this)) {
-//                serverPlayerEntity.getServerWorld().entityList.add(this);
-//            }
-//        }
         if(!(world instanceof ServerWorld))return;
         Vec3d realPos = this.getPos().add(Vec3d.ZERO);
         Vec3d realVelocity = this.getVelocity().add(Vec3d.ZERO);

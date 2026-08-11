@@ -1,4 +1,3 @@
-apply plugin: 'maven-publish'
 apply plugin: 'com.github.hierynomus.license'
 apply plugin: 'fabric-loom'
 apply plugin: 'com.replaymod.preprocess'
@@ -49,19 +48,16 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	// mods
 	//modImplementation("maven.modrinth:Carpet:${project.carpet_core_version}") // modrinth
+	//modImplementation("curse.maven:carpet-349239:${project.carpet_core_version}") // curseforge
 	modImplementation "carpet:fabric-carpet:${project.carpet_core_version}" // masa
 	modCompileOnly(project.lithium_dependency)
 
 	// library mods
-	include(modImplementation("com.github.1024-byteeeee:AnnotationToolBox:${project.annotationtoolbox_version}"))
 	include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:${project.mixinextras_version}")))
-
+	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:${project.mixinsquared_version}")))
 	// Dependencies
-	include(implementation("com.esotericsoftware.yamlbeans:yamlbeans:${project.yamlbeans_version}"))
-
-	compileOnly 'org.projectlombok:lombok:1.18.46'
-	annotationProcessor 'org.projectlombok:lombok:1.18.46'
-	include(implementation(annotationProcessor("com.github.bawnorton.mixinsquared:mixinsquared-fabric:0.3.7-beta.3")))
+	compileOnly "org.projectlombok:lombok:${project.lombok_version}"
+	annotationProcessor "org.projectlombok:lombok:${project.lombok_version}"
 }
 
 
@@ -70,7 +66,8 @@ loom {
 		// to make sure it generates all "Minecraft Client (:subproject_name)" applications
 		ideConfigGenerated = true
 		runDir '../../run'
-		vmArgs '-Dmixin.debug.export=true'
+		// Only needed when debugging mixin output (exports to .mixin.out); keep disabled for faster startup
+		// vmArgs '-Dmixin.debug.export=true'
 	}
 
 	runs {
@@ -188,25 +185,10 @@ license {
 	}
 	ext {
 		name = project.mod_name
-		author = 'A Minecraft Server'
+		author = 'Hureherd'
 		year = Calendar.getInstance().get(Calendar.YEAR).toString()
 	}
 }
 classes.dependsOn licenseFormatMain
 testClasses.dependsOn licenseFormatTest
 
-// configure the maven publication
-publishing {
-	publications {
-		mavenJava(MavenPublication) {
-			artifactId base.archivesName.get()
-			from components.java
-		}
-	}
-
-	// select the repositories you want to publish to
-	repositories {
-		// uncomment to publish to the local maven
-		// mavenLocal()
-	}
-}

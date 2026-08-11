@@ -1,3 +1,23 @@
+/*
+ * This file is part of the REMS-Carpet-Addition project, licensed under the
+ * GNU Lesser General Public License v3.0
+ *
+ * Copyright (C) 2026 Hureherd and contributors
+ *
+ * REMS-Carpet-Addition is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * REMS-Carpet-Addition is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with REMS-Carpet-Addition. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package rems.carpet.utils;
 
 import com.google.gson.JsonArray;
@@ -6,7 +26,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import org.spongepowered.asm.mixin.Mixin;
+import org.objectweb.asm.AnnotationVisitor;
+import org.objectweb.asm.ClassReader;
+import org.objectweb.asm.ClassVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -19,6 +43,7 @@ public class MixinAuditInitializer implements ClientModInitializer, DedicatedSer
     private static final String AUDIT_PROPERTY = "carpetremsaddition.mixin_audit";
     private static final String MIXIN_PACKAGE = "rems.carpet.mixins";
     private static final String CONFIG_PATH = "rems.mixins.json";
+    private static final String MIXIN_ANNOTATION_DESC = "Lorg/spongepowered/asm/mixin/Mixin;";
 
     @Override
     public void onInitializeClient() {
@@ -51,42 +76,31 @@ public class MixinAuditInitializer implements ClientModInitializer, DedicatedSer
                 String mixinName = e.getAsString();
                 String mixinClass = MIXIN_PACKAGE + "." + mixinName;
                 total++;
-                try {
-                    Class<?> mixinClazz = Class.forName(mixinClass, false, MixinAuditInitializer.class.getClassLoader());
-                    Mixin mixinAnn = mixinClazz.getAnnotation(Mixin.class);
-                    List<String> targets = new ArrayList<>();
-                    if (mixinAnn != null) {
-                        for (Class<?> t : mixinAnn.value()) {
-                            if (t != null && t != Object.class) {
-                                targets.add(t.getName());
-                            }
+                MixinInfo info = readMixinInfo(mixinClass);
+                if (info.targets.isEmpty()) {
+                    System.out.println("[MIXIN-AUDIT] " + mixinClass + ": no static targets (dynamic/plugin), skipped");
+                    continue;
+                }
+                boolean ok = true;
+                for (String target : info.targets) {
+                    try {
+                        Class.forName(target, false, MixinAuditInitializer.class.getClassLoader());
+                    } catch (Throwable t) {
+                        if (info.pseudo && t instanceof ClassNotFoundException) {
+                            System.out.println("[MIXIN-AUDIT] " + mixinClass + " -> " + target
+                                    + ": optional target missing (pseudo), skipped");
+                            continue;
                         }
-                        for (String t : mixinAnn.targets()) {
-                            if (t != null && !t.isEmpty()) {
-                                targets.add(t);
-                            }
-                        }
+                        ok = false;
+                        failures.add(mixinClass + " -> " + target + ": " + t);
+                        System.err.println("[MIXIN-AUDIT] FAILED " + mixinClass + " -> " + target);
+                        t.printStackTrace();
                     }
-                    if (targets.isEmpty()) {
-                        System.out.println("[MIXIN-AUDIT] " + mixinClass + ": no static targets (dynamic/plugin), skipped");
-                        continue;
-                    }
-                    for (String target : targets) {
-                        try {
-                            Class.forName(target, false, MixinAuditInitializer.class.getClassLoader());
-                        } catch (Throwable t) {
-                            failed++;
-                            failures.add(mixinClass + " -> " + target + ": " + t);
-                            System.err.println("[MIXIN-AUDIT] FAILED " + mixinClass + " -> " + target);
-                            t.printStackTrace();
-                        }
-                    }
-                    System.out.println("[MIXIN-AUDIT] " + mixinClass + ": " + targets.size() + " target(s) OK");
-                } catch (Throwable t) {
+                }
+                if (ok) {
+                    System.out.println("[MIXIN-AUDIT] " + mixinClass + ": " + info.targets.size() + " target(s) OK");
+                } else {
                     failed++;
-                    failures.add(mixinClass + ": " + t);
-                    System.err.println("[MIXIN-AUDIT] FAILED loading mixin class " + mixinClass);
-                    t.printStackTrace();
                 }
             }
         } catch (Exception ex) {
@@ -104,5 +118,66 @@ public class MixinAuditInitializer implements ClientModInitializer, DedicatedSer
             }
         }
         System.exit(failed == 0 ? 0 : 1);
+    }
+
+    private static MixinInfo readMixinInfo(String mixinClass) {
+        MixinInfo info = new MixinInfo();
+        String resource = mixinClass.replace('.', '/') + ".class";
+        try (InputStream is = MixinAuditInitializer.class.getClassLoader().getResourceAsStream(resource)) {
+            if (is == null) {
+                System.err.println("[MIXIN-AUDIT] class resource not found: " + mixinClass);
+                return info;
+            }
+            ClassReader reader = new ClassReader(is);
+            reader.accept(new ClassVisitor(Opcodes.ASM9) {
+                @Override
+                public AnnotationVisitor visitAnnotation(String descriptor, boolean visible) {
+                    if ("Lorg/spongepowered/asm/mixin/Pseudo;".equals(descriptor)) {
+                        info.pseudo = true;
+                        return super.visitAnnotation(descriptor, visible);
+                    }
+                    if (!MIXIN_ANNOTATION_DESC.equals(descriptor)) {
+                        return super.visitAnnotation(descriptor, visible);
+                    }
+                    return new AnnotationVisitor(Opcodes.ASM9) {
+                        @Override
+                        public AnnotationVisitor visitArray(String name) {
+                            if ("value".equals(name)) {
+                                return new AnnotationVisitor(Opcodes.ASM9) {
+                                    @Override
+                                    public void visit(String n, Object value) {
+                                        if (value instanceof Type) {
+                                            String cn = ((Type) value).getClassName();
+                                            if (!"java.lang.Object".equals(cn)) {
+                                                info.targets.add(cn);
+                                            }
+                                        }
+                                    }
+                                };
+                            }
+                            if ("targets".equals(name)) {
+                                return new AnnotationVisitor(Opcodes.ASM9) {
+                                    @Override
+                                    public void visit(String n, Object value) {
+                                        if (value instanceof String && !((String) value).isEmpty()) {
+                                            info.targets.add((String) value);
+                                        }
+                                    }
+                                };
+                            }
+                            return super.visitArray(name);
+                        }
+                    };
+                }
+            }, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG | ClassReader.SKIP_FRAMES);
+        } catch (Exception e) {
+            System.err.println("[MIXIN-AUDIT] failed to read " + mixinClass + ": " + e);
+        }
+        return info;
+    }
+
+    private static final class MixinInfo {
+        final List<String> targets = new ArrayList<>();
+        boolean pseudo;
     }
 }

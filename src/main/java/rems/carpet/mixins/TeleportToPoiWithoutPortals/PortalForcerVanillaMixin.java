@@ -2,7 +2,7 @@
  * This file is part of the REMS-Carpet-Addition project, licensed under the
  * GNU Lesser General Public License v3.0
  *
- * Copyright (C) 2026 A Minecraft Server and contributors
+ * Copyright (C) 2026 Hureherd and contributors
  *
  * REMS-Carpet-Addition is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
