@@ -24,5 +24,4 @@ import rems.carpet.utils.compat.DummyClass;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(DummyClass.class)
-public class ThrownEntityMixin {
-}
+public class ThrownEntityMixin {}

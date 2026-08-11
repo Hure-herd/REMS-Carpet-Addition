@@ -21,7 +21,6 @@
 package rems.carpet.mixins.Recover212ThrownEntity;
 
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.projectile.ProjectileEntity;
@@ -97,7 +96,7 @@ public class ThrownEntityMixin extends ProjectileEntity {
     }
 
     @Override
-    protected double getGravity() {
+    public double getGravity() {
         return 0.03;
     }
 
