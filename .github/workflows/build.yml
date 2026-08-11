@@ -51,11 +51,19 @@ jobs:
 
       - name: Run Mixin Audit Check
         if: ${{ inputs.mixin_audit }}
-        timeout-minutes: 10
+        timeout-minutes: 60
         run: |
           mkdir -p ./run
           echo eula=true > ./run/eula.txt
-          ./gradlew runClientMixinAudit
+          if [ -z "${{ inputs.target_subproject }}" ]; then
+              for d in versions/*/; do
+                  ./gradlew ":$(basename $d):runMixinAuditClient"
+              done
+          else
+              for sub in $(echo "${{ inputs.target_subproject }}" | tr ',' ' '); do
+                  ./gradlew ":$sub:runMixinAuditClient"
+              done
+          fi
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
