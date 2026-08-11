@@ -192,3 +192,39 @@ license {
 classes.dependsOn licenseFormatMain
 testClasses.dependsOn licenseFormatTest
 
+if (mcVersion >= 260100) {
+	def stripCarpetMixinForAudit = tasks.register('stripCarpetMixinForAudit') {
+		def outFile = layout.buildDirectory.file('carpet-audit/fabric-carpet-nomixin.jar')
+		outputs.file(outFile)
+		doLast {
+			def srcJar = configurations.runtimeClasspath.files.find { it.name.startsWith('fabric-carpet-') }
+			if (srcJar == null) {
+				throw new GradleException('fabric-carpet not found in runtimeClasspath configuration')
+			}
+			def tmpDir = layout.buildDirectory.dir('carpet-audit/unpack').get().asFile
+			delete(tmpDir)
+			copy {
+				from zipTree(srcJar)
+				into tmpDir
+			}
+			def fmFile = new File(tmpDir, 'fabric.mod.json')
+			def fm = new groovy.json.JsonSlurper().parse(fmFile)
+			fm.mixins = []
+			fm.remove('accessWidener')
+			fmFile.text = groovy.json.JsonOutput.prettyPrint(groovy.json.JsonOutput.toJson(fm))
+			delete(new File(tmpDir, 'carpet.accesswidener'))
+			def out = outFile.get().asFile
+			delete(out)
+			ant.zip(destfile: out) {
+				fileset(dir: tmpDir)
+			}
+		}
+	}
+	['runMixinAuditClient', 'runMixinAudit'].each { taskName ->
+		tasks.named(taskName) {
+			dependsOn(stripCarpetMixinForAudit)
+			classpath = classpath.filter { !it.name.startsWith('fabric-carpet-') } + files(stripCarpetMixinForAudit.map { it.outputs.files.singleFile })
+		}
+	}
+}
+
