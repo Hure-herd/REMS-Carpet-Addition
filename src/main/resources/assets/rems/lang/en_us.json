@@ -26,7 +26,7 @@
   "carpet.rule.chestMinecartChunkLoader.name": "ChestMinecartChunkLoader",
   "carpet.rule.chestMinecartChunkLoader.desc" : "ChestMinecart can load nearby chunks for 2 seconds,when ChestMinecart customName is Load",
 
-  "carpet.rule.projectileRaycastLength.name": "projectileRaycastLengthValidato",
+  "carpet.rule.projectileRaycastLength.name": "ProjectileRaycastLength",
   "carpet.rule.projectileRaycastLength.desc": "Changes the distance projectiles check for collisions. If set to 0 all Blocks to the destination will be checked which is the Vanilla behaviour.",
   "carpet.rule.projectileRaycastLength.extra": "This reduces lag for fast projectiles. In 1.12 the value was 200.",
 
@@ -67,9 +67,9 @@
   "carpet.rule.signAllowedCommands.desc" : "Set a list of allowed commands on the sign, separated by commas, for example: say, tick, player",
 
   "carpet.rule.enderpearlloadchunk.name": "Enderpearlloadchunk",
-  "carpet.rule.enderpearlloadchunk.desc" : "Enderpearl can load chunk like 1.21.2,when load more than Pealtime gt,enderpeal will discard",
+  "carpet.rule.enderpearlloadchunk.desc" : "Enderpearl can load chunk like 1.21.2,when load more than Pearltime gt,enderpeal will discard",
 
-  "carpet.rule.Pearltime.name": "Pealtime",
+  "carpet.rule.Pearltime.name": "Pearltime",
   "carpet.rule.Pearltime.desc": "This can control how long the pearl flies before it is destroyed. ",
 
   "carpet.rule.ComparatorIgnoresStateUpdatesFromBelow.name": "ComparatorIgnoresStateUpdatesFromBelow",
@@ -91,10 +91,10 @@
   "carpet.rule.pre21ThrowableEntityMovement.name": "Pre21ThrowableEntityMovement",
   "carpet.rule.pre21ThrowableEntityMovement.desc": "Restored the order of projectile movement from 1.21.2, you can use EnderPearl Cannon like in 1.21.2-",
 
-  "carpet.rule.fixedpearlloading.name": "Fixpearlloading",
+  "carpet.rule.fixedpearlloading.name": "Fixedpearlloading",
   "carpet.rule.fixedpearlloading.desc": "Fixed an issue where ender pearls would unload at high speeds due to being unable to load the current chunk.",
 
-  "carpet.rule.pearlnotloadingchunk.name": "Notloadingchunk",
+  "carpet.rule.pearlnotloadingchunk.name": "Pearlnotloadingchunk",
   "carpet.rule.pearlnotloadingchunk.desc": "It will make Enderpearl no load any chunk",
 
   "carpet.rule.wanderingTraderNoDisappear.name": "WanderingTraderNoDisappear",
@@ -175,7 +175,7 @@
   "carpet.rule.voidTrading.name": "VoidTrading",
   "carpet.rule.voidTrading.desc": "Restore Void Trading,Enable the /noEndGatewayTicket command to cancel the loading of a gate at a specific location.",
 
-  "carpet.rule.commandnoEndGatewayTicket.name": "CommandnoNoEndGatewayTicket",
+  "carpet.rule.commandnoEndGatewayTicket.name": "CommandNoEndGatewayTicket",
   "carpet.rule.commandnoEndGatewayTicket.desc": "Enable the /noEndGatewayTicket command to cancel the loading of a gate at a specific location.",
   "rems.commandnoEndGatewayTicket.add": "Added:",
   "rems.commandnoEndGatewayTicket.remove": "Removed:",

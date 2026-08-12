@@ -1,4 +1,5 @@
-#https://sdkman.io/jdks#bsg
 before_install:
-- sdk install java 21.0.2-librca
-- sdk use java 21.0.2-librca
+  - export JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF-8 -Dhttps.protocols=TLSv1.2,TLSv1.3"
+  - sdk install java 21.0.2-librca
+  - sdk use java 21.0.2-librca
+  - sdk install java 25.0.4-librca

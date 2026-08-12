@@ -75,11 +75,6 @@ public class REMSSettings
     @Rule(
             categories = {REMS, SURVIVAL}
     )
-    public static boolean pearlPosVelocity = false;
-
-    @Rule(
-            categories = {REMS, SURVIVAL}
-    )
     public static boolean stridergodie = false;
 
     @Rule(
