@@ -124,7 +124,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
                 TntEntity entityTNTPrimed = (TntEntity)entity;
                 Vec3d tntVelocity = entityTNTPrimed.getVelocity();
                 int targetFuse = entityTNTPrimed.getFuse();
-                long targetCreationTick = ((TntEntityMixin) entityTNTPrimed).creationTick;
+                long targetCreationTick = ((TntEntityMixin) (Object) entityTNTPrimed).creationTick;
 
                 if(this.squaredDistanceTo(entityTNTPrimed) < 0.0001
                         && velocity.squaredDistanceTo(tntVelocity) < 0.0001
