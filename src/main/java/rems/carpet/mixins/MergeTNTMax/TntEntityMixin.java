@@ -119,6 +119,8 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
         Vec3d velocity = this.getVelocity();
         int currentFuse = this.getFuse();
 
+        if (REMSSettings.mergeTNTFuseThreshold == 0) return;
+
         for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
             if(entity instanceof TntEntity && !entity.isRemoved()){
                 TntEntity entityTNTPrimed = (TntEntity)entity;
