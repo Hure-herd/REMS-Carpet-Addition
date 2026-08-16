@@ -20,9 +20,9 @@
   "carpet.rule.mergeTNTPro.name": "MergeTNTPro",
   "carpet.rule.mergeTNTPro.desc": "Combined with large amounts of TNT to reduce lag caused by entities and explosions",
 
-  "rems.rule.mergeTNTFuseThreshold": "TNT Merge Fuse Threshold",
-  "rems.rule.mergeTNTFuseThreshold.desc": "TNT with fuse time ≤ this value will merge. Set to 0 to disable merging.",
-  "rems.rule.mergeTNTFuseThreshold.validate": "Must be between 0 and 80",
+  "carpet.rule.mergeTNTFuseThreshold": "TNT Merge Fuse Threshold",
+  "carpet.rule.mergeTNTFuseThreshold.desc": "TNT with fuse time ≤ this value will merge. Set to 0 to disable merging.",
+  "carpet.rule.mergeTNTFuseThreshold.validate": "Must be between 0 and 80",
 
   "carpet.rule.mergeTNTMax.name": "MergeTNTMax",
   "carpet.rule.mergeTNTMax.desc": "A more aggressive TNT merge results in less stuttering compared to the Pro version.",
