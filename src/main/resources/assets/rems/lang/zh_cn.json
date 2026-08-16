@@ -11,6 +11,10 @@
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
 
+  "rems.rule.mergeTNTFuseThreshold": "TNT合并引信阈值",
+  "rems.rule.mergeTNTFuseThreshold.desc": "引信时间 ≤ 此值的TNT才会合并。设为0禁用合并。",
+  "rems.rule.mergeTNTFuseThreshold.validate": "必须在 0-80 之间"
+
   "carpet.rule.PortalPearlWarp.name": "珍珠超传",
   "carpet.rule.PortalPearlWarp.desc": "它可以移植回来1.13的超传，在某些特定的地方",
 
