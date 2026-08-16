@@ -46,10 +46,13 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
     private TNTLogHelper logHelper;
     @Unique
     private int mergedTNTMax = 1;
+    @Unique
+    private long creationTick;
 
     public TntEntityMixin(EntityType<?> entityType_1, World world_1)
     {
         super(entityType_1, world_1);
+        this.creationTick = world_1.getTime();
     }
 
     @Inject(method = "<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/LivingEntity;)V",
@@ -59,6 +62,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
         if (CarpetSettings.hardcodeTNTangle != -1.0D){
             setVelocity(-Math.sin(CarpetSettings.hardcodeTNTangle) * 0.02, 0.2, -Math.cos(CarpetSettings.hardcodeTNTangle) * 0.02);
         }
+        this.creationTick = world.getTime();
     }
 
     @Inject(method = "<init>(Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V", at = @At("RETURN"))
@@ -68,6 +72,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
         {
             logHelper = new TNTLogHelper();
         }
+        this.creationTick = world_1.getTime();
     }
 
     @Inject(method = "tick", at = @At("HEAD"))
@@ -88,6 +93,7 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
         if(CarpetSettings.tntPrimerMomentumRemoved){
             this.setVelocity(new Vec3d(0.0, 0.20000000298023224D, 0.0));
         }
+        this.creationTick = world_1.getTime();
     }
 
     @Inject(method = "explode", at = @At(value = "HEAD"))
@@ -107,22 +113,27 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
     @Inject(method = "tick", at = @At(value = "HEAD"))
     private void tryMergeTnT(CallbackInfo ci)
     {
-        if(REMSSettings.mergeTNTMax){
-            if (this.isRemoved() || getEntityWorld().isClient()) return;
+        if (!REMSSettings.mergeTNTMax) return;
+        if (this.isRemoved() || getEntityWorld().isClient()) return;
 
-            Vec3d velocity = this.getVelocity();
+        Vec3d velocity = this.getVelocity();
+        int currentFuse = this.getFuse();
 
-            for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
-                if(entity instanceof TntEntity && !entity.isRemoved()){
-                    TntEntity entityTNTPrimed = (TntEntity)entity;
-                    Vec3d tntVelocity = entityTNTPrimed.getVelocity();
-                    if(this.squaredDistanceTo(entityTNTPrimed) < 0.0001
-                            && velocity.squaredDistanceTo(tntVelocity) < 0.0001
-                            && this.getFuse() == entityTNTPrimed.getFuse()){
+        for(Entity entity : getEntityWorld().getOtherEntities(this, this.getBoundingBox())){
+            if(entity instanceof TntEntity && !entity.isRemoved()){
+                TntEntity entityTNTPrimed = (TntEntity)entity;
+                Vec3d tntVelocity = entityTNTPrimed.getVelocity();
+                int targetFuse = entityTNTPrimed.getFuse();
+                long targetCreationTick = ((TntEntityMixin) entityTNTPrimed).creationTick;
 
-                        mergedTNTMax += ((TntEntityInterface) entityTNTPrimed).getMergedTNTMax();
-                        entityTNTPrimed.remove(RemovalReason.DISCARDED);
-                    }
+                if(this.squaredDistanceTo(entityTNTPrimed) < 0.0001
+                        && velocity.squaredDistanceTo(tntVelocity) < 0.0001
+                        && currentFuse == targetFuse
+                        && (REMSSettings.mergeTNTFuseThreshold == 0 || currentFuse <= REMSSettings.mergeTNTFuseThreshold)
+                        && this.creationTick != targetCreationTick){
+
+                    mergedTNTMax += ((TntEntityInterface) entityTNTPrimed).getMergedTNTMax();
+                    entityTNTPrimed.remove(RemovalReason.DISCARDED);
                 }
             }
         }
