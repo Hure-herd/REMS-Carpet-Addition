@@ -128,9 +128,9 @@ public abstract class TntEntityMixin extends Entity implements TntEntityInterfac
                 int targetFuse = entityTNTPrimed.getFuse();
                 long targetCreationTick = ((TntEntityMixin) (Object) entityTNTPrimed).creationTick;
 
-                if(this.squaredDistanceTo(entityTNTPrimed) < 0.0001
-                        && velocity.squaredDistanceTo(tntVelocity) < 0.0001
-                        && (REMSSettings.mergeTNTFuseThreshold == 0 || currentFuse <= REMSSettings.mergeTNTFuseThreshold)
+                if(this.squaredDistanceTo(entityTNTPrimed) < 0.00000001
+                        && velocity.squaredDistanceTo(tntVelocity) < 0.00000001
+                        && currentFuse <= REMSSettings.mergeTNTFuseThreshold
                         && currentFuse == targetFuse){
 
                     mergedTNTMax += ((TntEntityInterface) entityTNTPrimed).getMergedTNTMax();
