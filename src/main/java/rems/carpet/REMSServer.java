@@ -83,7 +83,7 @@ public class REMSServer implements CarpetExtension, ModInitializer
     @Override
     public void onGameStarted() {
         LOGGER.info(MOD_ID + " " + "v" + getVersion() + "载入成功");
-        LOGGER.info("开源链接：https://github.com/Hure-herd/REMS-Carpet-extra,二改corn_desu");
+        LOGGER.info("开源链接：https://github.com/Hure-herd/REMS-Carpet-extra");
         CarpetServer.settingsManager.parseSettingsClass(REMSSettings.class);
 
     }
