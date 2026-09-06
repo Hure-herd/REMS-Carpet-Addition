@@ -22,14 +22,11 @@ package rems.carpet.mixins.TeleportToPoiWithoutPortals;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.world.BlockLocating;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.poi.PointOfInterestStorage;
 import net.minecraft.world.poi.PointOfInterestTypes;
-import org.spongepowered.asm.mixin.Overwrite;
 import rems.carpet.REMSSettings;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PortalForcer;
 import net.minecraft.world.poi.PointOfInterest;
@@ -49,19 +46,34 @@ public class PortalForcerVanillaMixin {
      * @reason Restore POI gateless teleportation in Vanilla.
      */
     @WrapMethod(method = "getPortalRect")
-    public Optional<BlockPos> getPortalRect(BlockPos centerPos, boolean dstIsNether, WorldBorder worldBorder, Operation<Optional<BlockLocating.Rectangle>> original) {
+    public Optional<BlockPos> getPortalRect(
+            BlockPos centerPos,
+            boolean dstIsNether,
+            WorldBorder worldBorder,
+            Operation<Optional<BlockPos>> original
+    ) {
+        if (!REMSSettings.teleportToPoiWithoutPortals) {
+            return original.call(centerPos, dstIsNether, worldBorder);
+        }
+
         int searchRadius = dstIsNether ? 16 : 128;
         PointOfInterestStorage poiStorage = this.world.getPointOfInterestStorage();
         poiStorage.preloadChunks(this.world, centerPos, searchRadius);
+
         Optional<PointOfInterest> optional = poiStorage.getInSquare(
-                        poiType -> poiType.matchesKey(PointOfInterestTypes.NETHER_PORTAL), centerPos, searchRadius, PointOfInterestStorage.OccupationStatus.ANY
-                ).filter(PointOfInterest -> worldBorder.contains(PointOfInterest.getPos()))
-                .filter(PointOfInterest -> {
-                    if (REMSSettings.teleportToPoiWithoutPortals)return true;
-                    return this.world.getBlockState(PointOfInterest.getPos()).contains(Properties.HORIZONTAL_AXIS);
-                })
-                .min(Comparator.comparingDouble((PointOfInterest PointOfInterest) -> PointOfInterest.getPos().getSquaredDistance(centerPos))
-                        .thenComparingInt(PointOfInterest -> PointOfInterest.getPos().getY()));
+                        poiType -> poiType.matchesKey(PointOfInterestTypes.NETHER_PORTAL),
+                        centerPos,
+                        searchRadius,
+                        PointOfInterestStorage.OccupationStatus.ANY
+                )
+                .filter(pointOfInterest ->
+                        worldBorder.contains(pointOfInterest.getPos()))
+                .min(Comparator
+                        .comparingDouble((PointOfInterest pointOfInterest) ->
+                                pointOfInterest.getPos().getSquaredDistance(centerPos))
+                        .thenComparingInt(pointOfInterest ->
+                                pointOfInterest.getPos().getY()));
+
         return optional.map(PointOfInterest::getPos);
     }
 }

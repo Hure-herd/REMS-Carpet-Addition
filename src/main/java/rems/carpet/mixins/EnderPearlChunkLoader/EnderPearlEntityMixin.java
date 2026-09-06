@@ -37,6 +37,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+import net.minecraft.world.border.WorldBorder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -59,8 +60,6 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         super(entityType, world);
     }
 
-
-
     @Inject(method = "tick",at = @At(value = "TAIL"))
     private void loadingChunksfix(
             CallbackInfo ci
@@ -68,28 +67,46 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         World world = this.getEntityWorld();
         if(!REMSSettings.fixedpearlloading) return;
         if(!(world instanceof ServerWorld))return;
-        Vec3d realPos = this.getPos().add(Vec3d.ZERO);
-        Vec3d realVelocity = this.getVelocity().add(Vec3d.ZERO);
-        Vec3d nextPos = realPos.add(realVelocity);
-        Vec3d nextVelocity = realVelocity.multiply(0.99F).subtract(0, 0.0297, 0);
-        Vec3d nextnextPos = nextPos.add(nextVelocity);
+        ServerWorld serverWorld = (ServerWorld) world;
+        Vec3d realVelocity = this.getVelocity();
+        if (REMSSettings.noSensationPearlLoad
+                && (Math.abs(realVelocity.x) > 300.0D || Math.abs(realVelocity.z) > 300.0D)) {
+            return;
+        }
+        ServerChunkManager serverChunkManager = serverWorld.getChunkManager();
+        WorldBorder worldBorder = serverWorld.getWorldBorder();
+        addTicketIfInBorder(serverChunkManager, worldBorder, toChunkPos(this.getPos()));
+        Vec3d pos = this.getPos();
+        Vec3d vel = realVelocity;
+        for (int t = 0; t < 4; t++) {
+            pos = pos.add(vel);
+            vel = vel.multiply(0.99F).subtract(0, 0.0297, 0);
+            addTicketIfInBorder(serverChunkManager, worldBorder, toChunkPos(pos));
+        }
+    }
+
+    @Unique
+    private ChunkPos toChunkPos(Vec3d pos) {
         //#if MC<260000
-        ChunkPos nextChunkPos = new ChunkPos(new BlockPos((int)nextPos.x, (int)nextPos.y, (int)nextPos.z));
-        ChunkPos nextnextChunkPos = new ChunkPos(new BlockPos((int)nextnextPos.x, (int)nextnextPos.y, (int)nextnextPos.z));
+        return new ChunkPos(BlockPos.ofFloored(pos));
         //#else
-        //$$ ChunkPos nextChunkPos = new ChunkPos((int)nextPos.x, (int)nextPos.z);
-        //$$ ChunkPos nextnextChunkPos = new ChunkPos((int)nextnextPos.x, (int)nextnextPos.z);
-        //#endif
-        ServerChunkManager serverChunkManager = ((ServerWorld) world).getChunkManager();
-        if(realVelocity.x > 200 ||realVelocity.z > 200)return;
-        //#if MC<12105
-        serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextChunkPos, 2, nextChunkPos);
-        serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextnextChunkPos, 2, nextnextChunkPos);
-        //#else
-        //$$ serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextChunkPos, 2);
-        //$$ serverChunkManager.addTicket(ChunkLoaderState.ENDER_PEARLS, nextnextChunkPos, 2);
+        //$$ return new ChunkPos(MathHelper.floor(pos.x) >> 4, MathHelper.floor(pos.z) >> 4);
         //#endif
     }
+
+    @Unique
+    private void addTicketIfInBorder(ServerChunkManager manager, WorldBorder worldBorder, ChunkPos chunkPos) {
+        if (chunkPos.getStartX() > worldBorder.getBoundEast() || chunkPos.getEndX() < worldBorder.getBoundWest()
+                || chunkPos.getStartZ() > worldBorder.getBoundSouth() || chunkPos.getEndZ() < worldBorder.getBoundNorth()) {
+            return;
+        }
+        //#if MC<12105
+        manager.addTicket(ChunkLoaderState.ENDER_PEARLS, chunkPos, 2, chunkPos);
+        //#else
+        //$$ manager.addTicket(ChunkLoaderState.ENDER_PEARLS, chunkPos, 2);
+        //#endif
+    }
+    
     //#if MC>12101
     //$$ @Inject(method = "tick",at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;isAlive()Z"),cancellable = true)
     //$$ private void noloadingchunk(

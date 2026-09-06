@@ -28,12 +28,10 @@ import me.jellysquid.mods.lithium.common.world.interests.PointOfInterestStorageE
 //#endif
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import net.minecraft.world.BlockLocating;
 import net.minecraft.world.border.WorldBorder;
 import net.minecraft.world.poi.PointOfInterestStorage;
 import rems.carpet.REMSSettings;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.PortalForcer;
 import net.minecraft.world.poi.PointOfInterest;
@@ -53,23 +51,33 @@ public class PortalForcerLithiumMixin {
      * @reason Inheriting Lithium's underlying search optimizations and restoring POI gateless teleportation in Lithium.
      */
     @WrapMethod(method = "getPortalRect")
-    public Optional<BlockPos> getPortalRect(BlockPos centerPos, boolean dstIsNether, WorldBorder worldBorder, Operation<Optional<BlockLocating.Rectangle>> original) {
+    public Optional<BlockPos> getPortalRect(
+            BlockPos centerPos,
+            boolean dstIsNether,
+            WorldBorder worldBorder,
+            Operation<Optional<BlockPos>> original
+    ) {
+        if (!REMSSettings.teleportToPoiWithoutPortals) {
+            return original.call(centerPos, dstIsNether, worldBorder);
+        }
         int searchRadius = dstIsNether ? 16 : 128;
-
         PointOfInterestStorage poiStorage = this.world.getPointOfInterestStorage();
         poiStorage.preloadChunks(this.world, centerPos, searchRadius);
         //#if MC<12100
-        Optional<PointOfInterest> ret = ((PointOfInterestStorageExtended) poiStorage).findNearestForPortalLogic(
+        Optional<PointOfInterest> ret =
+                ((PointOfInterestStorageExtended) poiStorage).findNearestForPortalLogic(
         //#else
-        //$$ Optional<PointOfInterest> ret = ((PointOfInterestStorageExtended) poiStorage).lithium$findNearestForPortalLogic(
+        //$$ Optional<PointOfInterest> ret =
+        //$$         ((PointOfInterestStorageExtended) poiStorage).lithium$findNearestForPortalLogic(
         //#endif
-                centerPos, searchRadius, POIRegistryEntries.NETHER_PORTAL_ENTRY, PointOfInterestStorage.OccupationStatus.ANY,
-                (poi) -> {
-                    if (REMSSettings.teleportToPoiWithoutPortals)return true;
-                    return this.world.getBlockState(poi.getPos()).contains(Properties.HORIZONTAL_AXIS);
-                },
-                worldBorder
-        );
+                        centerPos,
+                        searchRadius,
+                        POIRegistryEntries.NETHER_PORTAL_ENTRY,
+                        PointOfInterestStorage.OccupationStatus.ANY,
+                        poi -> true,
+                        worldBorder
+                );
+
         return ret.map(PointOfInterest::getPos);
     }
 }
