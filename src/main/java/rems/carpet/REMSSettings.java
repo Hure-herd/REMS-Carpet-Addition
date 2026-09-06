@@ -98,6 +98,14 @@ public class REMSSettings
     public static boolean mergeTNTMax = false;
 
     @Rule(
+            categories = {REMS, FEATURE, SURVIVAL, TNT},
+            options = {"0","80"},
+            strict = false,
+            validators = MergeTNTFuseThresholdValidator.class
+    )
+    public static int mergeTNTFuseThreshold = 60;
+
+    @Rule(
             categories = {REMS, FEATURE}
     )
     public static boolean disableBatCanSpawn = false;
@@ -444,6 +452,21 @@ public class REMSSettings
         }
     }
 
+    public static class MergeTNTFuseThresholdValidator extends Validator<Integer> {
+        @Override
+        public Integer validate(ServerCommandSource source, CarpetRule<Integer> currentRule, Integer newValue, String string) {
+            if (newValue < 0 || newValue > 80) {
+                return null;
+            }
+            return newValue;
+        }
+
+        @Override
+        public String description() {
+            return Language.getInstance().get("rems.rule.mergeTNTFuseThreshold.validate");
+        }
+    }
+
     //#if MC>=12110
     //$$ @Rule(
     //$$ categories = {REMS,EXPERIMENTAL}
@@ -471,4 +494,3 @@ public class REMSSettings
     //$$ public static String commandnoEndGatewayTicket = "ops";
     //#endif
 }
-
