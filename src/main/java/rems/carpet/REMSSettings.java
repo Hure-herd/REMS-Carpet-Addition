@@ -119,6 +119,12 @@ public class REMSSettings
             categories = {REMS, CREATIVE}
     )
     public static boolean disablePortalUpdate = false;
+
+    @Rule(
+            categories = {REMS, FEATURE, SURVIVAL}
+    )
+    public static boolean disableEndGatewayCooldown = false;
+
     //#if MC<12100
     @Rule(
             categories = {REMS, SURVIVAL}
@@ -171,10 +177,12 @@ public class REMSSettings
     )
     public static boolean noAnimalGenerationInNewChunks = false;
 
+    //#if MC<260300
     @Rule(
             categories = {REMS, BUGFIX}
     )
     public static boolean fixMiningFatigue = false;
+    //#endif
 
     @Rule(
             categories = {REMS, FEATURE, SURVIVAL}
@@ -469,9 +477,16 @@ public class REMSSettings
 
     //#if MC>=12110
     //$$ @Rule(
-    //$$ categories = {REMS,EXPERIMENTAL}
+    //$$        categories = {REMS, EXPERIMENTAL}
     //$$ )
     //$$ public static boolean dispenserSpearCharge = false;
+    //#endif
+
+    //#if MC>=12111
+    //$$ @Rule(
+    //$$        categories = {REMS, BUGFIX}
+    //$$ )
+    //$$ public static boolean fixSpearHitDetection = false;
     //#endif
 
     //#if MC>=12006

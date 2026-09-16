@@ -11,6 +11,9 @@
   "carpet.rule.endGatewayChunkLoader.name": "EndGatewayChunkLoader",
   "carpet.rule.endGatewayChunkLoader.desc": "When the entity passes through the ender gateway, the target chunk will be loaded for 3 seconds like nether portal",
 
+  "carpet.rule.disableEndGatewayCooldown.name": "Disable End Gateway Cooldown",
+  "carpet.rule.disableEndGatewayCooldown.desc": "Disables the teleport cooldown of end gateways, allowing entities to use them continuously",
+
   "carpet.rule.PortalPearlWarp.name": "PortalPearlWarp",
   "carpet.rule.PortalPearlWarp.desc": "It allows the player to be teleported 8x the distance of their current coords",
 
@@ -170,6 +173,9 @@
 
   "carpet.rule.dispenserSpearCharge.name": "DispenserSpearCharge",
   "carpet.rule.dispenserSpearCharge.desc": "Dispensers can use spears to attack entities in front of them.",
+
+  "carpet.rule.fixSpearHitDetection.name": "FixSpearHitDetection",
+  "carpet.rule.fixSpearHitDetection.desc": "Fixes spear attacks missing moving targets, starting cooldown without damage, and failing to apply enchanted knockback to players.",
 
   "carpet.rule.allowTripwirePlatformDeletion.name": "AllowTripwirePlatformDeletion",
   "carpet.rule.allowTripwirePlatformDeletion.desc": "Players can use the tripwire's abnormal state to interrupt the spawn of the End Obsidian spawn platform, thereby deleting the platform.",

@@ -11,6 +11,9 @@
   "carpet.rule.endGatewayChunkLoader.name": "末地折跃门加载",
   "carpet.rule.endGatewayChunkLoader.desc": "当实体穿越末路之地折跃门时，目标区块会像下界传送门一样使目标区块获得3s的加载",
 
+  "carpet.rule.disableEndGatewayCooldown.name": "关闭末地折跃门冷却",
+  "carpet.rule.disableEndGatewayCooldown.desc": "关闭末地折跃门的传送冷却，使实体可以连续使用折跃门",
+
   "carpet.rule.mergeTNTFuseThreshold": "TNT合并引信阈值",
   "carpet.rule.mergeTNTFuseThreshold.desc": "引信时间 ≤ 此值的TNT才会合并。设为0禁用合并。",
   "carpet.rule.mergeTNTFuseThreshold.validate": "必须在 0-80 之间",
@@ -167,6 +170,9 @@
 
   "carpet.rule.dispenserSpearCharge.name": "发射器可以发射矛",
   "carpet.rule.dispenserSpearCharge.desc": "发射器可以使用长矛攻击面前的实体。",
+
+  "carpet.rule.fixSpearHitDetection.name": "修复长矛命中判定",
+  "carpet.rule.fixSpearHitDetection.desc": "修复长矛无法命中移动目标、未造成伤害却进入冷却，以及击退附魔对玩家不生效的问题。",
 
   "carpet.rule.teleportToPoiWithoutPortals.name": "重新引入POI传送",
   "carpet.rule.teleportToPoiWithoutPortals.desc": "重新添加传送至没有传送门方块的传送门POI的规则",
