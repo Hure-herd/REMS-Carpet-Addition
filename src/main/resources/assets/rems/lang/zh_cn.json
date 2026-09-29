@@ -85,6 +85,8 @@
 
   "carpet.rule.soundSuppressionRadius.name": "声音抑制器范围控制",
   "carpet.rule.soundSuppressionRadius.desc": "控制声音抑制器的监听范围半径，可输入一个正整数，原版默认为16格，为了卡顿和性能考虑，最大不能超过64",
+  "carpet.rule.globalSoundSuppression.name": "全局声音抑制",
+  "carpet.rule.globalSoundSuppression.desc": "选择一个或多个受支持的声音抑制频率，多个值使用逗号分隔；false为关闭",
 
   "carpet.rule.commandsetnoisesuppressor.name": "放置声音抑制器命令开关",
   "carpet.rule.commandsetnoisesuppressor.desc": "启用/setnoisesuppressor命令来放置声音抑制器",
@@ -201,5 +203,8 @@
   "rems.CommandBlockWhitelist.add.1": "添加到命令方块白名单",
   "rems.CommandBlockWhitelist.add.2":"已经在白名单中了",
   "rems.CommandBlockWhitelist.remove.1": "从白名单中移除",
-  "rems.CommandBlockWhitelist.remove.2":"白名单中找不到"
+  "rems.CommandBlockWhitelist.remove.2":"白名单中找不到",
+
+  "carpet.rule.creativeCtrlPickBlockContents.name": "创造模式复制容器内容",
+  "carpet.rule.creativeCtrlPickBlockContents.desc": "允许在创造模式下使用 Ctrl+鼠标中键复制堆肥桶或炼药锅，并保留其中的内容物和液位。"
 } 

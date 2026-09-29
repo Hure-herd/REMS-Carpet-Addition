@@ -88,6 +88,8 @@
 
   "carpet.rule.soundSuppressionRadius.name": "SoundSuppressionRadius",
   "carpet.rule.soundSuppressionRadius.desc": "Controls the monitoring radius of the sound suppressor. You can enter a positive integer. The default value in the original version is 16 grids. For the sake of lag and performance, the maximum value cannot exceed 64.",
+  "carpet.rule.globalSoundSuppression.name": "Global Sound Suppression",
+  "carpet.rule.globalSoundSuppression.desc": "Selects one or more supported sound suppression frequencies, separated by commas. Use false to disable the rule.",
 
   "carpet.rule.commandsetnoisesuppressor.name": "Commandsetnoisesuppressor",
   "carpet.rule.commandsetnoisesuppressor.desc": "Enables /setnoisesuppressor command to place a sound suppressor",
@@ -201,5 +203,8 @@
   "rems.CommandBlockWhitelist.add.1": "has been added to the command block whitelist.",
   "rems.CommandBlockWhitelist.add.2":"is already on the whitelist.",
   "rems.CommandBlockWhitelist.remove.1": "has been removed from the whitelist.",
-  "rems.CommandBlockWhitelist.remove.2":"Not found in the whitelist."
+  "rems.CommandBlockWhitelist.remove.2":"Not found in the whitelist.",
+
+  "carpet.rule.creativeCtrlPickBlockContents.name": "Creative Ctrl Pick Block Contents",
+  "carpet.rule.creativeCtrlPickBlockContents.desc": "Allows Ctrl+middle-click in Creative mode to copy a composter or cauldron together with its contents and level."
 }

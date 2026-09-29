@@ -28,7 +28,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.projectile.thrown.EnderPearlEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.BlockPos;
@@ -37,7 +36,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
-import net.minecraft.world.border.WorldBorder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -60,64 +58,19 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         super(entityType, world);
     }
 
-    @Inject(method = "tick",at = @At(value = "TAIL"))
-    private void loadingChunksfix(
-            CallbackInfo ci
-    ){
-        World world = this.getEntityWorld();
-        if(!REMSSettings.fixedpearlloading) return;
-        if(!(world instanceof ServerWorld))return;
-        ServerWorld serverWorld = (ServerWorld) world;
-        Vec3d realVelocity = this.getVelocity();
-        if (REMSSettings.noSensationPearlLoad
-                && (Math.abs(realVelocity.x) > 300.0D || Math.abs(realVelocity.z) > 300.0D)) {
-            return;
-        }
-        ServerChunkManager serverChunkManager = serverWorld.getChunkManager();
-        WorldBorder worldBorder = serverWorld.getWorldBorder();
-        addTicketIfInBorder(serverChunkManager, worldBorder, toChunkPos(this.getPos()));
-        Vec3d pos = this.getPos();
-        Vec3d vel = realVelocity;
-        for (int t = 0; t < 4; t++) {
-            pos = pos.add(vel);
-            vel = vel.multiply(0.99F).subtract(0, 0.0297, 0);
-            addTicketIfInBorder(serverChunkManager, worldBorder, toChunkPos(pos));
-        }
-    }
-
-    @Unique
-    private ChunkPos toChunkPos(Vec3d pos) {
-        //#if MC<260000
-        return new ChunkPos(BlockPos.ofFloored(pos));
-        //#else
-        //$$ return new ChunkPos(MathHelper.floor(pos.x) >> 4, MathHelper.floor(pos.z) >> 4);
-        //#endif
-    }
-
-    @Unique
-    private void addTicketIfInBorder(ServerChunkManager manager, WorldBorder worldBorder, ChunkPos chunkPos) {
-        if (chunkPos.getStartX() > worldBorder.getBoundEast() || chunkPos.getEndX() < worldBorder.getBoundWest()
-                || chunkPos.getStartZ() > worldBorder.getBoundSouth() || chunkPos.getEndZ() < worldBorder.getBoundNorth()) {
-            return;
-        }
-        //#if MC<12105
-        manager.addTicket(ChunkLoaderState.ENDER_PEARLS, chunkPos, 2, chunkPos);
-        //#else
-        //$$ manager.addTicket(ChunkLoaderState.ENDER_PEARLS, chunkPos, 2);
-        //#endif
-    }
-    
-    //#if MC>12101
+    //#if MC>1.21.1
     //$$ @Inject(method = "tick",at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;isAlive()Z"),cancellable = true)
     //$$ private void noloadingchunk(
     //$$         CallbackInfo ci
     //$$ ){
-    //$$     if(REMSSettings.pearlnotloadingchunk){
-    //$$         ci.cancel();
-    //$$     }
+    //$$    if(REMSSettings.pearlnotloadingchunk)
+    //$$    //#if MC>1.21.4
+    //$$    //$$  ci.cancel();
+    //$$    //#endif
+    //$$    }
     //$$ }
     //#endif
-
+    
     @Shadow protected abstract void onCollision(HitResult hitResult);
     @Unique private String cacheKey = null;
     @Unique private boolean isReplaying = false;

@@ -18,6 +18,8 @@
     "CactusWrenchSound.BlockRotatorMixin",
     "ChestMinecartEntityChunkLoader.ChestMinecartEntityMixin",
     "CreativeInventoryPickup.PlayerEntityMixin",
+    "CreativePickBlockContents.BlockItemMixin",
+    "CreativePickBlockContents.ServerPlayNetworkHandlerMixin",
     "ComparatorIgnoresStateUpdatesFromBelow.ComparatorBlockMixin",
     "DisableAi.EntityNavigationMixin",
     "DisableAi.GoalSelectorAccessor",
@@ -34,11 +36,16 @@
     "DurableItemShadow.PersistentShadowMixin",
     "EnderGatewayChunkLoader.EndGatewayBlockEntityMixin",
     "EnderPearlChunkLoader.EnderPearlEntityMixin",
+    "FixedPearlLoading.EntityMixin",
+    "FixedPearlLoading.EntitySelectorMixin",
+    "FixedPearlLoading.ServerEntityManagerMixin",
     "EnderPearlChunkLoader.ProjectileUtilMixin",
     "EndStoneFram.EndGatewayBlockEntityMixin",
     "EndStoneFram.EndGatewayBlockMixin",
     "FixMiningFatigue.PlayerEntityMixin",
     "FlushFakePlayerNetworkQueue.ClientConnectionMixin",
+    "GlobalSoundSuppression.ServerWorldMixin",
+    "GlobalSoundSuppression.NeighborUpdaterMixin",
     "RevertZombieFeatures.ZombieEntityMixin",
     "RevertZombieFeatures.ZombifiedPiglinEntityMixin",
     "FragileBlocks.PlayerEntityMixin",
@@ -85,6 +92,7 @@
   ],
   "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",
   "client": [
+    "CreativePickBlockContents.MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

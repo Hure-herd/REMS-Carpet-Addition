@@ -190,6 +190,11 @@ public class REMSSettings
     public static boolean noCreativePickupWhenFull = false;
 
     @Rule(
+            categories = {REMS, CREATIVE, FEATURE}
+    )
+    public static boolean creativeCtrlPickBlockContents = false;
+
+    @Rule(
             options = {"ops", "true", "false"},
             categories = {REMS, SURVIVAL, COMMAND}
     )
@@ -206,7 +211,36 @@ public class REMSSettings
             strict = false,
             validators = soundSuppressionMaxRadiusValue.class
     )
-     public static int soundSuppressionRadius = 16;
+    public static int soundSuppressionRadius = 16;
+
+    @Rule(
+            categories = {REMS, FEATURE, CREATIVE},
+            options = {"false", "5", "9", "10", "11", "5,9,10,11"},
+            strict = false,
+            validators = GlobalSoundSuppressionValidator.class
+    )
+    public static String globalSoundSuppression = "false";
+
+    public static class GlobalSoundSuppressionValidator extends Validator<String> {
+        @Override
+        public String validate(ServerCommandSource source, CarpetRule<String> currentRule, String newValue, String string) {
+            String normalized = newValue.toLowerCase(Locale.ROOT).trim();
+            if (normalized.equals("false")) {
+                return normalized;
+            }
+
+            Set<String> frequencies = new LinkedHashSet<>();
+            for (String part : normalized.split(",", -1)) {
+                String frequency = part.trim();
+                if (!frequency.equals("5") && !frequency.equals("9")
+                        && !frequency.equals("10") && !frequency.equals("11")) {
+                    return null;
+                }
+                frequencies.add(frequency);
+            }
+            return frequencies.isEmpty() ? null : String.join(",", frequencies);
+        }
+    }
 
     private static class soundSuppressionMaxRadiusValue extends Validator<Integer> {
        @Override public Integer validate(ServerCommandSource source, CarpetRule<Integer> currentRule, Integer newValue, String string) {
