@@ -64,9 +64,7 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
     //$$         CallbackInfo ci
     //$$ ){
     //$$    if(REMSSettings.pearlnotloadingchunk)
-    //$$    //#if MC>1.21.4
-    //$$    //$$  ci.cancel();
-    //$$    //#endif
+    //$$    ci.cancel();
     //$$    }
     //$$ }
     //#endif
