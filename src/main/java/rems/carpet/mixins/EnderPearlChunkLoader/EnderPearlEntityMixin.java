@@ -58,13 +58,13 @@ public abstract class EnderPearlEntityMixin extends ThrownItemEntity {
         super(entityType, world);
     }
 
-    //#if MC>1.21.1
+    //#if MC>12101
     //$$ @Inject(method = "tick",at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/projectile/thrown/EnderPearlEntity;isAlive()Z"),cancellable = true)
     //$$ private void noloadingchunk(
     //$$         CallbackInfo ci
     //$$ ){
-    //$$    if(REMSSettings.pearlnotloadingchunk)
-    //$$    ci.cancel();
+    //$$     if (REMSSettings.pearlnotloadingchunk) {
+    //$$         ci.cancel();
     //$$    }
     //$$ }
     //#endif
