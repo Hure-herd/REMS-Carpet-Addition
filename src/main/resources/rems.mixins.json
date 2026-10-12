@@ -51,6 +51,19 @@
     "FragileBlocks.PlayerEntityMixin",
     "Introduce212ThrownEntity.ThrownEntityMixin",
     "ItemShadowing.ScreenHandlerMixin",
+    "NegativeItemStacks.ItemStackMixin",
+    "NegativeItemStacks.ItemStackPacketCodecMixin",
+    "NegativeItemStacks.ItemScattererMixin",
+    "NegativeItemStacks.GenericContainerScreenHandlerMixin",
+    "NegativeItemStacks.ScreenHandlerMixin",
+    "NegativeItemStacks.PlayerInventoryMixin",
+    "PetCapture.EnderEyeItemMixin",
+    "PetCapture.SnowballEntityMixin",
+    "PetCapture.SpawnEggItemMixin",
+    "PetCapture.MobEntityMixin",
+    "PetCapture.LivingEntityMixin",
+    "PetCapture.EnderDragonEntityMixin",
+    "PetCapture.DispenserBlockMixin",
     "MergeTNTMax.TntEntityMixin",
     "MergeTNTPro.TntEntityMixin",
     "NoAnimalGeneration.SpawnHelperMixin",
@@ -88,11 +101,13 @@
     "HUDControllerMixin",
     "VoidTrading.MerchantScreenHandlerMixin",
     "VoidTrading.EndGatewayBlockMixin",
-    "CommandBlockWhitelist.CommandBlockBlockMixin"
+    "CommandBlockWhitelist.CommandBlockBlockMixin",
+    "ReintroduceFallingBlockSliding.FallingBlockEntityMixin"
   ],
   "plugin": "rems.carpet.mixins.TeleportToPoiWithoutPortals.PortalMixinPlugin",
   "client": [
-    "CreativePickBlockContents.MinecraftClientMixin"
+    "CreativePickBlockContents.MinecraftClientMixin",
+    "NegativeItemStacks.DrawContextMixin"
   ],
   "injectors": {
     "defaultRequire": 1

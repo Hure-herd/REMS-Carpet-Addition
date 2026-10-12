@@ -1,6 +1,25 @@
 {
   "carpet.category.REMS": "REMS",
 
+  "carpet.rule.petCapture.name": "宠物抓取",
+  "carpet.rule.petCapture.desc": "用名为收服之眼或Capture Eye的末影之眼右键发射，命中生物后有25%概率收服，包括Boss",
+  "carpet.rule.petCapture.extra.0": "成功后生物变为宠物刷怪蛋；主人右键方块释放，空手右键宠物切换跟随或停留，shift+右键回收",
+  "carpet.rule.petCapture.extra.1": "不能收服玩家、其他玩家的宠物或正在骑乘及载人的生物",
+  "rems.petCapture.failed": "收服失败!",
+  "rems.petCapture.success": "收服成功！拾取宠物刷怪蛋后可召唤",
+  "rems.petCapture.reclaimed": "宠物已收回，拾取掉落的宠物刷怪蛋",
+  "carpet.rule.petCaptureLimit.name": "每种宠物的收服数量上限",
+  "carpet.rule.petCaptureLimit.desc": "每位玩家每种生物最多拥有多少只收服宠物；0表示不限，宠物蛋和已释放宠物共同计数",
+  "carpet.rule.petCaptureLimit.extra.0": "同一只宠物重新收服不重复计数；死亡释放名额，主人转让检查接收方上限；数量记录随世界保存",
+  "rems.petCapture.limit": "该种宠物已达到数量上限，无法继续收服",
+  "rems.petCapture.storage_failed": "宠物数量记录读写失败，操作已取消；请检查服务端日志",
+  "rems.petCapture.transfer_limit": "转让失败：接收者的该种宠物已达上限，或数量记录无法读写",
+
+  "carpet.rule.negativeItemStacks.name": "负数物品栈",
+  "carpet.rule.negativeItemStacks.desc": "重新引入零数量箱子物品和负数物品复制",
+  "carpet.rule.negativeItemStacks.extra.0": "在已打开的箱子被破坏后的6个游戏刻内取出物品（正常刻速下0.3秒），再将零数量物品放入投掷器",
+  "carpet.rule.negativeItemStacks.extra.1": "客户端和服务端均需安装本模组；破坏容器不会掉落其中的负数物品",
+
   "carpet.rule.pistonBlockChunkloader.name": "活塞头区块加载",
   "carpet.rule.pistonBlockChunkloader.desc": "活塞或黏性活塞被激活且能正常伸出时以活塞头将到达的区块为中心加载,持续3s",
   "carpet.rule.pistonBlockChunkloader.extra.0": "当活塞/黏性活塞上方有钻石原矿时，弱加载1x1的区块",
@@ -206,5 +225,8 @@
   "rems.CommandBlockWhitelist.remove.2":"白名单中找不到",
 
   "carpet.rule.creativeCtrlPickBlockContents.name": "创造模式复制容器内容",
-  "carpet.rule.creativeCtrlPickBlockContents.desc": "允许在创造模式下使用 Ctrl+鼠标中键复制堆肥桶或炼药锅，并保留其中的内容物和液位。"
+  "carpet.rule.creativeCtrlPickBlockContents.desc": "允许在创造模式下使用 Ctrl+鼠标中键复制堆肥桶或炼药锅，并保留其中的内容物和液位。",
+
+  "carpet.rule.reintroduceFallingBlockSliding.name":"重新引入下落方块滑行",
+  "carpet.rule.reintroduceFallingBlockSliding.desc":"恢复1.14-的下落方块滑行行为，使其在墙、栅栏等顶部满足旧版判定条件时保留水平速度，不因阻力减速。"
 } 

@@ -36,6 +36,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import rems.carpet.command.Commands;
 import rems.carpet.utils.DisableAi.AiGoalRegistrar;
 import rems.carpet.utils.DurableItemShadow.ShadowCacheManager;
+import rems.carpet.utils.PetCapture.PetCaptureRegistry;
 
 import java.util.Map;
 
@@ -78,6 +79,7 @@ public class REMSServer implements CarpetExtension, ModInitializer
         });
         ChunkLoaderState.init();
         AiGoalRegistrar.initialize();
+        PetCaptureRegistry.initialize();
     }
 
     @Override

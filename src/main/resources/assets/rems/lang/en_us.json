@@ -1,5 +1,23 @@
 {
   "carpet.category.REMS": "REMS",
+  "carpet.rule.petCapture.name": "Capture Pets With Ender Eyes",
+  "carpet.rule.petCapture.desc": "Right-click an ender eye named Capture Eye to throw it; hitting a mob has a 25% capture chance, including bosses",
+  "carpet.rule.petCapture.extra.0": "Upon success, the creature transforms into a pet spawn egg; the owner can right-click a block to release it, right-click the pet with an empty hand to toggle between follow and stay modes, and Shift+right-click to retrieve it",
+  "carpet.rule.petCapture.extra.1": "Players, other players' pets,mounted mobs and passenger carriers cannot be captured",
+  "rems.petCapture.failed": "Capture failed!",
+  "rems.petCapture.success": "Captured! Pick up the pet egg to summon your pet",
+  "rems.petCapture.reclaimed": "Pet reclaimed. Pick up the dropped pet egg",
+  "carpet.rule.petCaptureLimit.name": "Per-Type Pet Capture Limit",
+  "carpet.rule.petCaptureLimit.desc": "Maximum captured pets of each mob type per player;0 means unlimited,counting both eggs and released pets",
+  "carpet.rule.petCaptureLimit.extra.0": "Recapturing the same pet does not add a slot;death frees one,transfers check the recipient's limit,and counts persist with the world",
+  "rems.petCapture.limit": "You have reached this pet type's limit;no more can be captured",
+  "rems.petCapture.storage_failed": "Cannot read or save pet counts;operation cancelled. Check the server log",
+  "rems.petCapture.transfer_limit": "Transfer failed:the recipient has reached this pet type's limit,or pet counts cannot be read or saved",
+
+  "carpet.rule.negativeItemStacks.name": "Negative Item Stacks",
+  "carpet.rule.negativeItemStacks.desc": "Reintroduces zero-count items from chests and negative-count item duplication",
+  "carpet.rule.negativeItemStacks.extra.0": "Take an item from an open chest within six game ticks of its destruction (0.3 seconds at normal tick rate),then put the zero-count stack in a dropper",
+  "carpet.rule.negativeItemStacks.extra.1": "Requires the mod on both server and client; negative stacks are discarded when their container is broken",
 
   "carpet.rule.pistonBlockChunkloader.name": "PistonBlockChunkLoader",
   "carpet.rule.pistonBlockChunkloader.desc": "Load nearby chunks for 3 seconds when a piston is triggered (Centered on the piston head)",
@@ -206,5 +224,8 @@
   "rems.CommandBlockWhitelist.remove.2":"Not found in the whitelist.",
 
   "carpet.rule.creativeCtrlPickBlockContents.name": "Creative Ctrl Pick Block Contents",
-  "carpet.rule.creativeCtrlPickBlockContents.desc": "Allows Ctrl+middle-click in Creative mode to copy a composter or cauldron together with its contents and level."
+  "carpet.rule.creativeCtrlPickBlockContents.desc": "Allows Ctrl+middle-click in Creative mode to copy a composter or cauldron together with its contents and level.",
+
+  "carpet.rule.reintroduceFallingBlockSliding.name":"ReintroduceFallingBlockSliding",
+  "carpet.rule.reintroduceFallingBlockSliding.desc":"Restores pre-1.14 falling block sliding behavior,preserving horizontal velocity without drag when the legacy conditions are met atop walls, fences, and similar blocks"
 }

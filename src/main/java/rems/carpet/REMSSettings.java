@@ -137,6 +137,16 @@ public class REMSSettings
     )
     public static boolean itemShadowing = false;
 
+    @Rule(categories = {REMS, EXPERIMENTAL})
+    public static boolean negativeItemStacks = false;
+
+    @Rule(categories = {REMS, FEATURE, SURVIVAL})
+    public static boolean petCapture = false;
+
+    @Rule(categories = {REMS, FEATURE, SURVIVAL}, options = {"0", "3", "4"}, strict = false,
+            validators = Validators.NonNegativeNumber.class)
+    public static int petCaptureLimit = 0;
+
     @Rule(
             categories = {REMS, FEATURE, SURVIVAL}
     )
@@ -542,4 +552,9 @@ public class REMSSettings
     //$$ )
     //$$ public static String commandnoEndGatewayTicket = "ops";
     //#endif
+
+    @Rule(
+            categories = {REMS, SURVIVAL, FEATURE}
+    )
+    public static boolean reintroduceFallingBlockSliding = false;
 }

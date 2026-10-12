@@ -365,3 +365,31 @@ The command block whitelist can be enabled or disabled through the backend, prev
 * Close Method: `/cbwhitelist close`
 * How to add to the whitelist: `/cbwhitelist add XXX`
 * How to remove from the whitelist: `/cbwhitelist remove XXX`
+
+## PetCapture
+Use an anvil to rename an Eye of Ender to `Capture Eye` (case-insensitive), then right-click to launch the projectile. Each hit on a valid mob has a 25% chance of capturing it; valid targets include standard hostile mobs, the Wither, and the Ender Dragon, but exclude players, other players' pets, and mobs currently mounting or being ridden. An Eye is consumed upon a miss or failed capture (except in Creative mode). The mod must be installed on both the client and the server.
+Upon success, the original mob vanishes, and a special spawn egg is generated in its place. For the first capture, the egg's name appears as `Pet: Official Name` based on Carpet's `language` setting; if the mob has a name tag name, that name is used instead. Subsequent recalls preserve the pet's current name tag name; otherwise, the official name is used. The egg stores the original mob's UUID, owner, health, name, equipment, and other NBT data.
+Only the owner can right-click a block to release the pet; sufficient space is required at the location (bosses require extra space). A successful summon consumes the egg (even in Creative mode), while a failure preserves it. Pet eggs cannot be used to modify spawners, spawn baby mobs, or trigger direct mob spawning via dispensers. Owner and "stay" status are saved; disabling the rule prevents capture and release, though already released pets remain loyal.
+Pets do not attack proactively and generally follow the owner within the same dimension; the owner can toggle between "follow" and "stay" modes by right-clicking with an empty hand. If the owner sneaks and right-clicks their pet with an empty hand, the pet is recalled with 100% certainty, generating a spawn egg containing the original data. Pets do not cross dimensions or teleport automatically, and some mobs' vanilla movement mechanics may limit their ability to follow.
+With `/carpet commandpetOwnerTransfer true` enabled, the owner can transfer pets by executing `/petTransfer <petUUID> <targetPlayer>`. The pet must be released first; transfer cannot be performed directly on an egg held in hand.
+
+* Default Value:`false`
+* Optional Parameters: `true`, `false`
+* Open Method:`/carpet petCapture true`
+* Categories:`REMS`, `Feature`, `Survival`
+
+## PetCaptureLimit
+The number of captured pets is calculated independently for each player based on the creature type; for instance, if the limit is set to `3`, a player can simultaneously own 3 zombies, 3 skeletons, etc., rather than being limited to a total of 3 pets across all types. Pet slots are consumed by both pet eggs (including those stored in chests) and currently released pets; releasing or recalling the same pet does not increment the count multiple times. Slots are freed upon a pet's natural death, whereas unloading chunks, logging off, or disabling the rule does not reset the count. Only pets obtained via the capture function are tracked; the number of pets tamed using vanilla mechanics remains unrestricted.
+When transferring a captured pet, the recipient's limit for that specific type is checked; upon a successful transfer, the original owner's slot is freed, and the new owner's slot usage increases. Lowering the limit does not delete existing pets; eggs already included in the count can still be deployed, though no new pets exceeding the limit can be added. Setting the limit to `0` disables the restriction, though the records are retained. Destroying or losing an egg does not automatically free up a slot; the pet must be released and then die naturally. Administrator-forced entity deletion does not count as a natural death. In the event of file corruption or read/write failures, the system prevents new registrations or transfers rather than silently resetting the count to bypass the limit.
+* Default Value:`0`（不限）
+* Optional Parameters:任意非负整数，例如 `0`, `3`, `4`
+* Open Method:`/carpet petCaptureLimit 3`
+* Categories:`REMS`, `Feature`, `Survival`
+
+## NegativeItemStacks
+This re-implements the "zero-count item" and dispenser duplication effects from the [original tutorial](https://www.bilibili.com/video/BV1Cs411S7ss/); it does not fully revert the old item system.
+This mod must be installed on both the client and the server. To obtain a zero-count item, open a chest containing items and—within 6 game ticks (0.3 seconds at normal tick speed) of the chest being destroyed by TNT or another player—remove an item using a standard click or a number key.
+* Default Value:`false`
+* Optional Parameters: `true`, `false`
+* Open Method:`/carpet negativeItemStacks true`
+* Categories:`REMS`, `Experimental`
