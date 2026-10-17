@@ -22,9 +22,6 @@ package rems.carpet.mixins.PetCapture;
 
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.ActionResult;
@@ -46,33 +43,21 @@ import net.minecraft.util.math.Vec3d;
 
 @Mixin(MobEntity.class)
 public abstract class MobEntityMixin implements CapturedPet {
-    @Unique private static final TrackedData<String> rems$PET_OWNER = DataTracker.registerData(MobEntity.class, TrackedDataHandlerRegistry.STRING);
-    @Unique private static final TrackedData<Boolean> rems$PET_SITTING = DataTracker.registerData(MobEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
-    public UUID rems$getPetOwner() { return PetCapture.uuid(((MobEntity) (Object) this).getDataTracker().get(rems$PET_OWNER)); }
-    public void rems$setPetOwner(UUID owner) { ((MobEntity) (Object) this).getDataTracker().set(rems$PET_OWNER, owner == null ? "" : owner.toString()); }
-    public boolean rems$isPetSitting() { return ((MobEntity) (Object) this).getDataTracker().get(rems$PET_SITTING); }
+    @Unique private UUID rems$petOwner;
+    @Unique private boolean rems$petSitting;
+
+    public UUID rems$getPetOwner() { return rems$petOwner; }
+    public void rems$setPetOwner(UUID owner) { rems$petOwner = owner; }
+    public boolean rems$isPetSitting() { return rems$petSitting; }
     public void rems$setPetSitting(boolean sitting) {
         MobEntity mob = (MobEntity) (Object) this;
-        mob.getDataTracker().set(rems$PET_SITTING, sitting);
+        rems$petSitting = sitting;
         if (mob instanceof net.minecraft.entity.passive.TameableEntity tameable) {
             tameable.setSitting(sitting);
             tameable.setInSittingPose(sitting);
         }
     }
-
-    @Inject(method = "initDataTracker", at = @At("TAIL"))
-    //#if MC>=12100
-    //$$ private void trackPet(DataTracker.Builder builder, CallbackInfo ci) {
-    //$$     builder.add(rems$PET_OWNER, "");
-    //$$     builder.add(rems$PET_SITTING, false);
-    //$$ }
-    //#else
-    private void trackPet(CallbackInfo ci) {
-        ((MobEntity) (Object) this).getDataTracker().startTracking(rems$PET_OWNER, "");
-        ((MobEntity) (Object) this).getDataTracker().startTracking(rems$PET_SITTING, false);
-    }
-    //#endif
 
     //#if MC>=12108
     //$$ @Inject(method = "writeCustomData", at = @At("TAIL"))
